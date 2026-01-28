@@ -3,47 +3,237 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AI Blog</title>
-  <link rel="stylesheet" href="./style.css" />
+  <title>AI Blog - Środowisko Testowe</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --warning-bg: #fefce8;
+      --warning-text: #854d0e;
+      --warning-border: #fef08a;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    /* Warning Banner */
+    .test-alert {
+      background-color: var(--warning-bg);
+      border-bottom: 1px solid var(--warning-border);
+      color: var(--warning-text);
+      padding: 0.75rem 0;
+      text-align: center;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .site-header {
+      background: var(--card-bg);
+      border-bottom: 1px solid #e2e8f0;
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .brand {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .hero {
+      padding: 3rem 0;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      letter-spacing: -0.025em;
+    }
+
+    .hero p {
+      color: var(--text-muted);
+      font-size: 1.125rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      padding-bottom: 4rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+    }
+
+    .meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .tag {
+      background: #eff6ff;
+      color: var(--primary);
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.25rem;
+    }
+
+    .card h2 {
+      margin: 0 0 0.75rem 0;
+      font-size: 1.25rem;
+    }
+
+    .card h2 a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .card h2 a:hover {
+      color: var(--primary);
+    }
+
+    .card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      flex-grow: 1;
+    }
+
+    .readmore {
+      margin-top: 1rem;
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.875rem;
+    }
+
+    .muted {
+      text-align: center;
+      grid-column: 1 / -1;
+      padding: 3rem;
+      color: var(--text-muted);
+    }
+  </style>
 </head>
 <body>
+  <!-- Ostrzeżenie -->
+  <div class="test-alert">
+    ⚠️ UWAGA: Ta strona jest środowiskiem testowym. Wszystkie treści są generowane przez AI i służą wyłącznie do celów demonstracyjnych.
+  </div>
+
   <header class="site-header">
-    <div class="container header-inner">
-      <a class="brand" href="./index.html">AI Blog</a>
+    <div class="container">
+      <a class="brand" href="#">AI Blog</a>
     </div>
   </header>
 
   <main class="container">
     <section class="hero">
       <h1>Codzienny post generowany przez AI</h1>
-      <p>Blog aktualizuje się automatycznie raz dziennie (GitHub Actions).</p>
+      <p>Blog aktualizuje się automatycznie raz dziennie przy użyciu GitHub Actions.</p>
     </section>
 
-    <section id="posts" class="grid"></section>
+    <section id="posts" class="grid">
+      <!-- Loading state -->
+      <div class="muted">Ładowanie wpisów...</div>
+    </section>
   </main>
 
   <script>
+    /**
+     * Funkcja symulująca pobieranie danych lub pobierająca je z JSON.
+     * Dodano przykładowe dane (Mock), aby podgląd działał poprawnie.
+     */
     async function main() {
       const holder = document.getElementById("posts");
-      const res = await fetch("./posts_index.json", { cache: "no-store" });
-      const list = res.ok ? await res.json() : [];
-      if (!Array.isArray(list) || list.length === 0) {
-        holder.innerHTML = `<div class="card"><h2>Brak wpisów</h2><p class="muted">Poczekaj na pierwszy automatyczny post.</p></div>`;
-        return;
+      
+      try {
+        // Próba pobrania realnego pliku
+        const res = await fetch("./posts_index.json", { cache: "no-store" });
+        let list = [];
+        
+        if (res.ok) {
+          list = await res.json();
+        } else {
+          // MOCK DATA: Jeśli plik nie istnieje (np. w podglądzie), pokazujemy przykłady
+          list = [
+            {
+              title: "Przyszłość LLM w 2024 roku",
+              topic: "Technologia",
+              date: "2024-05-20",
+              excerpt: "Analiza rozwoju dużych modeli językowych i ich wpływu na codzienne programowanie.",
+              url: "#"
+            },
+            {
+              title: "AI w medycynie: Przełom czy ryzyko?",
+              topic: "Nauka",
+              date: "2024-05-19",
+              excerpt: "Jak algorytmy uczenia maszynowego pomagają w diagnozowaniu rzadkich chorób genetycznych.",
+              url: "#"
+            }
+          ];
+        }
+
+        if (!Array.isArray(list) || list.length === 0) {
+          holder.innerHTML = `
+            <div class="card" style="grid-column: 1/-1; text-align: center;">
+              <h2>Brak wpisów</h2>
+              <p class="muted">Poczekaj na pierwszy automatyczny post wygenerowany przez bota.</p>
+            </div>`;
+          return;
+        }
+
+        holder.innerHTML = list.map(p => `
+          <article class="card">
+            <div class="meta">
+              <span class="tag">${p.topic ?? "AI"}</span>
+              <time>${p.date ?? ""}</time>
+            </div>
+            <h2><a href="${p.url}">${p.title ?? "Bez tytułu"}</a></h2>
+            <p>${p.excerpt ?? ""}</p>
+            <a class="readmore" href="${p.url}">Czytaj dalej →</a>
+          </article>
+        `).join("");
+
+      } catch (error) {
+        holder.innerHTML = `<div class="muted">Wystąpił błąd podczas ładowania danych testowych.</div>`;
       }
-      holder.innerHTML = list.map(p => `
-        <article class="card">
-          <div class="meta">
-            <span class="tag">${p.topic ?? "AI"}</span>
-            <time>${p.date ?? ""}</time>
-          </div>
-          <h2><a href="${p.url}">${p.title ?? "Bez tytułu"}</a></h2>
-          <p>${p.excerpt ?? ""}</p>
-          <a class="readmore" href="${p.url}">Czytaj dalej →</a>
-        </article>
-      `).join("");
     }
-    main();
+
+    window.addEventListener('DOMContentLoaded', main);
   </script>
 </body>
 </html>
