@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Blog</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="./index.html">AI Blog</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1>Codzienny post generowany przez AI</h1>
+      <p>Blog aktualizuje się automatycznie raz dziennie (GitHub Actions).</p>
+    </section>
+
+    <section id="posts" class="grid"></section>
+  </main>
+
+  <script>
+    async function main() {
+      const holder = document.getElementById("posts");
+      const res = await fetch("./posts_index.json", { cache: "no-store" });
+      const list = res.ok ? await res.json() : [];
+      if (!Array.isArray(list) || list.length === 0) {
+        holder.innerHTML = `<div class="card"><h2>Brak wpisów</h2><p class="muted">Poczekaj na pierwszy automatyczny post.</p></div>`;
+        return;
+      }
+      holder.innerHTML = list.map(p => `
+        <article class="card">
+          <div class="meta">
+            <span class="tag">${p.topic ?? "AI"}</span>
+            <time>${p.date ?? ""}</time>
+          </div>
+          <h2><a href="${p.url}">${p.title ?? "Bez tytułu"}</a></h2>
+          <p>${p.excerpt ?? ""}</p>
+          <a class="readmore" href="${p.url}">Czytaj dalej →</a>
+        </article>
+      `).join("");
+    }
+    main();
+  </script>
+</body>
+</html>
