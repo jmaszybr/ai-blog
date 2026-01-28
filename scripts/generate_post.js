@@ -27,6 +27,7 @@ async function generateWithGroq() {
 
   const prompt = `
 Napisz wysokiej jakości wpis blogowy po polsku (800–1200 słów).
+Temat zaproponuj sam. Ma być związany z wykorzystaniem AI.
 Styl: merytoryczny, przystępny, bez lania wody.
 
 Wynik ma być ZAWSZE poprawnym JSON. Nie dodawaj żadnego tekstu poza JSON.
