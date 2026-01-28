@@ -5,42 +5,78 @@ import crypto from "node:crypto";
 const OUT_DIR = "posts";
 const INDEX_FILE = "posts_index.json";
 
+// --- UTILS ---
+
 function slugify(s) {
   return String(s).toLowerCase()
     .replace(/ą/g,"a").replace(/ć/g,"c").replace(/ę/g,"e").replace(/ł/g,"l")
     .replace(/ń/g,"n").replace(/ó/g,"o").replace(/ś/g,"s").replace(/ż/g,"z").replace(/ź/g,"z")
     .replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"").slice(0,80);
 }
+
 function esc(s) {
   return String(s ?? "").replace(/[&<>"']/g, m => ({
     "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
   }[m]));
 }
+
 function todayPL() {
   const d = new Date();
   return d.toLocaleDateString("pl-PL", { year:"numeric", month:"short", day:"2-digit" });
 }
 
-async function generateWithGroq() {
+function readIndex() {
+  if (!fs.existsSync(INDEX_FILE)) return [];
+  try {
+    return JSON.parse(fs.readFileSync(INDEX_FILE, "utf8"));
+  } catch (e) {
+    return [];
+  }
+}
+
+function writeIndex(list) {
+  fs.writeFileSync(INDEX_FILE, JSON.stringify(list, null, 2), "utf8");
+}
+
+// --- CORE GENERATION ---
+
+async function generateWithGroq(existingTitles = []) {
   const apiKey = process.env.GROQ_API_KEY;
   if (!apiKey) throw new Error("Brak GROQ_API_KEY w secrets");
 
+  // Losujemy "kąt" patrzenia, żeby każdy wpis był inny
+  const angles = [
+    "techniczne głębokie nurkowanie (deep dive)",
+    "perspektywa etyczna i filozoficzna",
+    "praktyczny poradnik dla biznesu",
+    "analiza trendów na rok 2026",
+    "studium przypadku (case study)",
+    "kontrowersyjna opinia podważająca status quo"
+  ];
+  const selectedAngle = angles[Math.floor(Math.random() * angles.length)];
+
   const prompt = `
-Napisz wysokiej jakości wpis blogowy po polsku (800–1200 słów).
-Temat zaproponuj sam. Ma być związany z wykorzystaniem AI.
-Styl: merytoryczny, przystępny, bez lania wody.
+Jesteś profesjonalnym blogerem technologicznym i ekspertem AI. 
+Twoim zadaniem jest napisanie unikalnego wpisu na bloga (800–1200 słów).
 
-Wynik ma być ZAWSZE poprawnym JSON. Nie dodawaj żadnego tekstu poza JSON.
-Nie używaj \`\`\` ani słów typu "Oto JSON:".
+OSTATNIO NAPISANE TEMATY (NIE POWTARZAJ ICH!):
+${existingTitles.length > 0 ? existingTitles.join(", ") : "Brak wcześniejszych wpisów."}
 
-Zwróć obiekt:
-- title: string
-- topic: string (1–2 słowa)
-- excerpt: string (1–2 zdania)
-- html: string (pełna treść w HTML: <h2>, <p>, <ul><li>...)
+DZISIEJSZY KONTEKST:
+- Temat: Coś nowatorskiego z dziedziny AI (LLM, agenty, robotyka, generative video itp.).
+- Perspektywa: ${selectedAngle}.
+- Styl: Mięsisty, konkretny, bez lania wody. Unikaj wstępów typu "W dzisiejszym dynamicznie zmieniającym się świecie".
+- Język: Polski (naturalny, ekspercki).
 
-WAŻNE: W polu "html" nie używaj atrybutów z cudzysłowami (np. class="...") – tylko czyste tagi bez atrybutów.
-  `.trim();
+WYMAGANIA TECHNICZNE (JSON):
+Zwróć ZAWSZE czysty JSON bez markdownu (bez \`\`\`). Obiekt:
+- title: string (chwytliwy, ale merytoryczny tytuł)
+- topic: string (1–2 słowa, np. "Automatyzacja")
+- excerpt: string (krótka zajawka na stronę główną)
+- html: string (pełna treść: używaj <h2>, <h3>, <p>, <ul>, <li>, <strong>. Nie używaj atrybutów class ani id).
+
+WAŻNE: Nie powtarzaj informacji. Bądź kreatywny. Jeśli ostatnio było o ChatGPT, dziś napisz o lokalnych modelach Llama lub agentach AI w medycynie.
+`.trim();
 
   const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
     method: "POST",
@@ -49,38 +85,24 @@ WAŻNE: W polu "html" nie używaj atrybutów z cudzysłowami (np. class="...") �
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      model: "openai/gpt-oss-120b",
+      model: "llama-3.3-70b-versatile", // Używamy sprawdzonego modelu Groq
       messages: [{ role: "user", content: prompt }],
-      temperature: 0.7,
+      temperature: 0.8, // Wyższa temperatura = większa kreatywność
       response_format: { type: "json_object" },
     }),
   });
 
-  const raw = await res.text();
-  if (!res.ok) throw new Error(`Groq error ${res.status}: ${raw}`);
-
-  const data = JSON.parse(raw);
-  let content = data.choices?.[0]?.message?.content ?? "";
-
-  // usuń ewentualne ```json ... ```
-  content = content.replace(/```(?:json)?/g, "").replace(/```/g, "").trim();
-
-  // 1) spróbuj wprost
-  try {
-    return JSON.parse(content);
-  } catch (e) {
-    // 2) wyciągnij pierwszy sensowny obiekt JSON
-    const start = content.indexOf("{");
-    const end = content.lastIndexOf("}");
-    if (start === -1 || end === -1 || end <= start) {
-      throw new Error("Nie mogę znaleźć JSON w odpowiedzi: " + content.slice(0, 400));
-    }
-    const sliced = content.slice(start, end + 1);
-    return JSON.parse(sliced);
+  if (!res.ok) {
+    const errorText = await res.text();
+    throw new Error(`Groq error ${res.status}: ${errorText}`);
   }
+
+  const data = await res.json();
+  const content = data.choices?.[0]?.message?.content;
+  return JSON.parse(content);
 }
 
-
+// --- RENDERING ---
 
 function renderPostPage({ title, topic, html, date }) {
   return `<!doctype html>
@@ -98,55 +120,69 @@ function renderPostPage({ title, topic, html, date }) {
     </div>
   </header>
   <main class="container">
-    <article class="hero">
-      <div class="meta">
-        <span class="tag">${esc(topic ?? "AI")}</span>
-        <time>${esc(date)}</time>
-      </div>
-      <h1>${esc(title)}</h1>
+    <article>
+      <header class="post-header">
+        <div class="meta">
+          <span class="tag">${esc(topic ?? "AI")}</span>
+          <time>${esc(date)}</time>
+        </div>
+        <h1>${esc(title)}</h1>
+      </header>
+      <section class="post-content">
+        ${html}
+      </section>
     </article>
-    <section class="card">
-      ${html ?? "<p>Brak treści</p>"}
-    </section>
   </main>
 </body>
 </html>`;
 }
 
-function readIndex() {
-  if (!fs.existsSync(INDEX_FILE)) return [];
-  return JSON.parse(fs.readFileSync(INDEX_FILE, "utf8"));
-}
-
-function writeIndex(list) {
-  fs.writeFileSync(INDEX_FILE, JSON.stringify(list, null, 2), "utf8");
-}
+// --- MAIN ---
 
 async function main() {
+  console.log("🚀 Rozpoczynam generowanie wpisu...");
   fs.mkdirSync(OUT_DIR, { recursive: true });
 
-  const post = await generateWithGroq();
+  // 1. Pobierz listę tytułów, żeby AI się nie powtarzało
+  const index = readIndex();
+  const recentTitles = index.slice(0, 15).map(p => p.title);
+
+  // 2. Generuj treść
+  const post = await generateWithGroq(recentTitles);
+  
   const date = todayPL();
-  const id = crypto.randomBytes(6).toString("hex");
+  const id = crypto.randomBytes(4).toString("hex");
   const slug = slugify(post.title || `post-${id}`);
   const filename = `${slug}.html`;
   const url = `./posts/${filename}`;
 
-  const page = renderPostPage({ title: post.title, topic: post.topic, html: post.html, date });
-  fs.writeFileSync(path.join(OUT_DIR, filename), page, "utf8");
+  // 3. Zapisz plik HTML
+  const pageHtml = renderPostPage({ 
+    title: post.title, 
+    topic: post.topic, 
+    html: post.html, 
+    date 
+  });
+  
+  fs.writeFileSync(path.join(OUT_DIR, filename), pageHtml, "utf8");
 
-  const index = readIndex();
+  // 4. Aktualizuj indeks
   index.unshift({
-    id, title: post.title, topic: post.topic, excerpt: post.excerpt, date, url
+    id, 
+    title: post.title, 
+    topic: post.topic, 
+    excerpt: post.excerpt, 
+    date, 
+    url
   });
 
-  // opcjonalnie: limit np. 200 postów
   writeIndex(index.slice(0, 200));
 
-  console.log("Generated:", url);
+  console.log(`✅ Gotowe! Wygenerowano: ${post.title}`);
+  console.log(`🔗 Ścieżka: ${url}`);
 }
 
 main().catch(err => {
-  console.error(err);
+  console.error("❌ Błąd krytyczny:", err);
   process.exit(1);
 });
