@@ -25,27 +25,21 @@ async function generateWithGroq() {
   const apiKey = process.env.GROQ_API_KEY;
   if (!apiKey) throw new Error("Brak GROQ_API_KEY w secrets");
 
-const prompt = `
+  const prompt = `
 Napisz wysokiej jakości wpis blogowy po polsku (800–1200 słów).
 Styl: merytoryczny, przystępny, bez lania wody.
 
-Struktura:
-- krótki lead (2–3 zdania)
-- sekcje z nagłówkami <h2>
-- listy punktowane tam, gdzie to pasuje
-- krótkie podsumowanie na końcu
+Wynik ma być ZAWSZE poprawnym JSON. Nie dodawaj żadnego tekstu poza JSON.
+Nie używaj \`\`\` ani słów typu "Oto JSON:".
 
-Temat wybierz sam, ale ma dotyczyć praktycznego wykorzystania AI.
+Zwróć obiekt:
+- title: string
+- topic: string (1–2 słowa)
+- excerpt: string (1–2 zdania)
+- html: string (pełna treść w HTML: <h2>, <p>, <ul><li>...)
 
-Zwróć WYŁĄCZNIE poprawny JSON (bez markdown, bez komentarzy):
-{
-  "title": "krótki, chwytliwy tytuł",
-  "topic": "1–2 słowa",
-  "excerpt": "1–2 zdania streszczenia (SEO)",
-  "html": "pełna treść wpisu w HTML (<h2>, <p>, <ul>)"
-}
-`;
-
+WAŻNE: W polu "html" nie używaj atrybutów z cudzysłowami (np. class="...") – tylko czyste tagi bez atrybutów.
+  `.trim();
 
   const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
     method: "POST",
@@ -57,29 +51,34 @@ Zwróć WYŁĄCZNIE poprawny JSON (bez markdown, bez komentarzy):
       model: "openai/gpt-oss-120b",
       messages: [{ role: "user", content: prompt }],
       temperature: 0.7,
-
-      // Jeśli Groq/model wspiera - wymusza czysty JSON:
       response_format: { type: "json_object" },
     }),
   });
 
-  const text = await res.text();
-  if (!res.ok) throw new Error(`Groq error ${res.status}: ${text}`);
+  const raw = await res.text();
+  if (!res.ok) throw new Error(`Groq error ${res.status}: ${raw}`);
 
-  // Groq zwraca JSON, ale message.content jest stringiem:
-  const data = JSON.parse(text);
-  const content = data.choices?.[0]?.message?.content ?? "";
+  const data = JSON.parse(raw);
+  let content = data.choices?.[0]?.message?.content ?? "";
 
-  // 1) próbujemy normalnie
+  // usuń ewentualne ```json ... ```
+  content = content.replace(/```(?:json)?/g, "").replace(/```/g, "").trim();
+
+  // 1) spróbuj wprost
   try {
     return JSON.parse(content);
-  } catch {
-    // 2) fallback: wyciągnij pierwszego JSON-a z tekstu
-    const m = content.match(/\{[\s\S]*\}/);
-    if (!m) throw new Error("Model nie zwrócił JSON. Odpowiedź: " + content.slice(0, 400));
-    return JSON.parse(m[0]);
+  } catch (e) {
+    // 2) wyciągnij pierwszy sensowny obiekt JSON
+    const start = content.indexOf("{");
+    const end = content.lastIndexOf("}");
+    if (start === -1 || end === -1 || end <= start) {
+      throw new Error("Nie mogę znaleźć JSON w odpowiedzi: " + content.slice(0, 400));
+    }
+    const sliced = content.slice(start, end + 1);
+    return JSON.parse(sliced);
   }
 }
+
 
 
 function renderPostPage({ title, topic, html, date }) {
