@@ -25,15 +25,27 @@ async function generateWithGroq() {
   const apiKey = process.env.GROQ_API_KEY;
   if (!apiKey) throw new Error("Brak GROQ_API_KEY w secrets");
 
-  const prompt =
-`Wygeneruj wpis na bloga po polsku.
-Zwróć WYŁĄCZNIE JSON (bez markdown, bez komentarzy) w formacie:
+const prompt = `
+Napisz wysokiej jakości wpis blogowy po polsku (800–1200 słów).
+Styl: merytoryczny, przystępny, bez lania wody.
+
+Struktura:
+- krótki lead (2–3 zdania)
+- sekcje z nagłówkami <h2>
+- listy punktowane tam, gdzie to pasuje
+- krótkie podsumowanie na końcu
+
+Temat wybierz sam, ale ma dotyczyć praktycznego wykorzystania AI.
+
+Zwróć WYŁĄCZNIE poprawny JSON (bez markdown, bez komentarzy):
 {
-  "title": "...",
-  "topic": "...",
-  "excerpt": "...",
-  "html": "..."   // pełna treść w HTML (np. <h2>..</h2><p>..</p>)
-}`;
+  "title": "krótki, chwytliwy tytuł",
+  "topic": "1–2 słowa",
+  "excerpt": "1–2 zdania streszczenia (SEO)",
+  "html": "pełna treść wpisu w HTML (<h2>, <p>, <ul>)"
+}
+`;
+
 
   const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
     method: "POST",
