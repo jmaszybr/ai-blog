@@ -25,8 +25,15 @@ async function generateWithGroq() {
   const apiKey = process.env.GROQ_API_KEY;
   if (!apiKey) throw new Error("Brak GROQ_API_KEY w secrets");
 
-  // Minimalny request — dopasuj model/prompt pod siebie:
-  const prompt = `Napisz wpis na bloga (PL) o AI: tytuł + 2-4 sekcje + podsumowanie. Dodaj krótki lead i excerpt. Zwróć JSON: {title, topic, excerpt, html}.`;
+  const prompt =
+`Wygeneruj wpis na bloga po polsku.
+Zwróć WYŁĄCZNIE JSON (bez markdown, bez komentarzy) w formacie:
+{
+  "title": "...",
+  "topic": "...",
+  "excerpt": "...",
+  "html": "..."   // pełna treść w HTML (np. <h2>..</h2><p>..</p>)
+}`;
 
   const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
     method: "POST",
@@ -35,20 +42,33 @@ async function generateWithGroq() {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      model: "llama-3.1-70b-versatile",
+      model: "openai/gpt-oss-120b",
       messages: [{ role: "user", content: prompt }],
       temperature: 0.7,
+
+      // Jeśli Groq/model wspiera - wymusza czysty JSON:
+      response_format: { type: "json_object" },
     }),
   });
 
-  if (!res.ok) {
-    const t = await res.text();
-    throw new Error(`Groq error: ${res.status} ${t}`);
-  }
-  const data = await res.json();
+  const text = await res.text();
+  if (!res.ok) throw new Error(`Groq error ${res.status}: ${text}`);
+
+  // Groq zwraca JSON, ale message.content jest stringiem:
+  const data = JSON.parse(text);
   const content = data.choices?.[0]?.message?.content ?? "";
-  return JSON.parse(content);
+
+  // 1) próbujemy normalnie
+  try {
+    return JSON.parse(content);
+  } catch {
+    // 2) fallback: wyciągnij pierwszego JSON-a z tekstu
+    const m = content.match(/\{[\s\S]*\}/);
+    if (!m) throw new Error("Model nie zwrócił JSON. Odpowiedź: " + content.slice(0, 400));
+    return JSON.parse(m[0]);
+  }
 }
+
 
 function renderPostPage({ title, topic, html, date }) {
   return `<!doctype html>
