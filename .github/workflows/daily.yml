@@ -1,0 +1,34 @@
+name: Daily AI Post
+
+on:
+  schedule:
+    - cron: "0 6 * * *"   # 06:00 UTC (w PL zwykle 7/8 zależnie od DST)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Generate post
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+        run: node scripts/generate_post.js
+
+      - name: Commit changes
+        run: |
+          git config user.name "ai-blog-bot"
+          git config user.email "ai-blog-bot@users.noreply.github.com"
+          git add posts posts_index.json
+          git commit -m "Daily post" || echo "No changes"
+          git push
