@@ -56,32 +56,28 @@ async function generateWithGroq(existingTitles = []) {
   const selectedAngle = angles[Math.floor(Math.random() * angles.length)];
 
 const prompt = `
-Jesteś redaktorem naczelnym czołowego portalu tech. Piszesz dla czytelnika, który zna podstawy AI i szuka mięsa, a nie definicji.
+Jesteś wybitnym popularyzatorem nauki i dziennikarzem śledczym w dziedzinie technologii. 
+Twoim celem jest napisanie dogłębnego artykułu popularnonaukowego (1200-1800 słów).
 
-TEMATY DO UNIKANIA (JUŻ BYŁY):
-${existingTitles.join(", ")}
+STRUKTURA ARTYKUŁU:
+1. Lead: Intrygujący, oparty na paradoksie lub przełomowym odkryciu.
+2. Abstract (Streszczenie): 3-4 zdania podsumowujące tezę artykułu.
+3. Kontekst historyczny/teoretyczny: Jak doszliśmy do tego punktu?
+4. Mechanizm: Wyjaśnij "jak to działa" używając analogii, ale zachowując precyzję.
+5. Analiza krytyczna: Potencjalne błędy, ograniczenia technologii (np. twierdzenie o nierozstrzygalności lub złożoność obliczeniowa).
+6. Futurologia oparta na danych: Co mówią obecne trendy matematyczne/statystyczne?
 
-DZISIEJSZA MISJA:
-Napisz artykuł na temat: [NOWATORSKIE AI 2026]
-Perspektywa: ${selectedAngle}
-
-ZASADY REDAKCYJNE:
-1. ZAKAZ: "W dzisiejszym świecie", "Dynamiczny rozwój", "Warto zauważyć", "Podsumowując".
-2. STYL: Agresywny, konkretny, pełen branżowego żargonu (ale wyjaśnionego kontekstem). 
-3. STRUKTURA:
-   - Mocny lead (zaczepka).
-   - Śródtytuły, które są tezami, a nie pytaniami (np. zamiast "Co to jest?", napisz "Koniec ery prostych LLM").
-   - Przynajmniej jedna sekcja <blockquote> (ważny cytat fikcyjnego eksperta).
-   - Przynajmniej jedna tabela porównawcza lub lista <ul> z technicznymi parametrami.
-   - Sekcja "Key Takeaways" na końcu w formie ramki (użyj <aside> lub <strong>).
+ZASADY TREŚCI:
+- Używaj terminologii fachowej (np. "sieci neuronowe typu Transformer", "entropia informacyjna", "kwantowa superpozycja"), ale wyjaśniaj ją w tekście.
+- Wymagane: Użyj notacji LaTeX do opisania kluczowych wzorów lub zależności (np. złożoność modelu $\mathcal{O}(n^2)$).
+- Wstaw co najmniej jeden cytat fikcyjnego profesora z prestiżowej uczelni (MIT, Stanford, Oxford).
 
 WYMAGANIA TECHNICZNE (JSON):
-Zwróć ZAWSZE czysty JSON:
 {
-  "title": "Tytuł, który wymusza kliknięcie, ale nie jest clickbaitem",
-  "topic": "Kategoria",
-  "excerpt": "Zajawka budująca napięcie",
-  "html": "Pełna treść artykułu. Używaj: <h2>, <h3>, <p>, <ul>, <li>, <strong>, <blockquote>. Jeśli to pasuje, dodaj <pre><code> dla przykładów technicznych."
+  "title": "Tytuł w stylu naukowym (np. 'Od neuronów do bitów: Granice skalowalności...')",
+  "topic": "Dziedzina (np. Neuroinformatyka)",
+  "excerpt": "Poważne, naukowe wprowadzenie",
+  "html": "Pełna treść z tagami <h2>, <h3>. Dodaj <aside> dla 'Ciekawostki technicznej'. Użyj <table> do zestawienia twardych danych."
 }
 `.trim();
 
