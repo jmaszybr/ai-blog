@@ -88,7 +88,7 @@ ZWRÓĆ CZYSTY JSON:
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      model: "llama-3.3-70b-versatile", // Używamy sprawdzonego modelu Groq
+      model: "gpt-oss-120b", // Używamy sprawdzonego modelu Groq
       messages: [{ role: "user", content: prompt }],
       temperature: 0.8, // Wyższa temperatura = większa kreatywność
       response_format: { type: "json_object" },
