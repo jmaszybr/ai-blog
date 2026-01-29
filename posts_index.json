@@ -1,5 +1,13 @@
 [
   {
+    "id": "3a01a483",
+    "title": "Rozpoznawanie twarzy: jak komputery rozpoznają nasze twarze",
+    "topic": "Ludzkim głosem o AI",
+    "excerpt": "Dowiedz się, jak komputery są w stanie rozpoznać nasze twarze w kilka sekund",
+    "date": "29 sty 2026",
+    "url": "./posts/rozpoznawanie-twarzy-jak-komputery-rozpoznaja-nasze-twarze.html"
+  },
+  {
     "id": "5a209200",
     "title": "Od neuronów do bitów: Granice skalowalności sieci neuronowych w erze kwantowej",
     "topic": "Neuroinformatyka",
