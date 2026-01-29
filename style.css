@@ -1,14 +1,17 @@
 :root {
-  --bg: #0b0f19;
-  --text: #f8fafc;
-  --muted: #94a3b8;
-  --border: rgba(255, 255, 255, 0.08);
-  --panel: rgba(255, 255, 255, 0.03);
-  --accent: #3b82f6;
-  --accent-glow: rgba(59, 130, 246, 0.2);
+  /* Nowa paleta: Czysta biel i profesjonalne szarości (Slate) */
+  --bg: #ffffff;
+  --text: #0f172a;           /* Bardzo ciemny granat zamiast czystej czerni */
+  --muted: #64748b;          /* Stonowany tekst pomocniczy */
+  --border: #e2e8f0;         /* Jasna, elegancka linia */
+  --panel: #f8fafc;          /* Bardzo jasne tło dla kart i hero */
+  --accent: #2563eb;         /* Nieco głębszy niebieski dla lepszego kontrastu */
+  --accent-glow: #eff6ff;    /* Jasnobłękitne tło dla badge'y */
+  
   --radius: 16px;
   --max: 1100px;
   --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
 }
 
 * { box-sizing: border-box; }
@@ -29,7 +32,7 @@ body {
 
 /* --- Header --- */
 .site-header {
-  background: rgba(11, 15, 25, 0.8);
+  background: rgba(255, 255, 255, 0.8); /* Biały z przezroczystością */
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border);
@@ -60,12 +63,18 @@ body {
   color: var(--muted); 
   text-decoration: none; 
   font-size: 0.9rem; 
+  font-weight: 500;
   transition: var(--transition);
 }
-.nav-links a:hover { color: var(--text); }
+.nav-links a:hover { color: var(--accent); }
 
 /* --- Hero --- */
-.hero { padding: 80px 0 60px; text-align: center; }
+.hero { 
+  padding: 80px 0 60px; 
+  text-align: center; 
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(to bottom, #fcfcfd, #ffffff);
+}
 
 .hero-badge {
   display: inline-block;
@@ -76,7 +85,7 @@ body {
   font-size: 0.8rem;
   font-weight: 600;
   margin-bottom: 20px;
-  border: 1px solid rgba(59, 130, 246, 0.3);
+  border: 1px solid #dbeafe; /* Subtelniejsza ramka */
 }
 
 .hero h1 {
@@ -84,6 +93,7 @@ body {
   font-weight: 800;
   margin: 0 0 20px 0;
   letter-spacing: -0.04em;
+  color: #1e293b;
 }
 
 /* --- Blog Grid --- */
@@ -91,12 +101,12 @@ body {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   gap: 24px;
-  padding-bottom: 80px;
+  padding: 60px 0 80px;
 }
 
 .card {
   grid-column: span 12;
-  background: var(--panel);
+  background: var(--bg);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 32px;
@@ -105,12 +115,13 @@ body {
   transition: var(--transition);
   text-decoration: none;
   color: inherit;
+  box-shadow: var(--shadow); /* Delikatny cień w trybie jasnym */
 }
 
 .card:hover {
-  border-color: rgba(255,255,255,0.2);
-  background: rgba(255,255,255,0.05);
+  border-color: var(--accent);
   transform: translateY(-6px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
 }
 
 @media (min-width: 768px) { .card { grid-column: span 6; } }
@@ -119,16 +130,31 @@ body {
 .tag { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: var(--accent); }
 .date { color: var(--muted); font-size: 0.85rem; }
 
-.card h2 { margin: 0 0 16px 0; font-size: 1.5rem; }
+.card h2 { margin: 0 0 16px 0; font-size: 1.4rem; color: #1e293b; }
 .card p { 
   color: var(--muted); 
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  font-size: 0.95rem;
 }
 
-.readmore { margin-top: auto; font-weight: 700; font-size: 0.9rem; color: var(--accent); }
+.readmore { 
+  margin-top: auto; 
+  font-weight: 700; 
+  font-size: 0.9rem; 
+  color: var(--accent); 
+  padding-top: 20px;
+}
 
-footer { border-top: 1px solid var(--border); padding: 40px 0; text-align: center; color: var(--muted); }
+/* --- Footer --- */
+footer { 
+  border-top: 1px solid var(--border); 
+  padding: 40px 0; 
+  text-align: center; 
+  color: var(--muted);
+  background: var(--panel);
+}
+
 .loading-shimmer { text-align: center; padding: 100px; grid-column: 1 / -1; color: var(--muted); }
