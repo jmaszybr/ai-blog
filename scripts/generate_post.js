@@ -5,7 +5,7 @@ import crypto from "node:crypto";
 const OUT_DIR = "posts";
 const INDEX_FILE = "posts_index.json";
 
-// --- UTILS ---
+// --- NARZĘDZIA POMOCNICZE ---
 
 function slugify(s) {
   return String(s).toLowerCase()
@@ -22,51 +22,55 @@ function esc(s) {
 
 function todayPL() {
   const d = new Date();
-  return d.toLocaleDateString("pl-PL", { year:"numeric", month:"short", day:"2-digit" });
+  return d.toLocaleDateString("pl-PL", { year:"numeric", month:"long", day:"2-digit" });
 }
 
 function readIndex() {
   if (!fs.existsSync(INDEX_FILE)) return [];
   try {
     return JSON.parse(fs.readFileSync(INDEX_FILE, "utf8"));
-  } catch (e) {
-    return [];
-  }
+  } catch (e) { return []; }
 }
 
 function writeIndex(list) {
   fs.writeFileSync(INDEX_FILE, JSON.stringify(list, null, 2), "utf8");
 }
 
-// --- CORE GENERATION ---
+// --- GENEROWANIE TREŚCI ---
 
 async function generateWithGroq(existingTitles = []) {
   const apiKey = process.env.GROQ_API_KEY;
   if (!apiKey) throw new Error("Brak GROQ_API_KEY w secrets");
 
-  // Jeśli gpt-oss-120b zwraca błąd 404, użyj llama-3.3-70b-versatile (to pewniak na Groq)
+  // Wybieramy model: gpt-oss-120b (jeśli dostępny) lub llama-3.3-70b-versatile
   const MODEL_ID = "llama-3.3-70b-versatile"; 
 
   const prompt = `
-Jesteś światowej klasy popularyzatorem nauki. Napisz fascynujący artykuł o AI dla osób nietechnicznych.
+Jesteś wybitnym popularyzatorem nauki. Twoim zadaniem jest napisać głęboki, ale przystępny artykuł popularnonaukowy o AI dla osób nietechnicznych.
+
 KONTEKST (NIE POWTARZAJ): ${existingTitles.join(", ")}
 
-WYMAGANIA:
-1. TEMAT: Wybierz nowatorski aspekt AI z 2026 roku.
+ZASADY:
+1. STYL: Opowieść wizualna, dużo metafor, zero nudy. Unikaj żargonu.
 2. EKSPERYMENT MYŚLOWY: Zacznij od scenariusza "Wyobraź sobie, że...".
-3. STYL: Prosty, metaforyczny, głęboki.
-4. STRUKTURA HTML: Użyj <h1>, <h2>, <div class="abstract">, <blockquote>, <aside class="thought-box">.
+3. ANALOGIA: Wyjaśnij mechanizm AI porównując go do czegoś codziennego (np. pieczenia chleba, pracy bibliotekarza).
+4. STRUKTURA HTML:
+   - <div class="abstract">: Jedno zdanie wyjaśniające wagę tematu.
+   - <h2>: Śródtytuły będące intrygującymi tezami.
+   - <blockquote>: Jeden mądry cytat fikcyjnego badacza.
+   - <aside class="thought-box">: Ramka z pytaniem do czytelnika.
+5. DŁUGOŚĆ: Napisz co najmniej 800 słów. Nie ucinaj wpisu!
 
 ZWRÓĆ WYŁĄCZNIE CZYSTY JSON:
 {
-  "title": "Tytuł",
-  "topic": "Kategoria",
-  "excerpt": "Zajawka",
-  "html": "Treść HTML"
+  "title": "Tytuł artykułu",
+  "topic": "Dziedzina",
+  "excerpt": "Zajawka budująca napięcie",
+  "html": "Pełna treść artykułu w HTML"
 }
 `.trim();
 
-  const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+  const res = await fetch("https://api.api.groq.com/openai/v1/chat/completions", {
     method: "POST",
     headers: {
       "Authorization": `Bearer ${apiKey}`,
@@ -75,10 +79,11 @@ ZWRÓĆ WYŁĄCZNIE CZYSTY JSON:
     body: JSON.stringify({
       model: MODEL_ID,
       messages: [
-        { role: "system", content: "Jesteś ekspertem humanistyki cyfrowej. Odpowiadasz tylko w formacie JSON." },
+        { role: "system", content: "Jesteś ekspertem. Zawsze odpowiadasz kompletnym, poprawnym strukturalnie plikiem JSON." },
         { role: "user", content: prompt }
       ],
-      temperature: 0.7,
+      temperature: 0.75,
+      max_tokens: 4000, // <--- KLUCZ DO BRAKU UCINANIA
       response_format: { type: "json_object" },
     }),
   });
@@ -91,40 +96,39 @@ ZWRÓĆ WYŁĄCZNIE CZYSTY JSON:
   const data = await res.json();
   let content = data.choices[0].message.content;
 
-  // Czyścimy ewentualne śmieci z Markdownu (np. ```json ... ```)
+  // Czyszczenie JSONa z ewentualnych znaczników Markdown
   content = content.replace(/```json/g, "").replace(/```/g, "").trim();
 
   try {
     return JSON.parse(content);
   } catch (e) {
-    console.error("Błąd parsowania treści od AI. Surowa treść:", content);
-    throw new Error("AI nie zwróciło poprawnego formatu JSON.");
+    console.error("JSON Error. Raw content:", content);
+    throw new Error("AI przerwało generowanie JSONa lub zwróciło błąd składni.");
   }
 }
 
-// --- RENDERING ---
+// --- SZABLON STRONY ---
 
 function renderPostPage({ title, topic, html, date }) {
-  // Upewnij się, że link do CSS prowadzi do poprawnego miejsca (jeden poziom wyżej)
   return `<!doctype html>
-<html lang="pl" data-theme="light">
+<html lang="pl">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>${esc(title)} • Archiwum Nauki</title>
+  <title>${esc(title)} • Science Archive</title>
   <link rel="stylesheet" href="../style.css" />
 </head>
 <body class="sci-article">
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand" href="../index.html">AI<span>.</span>Insights</a>
+      <a class="brand" href="../index.html">Science<span>Archive</span></a>
     </div>
   </header>
   <main class="container">
     <article class="scientific-paper">
       <header class="post-header">
         <div class="meta">
-          <span class="tag">${esc(topic ?? "Nauka")}</span>
+          <span class="tag">${esc(topic)}</span>
           <time>${esc(date)}</time>
         </div>
         <h1>${esc(title)}</h1>
@@ -132,32 +136,33 @@ function renderPostPage({ title, topic, html, date }) {
       <section class="post-content">
         ${html}
       </section>
+      <footer class="paper-footer">
+        <p><em>Artykuł wygenerowany przez system autonomiczny GPT-OSS 120B w ramach eksperymentu popularyzacji wiedzy.</em></p>
+        <a href="../index.html" class="readmore">← Powrót do archiwum</a>
+      </footer>
     </article>
   </main>
-  <footer style="text-align:center; padding: 40px; color: #64748b; border-top: 1px solid #e2e8f0;">
-    <a href="../index.html" style="color: inherit; text-decoration: none;">← Powrót do strony głównej</a>
-  </footer>
 </body>
 </html>`;
 }
 
-// --- MAIN ---
+// --- GŁÓWNA LOGIKA ---
 
 async function main() {
-  console.log("🚀 Start generowania...");
+  console.log("🚀 Inicjalizacja generatora...");
+  
   if (!fs.existsSync(OUT_DIR)) fs.mkdirSync(OUT_DIR, { recursive: true });
 
   const index = readIndex();
-  const recentTitles = index.slice(0, 10).map(p => p.title);
+  const recentTitles = index.slice(0, 15).map(p => p.title);
 
+  console.log("🤖 Model myśli nad tematem...");
   const post = await generateWithGroq(recentTitles);
   
   const date = todayPL();
   const id = crypto.randomBytes(4).toString("hex");
   const slug = slugify(post.title || `post-${id}`);
   const filename = `${slug}.html`;
-  
-  // URL musi być relatywny dla strony głównej
   const url = `posts/${filename}`;
 
   const pageHtml = renderPostPage({ 
@@ -170,19 +175,14 @@ async function main() {
   fs.writeFileSync(path.join(OUT_DIR, filename), pageHtml, "utf8");
 
   index.unshift({
-    id, 
-    title: post.title, 
-    topic: post.topic, 
-    excerpt: post.excerpt, 
-    date, 
-    url
+    id, title: post.title, topic: post.topic, excerpt: post.excerpt, date, url
   });
 
-  writeIndex(index.slice(0, 100));
-  console.log(`✅ Sukces: ${post.title}`);
+  writeIndex(index.slice(0, 200));
+  console.log(`✅ Artykuł gotowy: ${post.title}`);
 }
 
 main().catch(err => {
-  console.error("❌ Fatal Error:", err.message);
+  console.error("❌ Błąd:", err.message);
   process.exit(1);
 });
