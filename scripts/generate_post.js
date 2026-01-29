@@ -44,42 +44,61 @@ async function generateWithGroq(existingTitles = []) {
   const apiKey = process.env.GROQ_API_KEY;
   if (!apiKey) throw new Error("Brak GROQ_API_KEY w secrets");
 
-  // Losujemy "kąt" patrzenia, żeby każdy wpis był inny
-  const angles = [
-    "techniczne głębokie nurkowanie (deep dive)",
-    "perspektywa etyczna i filozoficzna",
-    "praktyczny poradnik dla biznesu",
-    "analiza trendów na rok 2026",
-    "studium przypadku (case study)",
-    "kontrowersyjna opinia podważająca status quo"
-  ];
-  const selectedAngle = angles[Math.floor(Math.random() * angles.length)];
+  const prompt = `
+Osobliwość: Jesteś światowej klasy popularyzatorem nauki (połączenie stylu Carla Sagana i Richarda Feynmana). 
+Twój cel: Napisać fascynujący, głęboki, a jednocześnie prosty artykuł o AI dla kogoś, kto boi się technologii.
 
-const prompt = `
-Jesteś ekspertem, który potrafi wytłumaczyć dziecku, jak działa silnik odrzutowy. 
-Twoim zadaniem jest napisanie artykułu popularnonaukowego o AI dla osób, które nie potrafią programować.
+KONTEKST (NIE POWTARZAJ TYCH TYTUŁÓW):
+${existingTitles.join(", ")}
 
-DZISIEJSZY TEMAT: [Wylosuj coś z dziedziny AI, np. rozpoznawanie twarzy, tłumaczenie tekstów, generowanie grafiki]
-STYL: Ciepły, edukacyjny, fascynujący. Używaj metafor z życia codziennego (gotowanie, sport, ogrodnictwo).
+ZADANIE:
+1. WYBIERZ TEMAT: Wybierz jeden konkretny, przełomowy aspekt AI z 2026 roku (np. "Emocjonalna inteligencja maszyn", "Cyfrowe sny sieci neuronowych", "Dlaczego AI nie 'myśli' tak jak my").
+2. EKSPERYMENT MYŚLOWY: Artykuł MUSI zacząć się od fascynującego eksperymentu myślowego lub scenariusza (np. "Wyobraź sobie, że Twój komputer nagle zaczyna widzieć kolory, których nie ma w naszej tęczy...").
+3. FILOZOFIA DZIAŁANIA: Zamiast tłumaczyć kod, wytłumacz "intencję" technologii. Użyj analogii biologicznej lub astronomicznej.
+4. NAUKA BEZ BÓLU: Jeśli musisz użyć trudnego pojęcia, wprowadź je jako "supermoc" maszyny, a nie techniczną barierę.
 
-WYMAGANIA DOTYCZĄCE TREŚCI:
-1. LEAD: Zacznij od sceny z życia, w której ta technologia nam pomaga.
-2. ANALOGIA: Wyjaśnij główny mechanizm za pomocą porównania (np. "AI jest jak sito do mąki...").
-3. ZAKAZ: Nie używaj słów: "parametry", "warstwy ukryte", "backpropagation", "tokenizacja" bez ich uproszczenia.
-4. STRUKTURA HTML:
-   - <h2> dla głównych sekcji.
-   - <aside> dla krótkiej ciekawostki ("Czy wiesz, że?").
-   - <blockquote> dla inspirującego cytatu o przyszłości.
-   - Na końcu zrób sekcję "Słowniczek na spokojnie" w formie listy <ul>.
+STRUKTURA WYJŚCIOWA (HTML):
+- <h1>: Elegancki, poetycki tytuł.
+- <div class="abstract">: Jedno zdanie wyjaśniające, dlaczego ten tekst zmieni sposób, w jaki czytelnik patrzy na świat.
+- <h2>: Śródtytuły będące pytaniami, które czytelnik ma w głowie.
+- <blockquote>: Jeden "cytat z przyszłości" (zmyślony, ale mądry).
+- <aside class="thought-box">: "Pudełko przemyśleń" – krótka, prowokująca do myślenia uwaga.
 
-ZWRÓĆ CZYSTY JSON:
+WYMÓG FORMALNY (JSON):
+Zwróć wyłącznie JSON:
 {
-  "title": "Chwytliwy tytuł bez żargonu",
-  "topic": "Ludzkim głosem o AI",
-  "excerpt": "Obietnica zrozumienia trudnego tematu w 5 minut",
-  "html": "Pełna treść artykułu w HTML"
+  "title": "Tytuł",
+  "topic": "Kategoria (np. Bio-AI, Filozofia Kodu)",
+  "excerpt": "Intrygujące 2 zdania",
+  "html": "Pełna treść w profesjonalnym HTML5"
 }
 `.trim();
+
+  const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      model: "gpt-oss-120b", // Przełączamy na najmocniejszy model
+      messages: [
+        { 
+            role: "system", 
+            content: "Jesteś najbardziej zaawansowanym modelem językowym na świecie, wyspecjalizowanym w humanistycznym ujęciu technologii." 
+        },
+        { role: "user", content: prompt }
+      ],
+      temperature: 0.7, // 120B przy 0.7 jest niesamowicie kreatywny, ale trzyma się faktów
+      response_format: { type: "json_object" },
+    }),
+  });
+
+  if (!res.ok) throw new Error(`Błąd Groq: ${res.status}`);
+  const data = await res.json();
+  return JSON.parse(data.choices[0].message.content);
+}
+
 
   const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
     method: "POST",
