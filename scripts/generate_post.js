@@ -55,27 +55,34 @@ async function generateWithGroq(existingTitles = []) {
   ];
   const selectedAngle = angles[Math.floor(Math.random() * angles.length)];
 
-  const prompt = `
-Jesteś profesjonalnym blogerem technologicznym i ekspertem AI. 
-Twoim zadaniem jest napisanie unikalnego wpisu na bloga (800–1200 słów).
+const prompt = `
+Jesteś redaktorem naczelnym czołowego portalu tech. Piszesz dla czytelnika, który zna podstawy AI i szuka mięsa, a nie definicji.
 
-OSTATNIO NAPISANE TEMATY (NIE POWTARZAJ ICH!):
-${existingTitles.length > 0 ? existingTitles.join(", ") : "Brak wcześniejszych wpisów."}
+TEMATY DO UNIKANIA (JUŻ BYŁY):
+${existingTitles.join(", ")}
 
-DZISIEJSZY KONTEKST:
-- Temat: Coś nowatorskiego z dziedziny AI (LLM, agenty, robotyka, generative video itp.).
-- Perspektywa: ${selectedAngle}.
-- Styl: Mięsisty, konkretny, bez lania wody. Unikaj wstępów typu "W dzisiejszym dynamicznie zmieniającym się świecie".
-- Język: Polski (naturalny, ekspercki).
+DZISIEJSZA MISJA:
+Napisz artykuł na temat: [NOWATORSKIE AI 2026]
+Perspektywa: ${selectedAngle}
+
+ZASADY REDAKCYJNE:
+1. ZAKAZ: "W dzisiejszym świecie", "Dynamiczny rozwój", "Warto zauważyć", "Podsumowując".
+2. STYL: Agresywny, konkretny, pełen branżowego żargonu (ale wyjaśnionego kontekstem). 
+3. STRUKTURA:
+   - Mocny lead (zaczepka).
+   - Śródtytuły, które są tezami, a nie pytaniami (np. zamiast "Co to jest?", napisz "Koniec ery prostych LLM").
+   - Przynajmniej jedna sekcja <blockquote> (ważny cytat fikcyjnego eksperta).
+   - Przynajmniej jedna tabela porównawcza lub lista <ul> z technicznymi parametrami.
+   - Sekcja "Key Takeaways" na końcu w formie ramki (użyj <aside> lub <strong>).
 
 WYMAGANIA TECHNICZNE (JSON):
-Zwróć ZAWSZE czysty JSON bez markdownu (bez \`\`\`). Obiekt:
-- title: string (chwytliwy, ale merytoryczny tytuł)
-- topic: string (1–2 słowa, np. "Automatyzacja")
-- excerpt: string (krótka zajawka na stronę główną)
-- html: string (pełna treść: używaj <h2>, <h3>, <p>, <ul>, <li>, <strong>. Nie używaj atrybutów class ani id).
-
-WAŻNE: Nie powtarzaj informacji. Bądź kreatywny. Jeśli ostatnio było o ChatGPT, dziś napisz o lokalnych modelach Llama lub agentach AI w medycynie.
+Zwróć ZAWSZE czysty JSON:
+{
+  "title": "Tytuł, który wymusza kliknięcie, ale nie jest clickbaitem",
+  "topic": "Kategoria",
+  "excerpt": "Zajawka budująca napięcie",
+  "html": "Pełna treść artykułu. Używaj: <h2>, <h3>, <p>, <ul>, <li>, <strong>, <blockquote>. Jeśli to pasuje, dodaj <pre><code> dla przykładów technicznych."
+}
 `.trim();
 
   const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
