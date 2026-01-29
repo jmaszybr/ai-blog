@@ -47,30 +47,35 @@ async function generateWithGroq(existingTitles = []) {
   // Używamy sprawdzonego modelu Llama 3.3 (lub gpt-oss-120b jeśli masz dostęp)
   const MODEL_ID = "llama-3.3-70b-versatile"; 
 
-  const prompt = `
-Osobliwość: Jesteś światowej klasy popularyzatorem nauki (styl Carla Sagana). 
-Cel: Napisz fascynujący artykuł popularnonaukowy o AI dla osób nietechnicznych (minimum 800 słów).
+const prompt = `
+Jesteś redaktorem naczelnym magazynu typu "Wired" lub "Scientific American". 
+Twoim zadaniem jest napisać ROZBUDOWANY artykuł popularnonaukowy (celuj w 1500 słów).
 
-KONTEKST (O TYM JUŻ PISAŁEŚ, NIE POWTARZAJ):
-${existingTitles.join(", ")}
+TEMAT: [Wybierz ambitny temat z dziedziny AI na rok 2026]
+KONTEKST (NIE POWTARZAJ): ${existingTitles.join(", ")}
 
-ZADANIE:
-1. WYBIERZ TEMAT: Coś nowatorskiego z 2026 roku (np. "AI w badaniu oceanów", "Neuro-linki dla każdego").
-2. EKSPERYMENT MYŚLOWY: Zacznij od scenariusza "Wyobraź sobie, że...".
-3. ANALOGIE: Wyjaśnij technologię przez codzienne czynności (np. sprzątanie, gotowanie).
-4. STRUKTURA HTML:
-   - <div class="abstract">: Jedno zdanie wyjaśniające, dlaczego to ważne.
-   - <h2>: Intrygujące nagłówki sekcji.
-   - <blockquote>: Jeden "cytat z przyszłości" (mądry i inspirujący).
-   - <aside class="thought-box">: Ramka z pytaniem do czytelnika.
-5. WAŻNE: Nie ucinaj tekstu. Dokończ wszystkie myśli i tagi HTML.
+STRUKTURA ARTYKUŁU (MUSISZ WYPEŁNIĆ KAŻDY PUNKT SZCZEGÓŁOWO):
+1. TYTUŁ: Intrygujący i mądry.
+2. LEAD: Mocny wstęp (minimum 150 słów).
+3. ABSTRACT: Krótkie, techniczne streszczenie w ramce.
+4. ROZDZIAŁ 1 - GENEZA: Historia i tło problemu (minimum 250 słów).
+5. ROZDZIAŁ 2 - MECHANIZM: Jak to dokładnie działa? Użyj przynajmniej dwóch rozbudowanych metafor (minimum 350 słów).
+6. ROZDZIAŁ 3 - WPŁYW SPOŁECZNY: Jak to zmieni życie zwykłego człowieka? (minimum 250 słów).
+7. ROZDZIAŁ 4 - ETYKA I RYZYKA: Czego naukowcy się obawiają? (minimum 200 słów).
+8. SIDEPAR: <aside> z technicznymi detalami dla ciekawskich.
+9. BIBLIOGRAFIA: Wymyśl 3 realistyczne źródła naukowe.
 
-ZWRÓĆ WYŁĄCZNIE CZYSTY JSON:
+ZASADY:
+- Zakaz używania zwrotów: "Podsumowując", "W dzisiejszym świecie", "Warto zauważyć".
+- Styl: Gęsty od faktów, barwny, ekspercki.
+- HTML: Używaj <h1>, <h2>, <h3>, <ul>, <li>, <blockquote>, <strong>, <aside>, <table>.
+
+ZWRÓĆ WYŁĄCZNIE JSON:
 {
   "title": "Tytuł",
   "topic": "Dziedzina",
-  "excerpt": "Zajawka (2 zdania)",
-  "html": "Pełna treść artykułu w profesjonalnym HTML"
+  "excerpt": "Zajawka",
+  "html": "Pełna, bardzo długa treść HTML (minimum 8000 znaków kodu)"
 }
 `.trim();
 
