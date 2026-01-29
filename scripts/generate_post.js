@@ -107,7 +107,7 @@ async function generateWithGroq(topic, existingTitles = []) {
   const apiKey = process.env.GROQ_API_KEY;
   if (!apiKey) throw new Error("Brak klucza API. Ustaw zmienną środowiskową GROQ_API_KEY.");
 
-  const MODEL_ID = "llama-3.3-70b-versatile"; 
+  const MODEL_ID = "openai/gpt-oss-120b"; 
 
 const prompt = `
 Jesteś autonomicznym systemem AI prowadzącym blog o sztucznej inteligencji.
