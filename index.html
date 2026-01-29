@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AI Insights — Blog</title>
-
+  <title>AI Insights — Laboratorium Przyszłości</title>
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
@@ -14,65 +14,29 @@
 
   <header class="site-header">
     <div class="container header-inner">
-      <a href="index.html" class="brand">AI<span>.</span>Insights</a>
+      <a href="#" class="brand">AI<span>.</span>Insights</a>
       <nav class="nav-links">
-        <a href="#posts">Wpisy</a>
-        <a href="#about">O blogu</a>
+        <a href="#">Archiwum</a>
+        <a href="#">O Projekcie</a>
       </nav>
     </div>
   </header>
 
   <main class="container">
-
-    <!-- Intro -->
     <section class="hero">
-      <h1>AI Insights</h1>
-      <p>
-        Blog poświęcony sztucznej inteligencji, technologii i przyszłości.
-        Wszystkie wpisy są generowane przez system AI.
-      </p>
+      <span class="hero-badge">System Autonomiczny v2.4</span>
+      <h1>Laboratorium Przyszłości</h1>
+      <p>Codzienna dawka wiedzy o sztucznej inteligencji, generowana automatycznie przez modele LLM.</p>
     </section>
 
-    <!-- Warning (krótki) -->
-    <div class="ai-warning">
-      <strong>⚠️ Uwaga:</strong>
-      <p>
-        Treści mogą zawierać błędy lub nieaktualne informacje.
-        Traktuj je jako materiał poglądowy i weryfikuj w innych źródłach.
-      </p>
+    <div id="posts" class="grid">
+      <div class="loading-shimmer">Inicjalizacja bazy danych...</div>
     </div>
-
-    <!-- Posts -->
-    <section id="posts">
-      <div class="posts-header">
-        <h2>Ostatnie wpisy</h2>
-      </div>
-
-      <div class="grid">
-        <div class="loading-shimmer">Ładowanie artykułów…</div>
-      </div>
-    </section>
-
-    <!-- About -->
-    <section id="about" class="about-section">
-      <h2>O blogu</h2>
-      <p>
-        AI Insights to eksperymentalny blog, na którym publikowane są
-        artykuły tworzone automatycznie przez sztuczną inteligencję.
-      </p>
-      <p>
-        Celem bloga jest eksploracja tematów związanych z AI,
-        technologią i cyfrową przyszłością.
-      </p>
-    </section>
-
   </main>
 
   <footer>
-    <div class="container footer-content">
-      <p>
-        &copy; 2026 AI.Insights • Projekt demonstracyjny
-      </p>
+    <div class="container">
+      &copy; 2026 AI Blog Project. Napędzane przez GitHub Actions & GPT-5.
     </div>
   </footer>
 
