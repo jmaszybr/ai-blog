@@ -100,29 +100,6 @@ Zwróć wyłącznie JSON:
 }
 
 
-  const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-    method: "POST",
-    headers: {
-      "Authorization": `Bearer ${apiKey}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      model: "openai/gpt-oss-120b", // Używamy sprawdzonego modelu Groq
-      messages: [{ role: "user", content: prompt }],
-      temperature: 0.8, // Wyższa temperatura = większa kreatywność
-      response_format: { type: "json_object" },
-    }),
-  });
-
-  if (!res.ok) {
-    const errorText = await res.text();
-    throw new Error(`Groq error ${res.status}: ${errorText}`);
-  }
-
-  const data = await res.json();
-  const content = data.choices?.[0]?.message?.content;
-  return JSON.parse(content);
-}
 
 // --- RENDERING ---
 
