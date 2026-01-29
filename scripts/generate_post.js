@@ -44,33 +44,25 @@ async function generateWithGroq(existingTitles = []) {
   const apiKey = process.env.GROQ_API_KEY;
   if (!apiKey) throw new Error("Brak GROQ_API_KEY w secrets");
 
+  // Jeśli gpt-oss-120b zwraca błąd 404, użyj llama-3.3-70b-versatile (to pewniak na Groq)
+  const MODEL_ID = "llama-3.3-70b-versatile"; 
+
   const prompt = `
-Osobliwość: Jesteś światowej klasy popularyzatorem nauki (połączenie stylu Carla Sagana i Richarda Feynmana). 
-Twój cel: Napisać fascynujący, głęboki, a jednocześnie prosty artykuł o AI dla kogoś, kto boi się technologii.
+Jesteś światowej klasy popularyzatorem nauki. Napisz fascynujący artykuł o AI dla osób nietechnicznych.
+KONTEKST (NIE POWTARZAJ): ${existingTitles.join(", ")}
 
-KONTEKST (NIE POWTARZAJ TYCH TYTUŁÓW):
-${existingTitles.join(", ")}
+WYMAGANIA:
+1. TEMAT: Wybierz nowatorski aspekt AI z 2026 roku.
+2. EKSPERYMENT MYŚLOWY: Zacznij od scenariusza "Wyobraź sobie, że...".
+3. STYL: Prosty, metaforyczny, głęboki.
+4. STRUKTURA HTML: Użyj <h1>, <h2>, <div class="abstract">, <blockquote>, <aside class="thought-box">.
 
-ZADANIE:
-1. WYBIERZ TEMAT: Wybierz jeden konkretny, przełomowy aspekt AI z 2026 roku (np. "Emocjonalna inteligencja maszyn", "Cyfrowe sny sieci neuronowych", "Dlaczego AI nie 'myśli' tak jak my").
-2. EKSPERYMENT MYŚLOWY: Artykuł MUSI zacząć się od fascynującego eksperymentu myślowego lub scenariusza (np. "Wyobraź sobie, że Twój komputer nagle zaczyna widzieć kolory, których nie ma w naszej tęczy...").
-3. FILOZOFIA DZIAŁANIA: Zamiast tłumaczyć kod, wytłumacz "intencję" technologii. Użyj analogii biologicznej lub astronomicznej.
-4. NAUKA BEZ BÓLU: Jeśli musisz użyć trudnego pojęcia, wprowadź je jako "supermoc" maszyny, a nie techniczną barierę.
-
-STRUKTURA WYJŚCIOWA (HTML):
-- <h1>: Elegancki, poetycki tytuł.
-- <div class="abstract">: Jedno zdanie wyjaśniające, dlaczego ten tekst zmieni sposób, w jaki czytelnik patrzy na świat.
-- <h2>: Śródtytuły będące pytaniami, które czytelnik ma w głowie.
-- <blockquote>: Jeden "cytat z przyszłości" (zmyślony, ale mądry).
-- <aside class="thought-box">: "Pudełko przemyśleń" – krótka, prowokująca do myślenia uwaga.
-
-WYMÓG FORMALNY (JSON):
-Zwróć wyłącznie JSON:
+ZWRÓĆ WYŁĄCZNIE CZYSTY JSON:
 {
   "title": "Tytuł",
-  "topic": "Kategoria (np. Bio-AI, Filozofia Kodu)",
-  "excerpt": "Intrygujące 2 zdania",
-  "html": "Pełna treść w profesjonalnym HTML5"
+  "topic": "Kategoria",
+  "excerpt": "Zajawka",
+  "html": "Treść HTML"
 }
 `.trim();
 
@@ -81,48 +73,58 @@ Zwróć wyłącznie JSON:
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      model: "gpt-oss-120b", // Przełączamy na najmocniejszy model
+      model: MODEL_ID,
       messages: [
-        { 
-            role: "system", 
-            content: "Jesteś najbardziej zaawansowanym modelem językowym na świecie, wyspecjalizowanym w humanistycznym ujęciu technologii." 
-        },
+        { role: "system", content: "Jesteś ekspertem humanistyki cyfrowej. Odpowiadasz tylko w formacie JSON." },
         { role: "user", content: prompt }
       ],
-      temperature: 0.7, // 120B przy 0.7 jest niesamowicie kreatywny, ale trzyma się faktów
+      temperature: 0.7,
       response_format: { type: "json_object" },
     }),
   });
 
-  if (!res.ok) throw new Error(`Błąd Groq: ${res.status}`);
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(`Groq API Error: ${res.status} - ${err}`);
+  }
+
   const data = await res.json();
-  return JSON.parse(data.choices[0].message.content);
+  let content = data.choices[0].message.content;
+
+  // Czyścimy ewentualne śmieci z Markdownu (np. ```json ... ```)
+  content = content.replace(/```json/g, "").replace(/```/g, "").trim();
+
+  try {
+    return JSON.parse(content);
+  } catch (e) {
+    console.error("Błąd parsowania treści od AI. Surowa treść:", content);
+    throw new Error("AI nie zwróciło poprawnego formatu JSON.");
+  }
 }
-
-
 
 // --- RENDERING ---
 
 function renderPostPage({ title, topic, html, date }) {
+  // Upewnij się, że link do CSS prowadzi do poprawnego miejsca (jeden poziom wyżej)
   return `<!doctype html>
-<html lang="pl">
+<html lang="pl" data-theme="light">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>${esc(title)} • AI Blog</title>
+  <title>${esc(title)} • Archiwum Nauki</title>
   <link rel="stylesheet" href="../style.css" />
 </head>
-<body>
+<body class="sci-article">
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand" href="../index.html">AI Blog</a>
+      <a class="brand" href="../index.html">AI<span>.</span>Insights</a>
     </div>
   </header>
   <main class="container">
-    <article>
+    <article class="scientific-paper">
       <header class="post-header">
         <div class="meta">
-          <span class="tag">${esc(topic ?? "AI")}</span>
+          <span class="tag">${esc(topic ?? "Nauka")}</span>
           <time>${esc(date)}</time>
         </div>
         <h1>${esc(title)}</h1>
@@ -132,6 +134,9 @@ function renderPostPage({ title, topic, html, date }) {
       </section>
     </article>
   </main>
+  <footer style="text-align:center; padding: 40px; color: #64748b; border-top: 1px solid #e2e8f0;">
+    <a href="../index.html" style="color: inherit; text-decoration: none;">← Powrót do strony głównej</a>
+  </footer>
 </body>
 </html>`;
 }
@@ -139,23 +144,22 @@ function renderPostPage({ title, topic, html, date }) {
 // --- MAIN ---
 
 async function main() {
-  console.log("🚀 Rozpoczynam generowanie wpisu...");
-  fs.mkdirSync(OUT_DIR, { recursive: true });
+  console.log("🚀 Start generowania...");
+  if (!fs.existsSync(OUT_DIR)) fs.mkdirSync(OUT_DIR, { recursive: true });
 
-  // 1. Pobierz listę tytułów, żeby AI się nie powtarzało
   const index = readIndex();
-  const recentTitles = index.slice(0, 15).map(p => p.title);
+  const recentTitles = index.slice(0, 10).map(p => p.title);
 
-  // 2. Generuj treść
   const post = await generateWithGroq(recentTitles);
   
   const date = todayPL();
   const id = crypto.randomBytes(4).toString("hex");
   const slug = slugify(post.title || `post-${id}`);
   const filename = `${slug}.html`;
-  const url = `./posts/${filename}`;
+  
+  // URL musi być relatywny dla strony głównej
+  const url = `posts/${filename}`;
 
-  // 3. Zapisz plik HTML
   const pageHtml = renderPostPage({ 
     title: post.title, 
     topic: post.topic, 
@@ -165,7 +169,6 @@ async function main() {
   
   fs.writeFileSync(path.join(OUT_DIR, filename), pageHtml, "utf8");
 
-  // 4. Aktualizuj indeks
   index.unshift({
     id, 
     title: post.title, 
@@ -175,13 +178,11 @@ async function main() {
     url
   });
 
-  writeIndex(index.slice(0, 200));
-
-  console.log(`✅ Gotowe! Wygenerowano: ${post.title}`);
-  console.log(`🔗 Ścieżka: ${url}`);
+  writeIndex(index.slice(0, 100));
+  console.log(`✅ Sukces: ${post.title}`);
 }
 
 main().catch(err => {
-  console.error("❌ Błąd krytyczny:", err);
+  console.error("❌ Fatal Error:", err.message);
   process.exit(1);
 });
