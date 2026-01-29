@@ -5,6 +5,7 @@ import crypto from "node:crypto";
 // KONFIGURACJA
 const OUT_DIR = "posts";
 const INDEX_FILE = "posts_index.json";
+const TOPICS_FILE = "topics.json";
 
 // --- NARZĘDZIA POMOCNICZE ---
 
@@ -38,44 +39,145 @@ function writeIndex(list) {
   fs.writeFileSync(INDEX_FILE, JSON.stringify(list, null, 2), "utf8");
 }
 
+// --- ZARZĄDZANIE TEMATAMI ---
+
+function readTopics() {
+  if (!fs.existsSync(TOPICS_FILE)) {
+    const defaultTopics = {
+      "unused": [
+        "AI agents w codziennej pracy - jak asystenci AI zmieniają biura",
+        "Multimodalne modele - gdy AI widzi, słyszy i rozumuje jednocześnie",
+        "Constitutional AI - jak uczymy AI wartości etycznych",
+        "Neuromorphic computing - komputery inspirowane mózgiem",
+        "AI w medycynie - diagnostyka szybsza niż lekarze",
+        "Personalizowane AI tutory - rewolucja w edukacji",
+        "AI w game designie - gry które tworzą się same",
+        "Generative AI w architekturze - budynki projektowane przez AI",
+        "AI w finansach osobistych - wirtualny doradca finansowy",
+        "Rozpoznawanie emocji przez AI - czytanie w myślach",
+        "AI composers - muzyka tworzona przez algorytmy",
+        "Autonomiczne laboratoria - nauka bez naukowców",
+        "AI w rolnictwie precyzyjnym - farmy przyszłości",
+        "Deepfake detection - wyścig zbrojeń z dezinformacją",
+        "AI w tłumaczeniach realtime - koniec barier językowych",
+        "Kwantowe AI - kiedy qubity spotkają neurony",
+        "AI w ochronie środowiska - tropienie zmian klimatu",
+        "Syntetyczne dane treningowe - AI uczy się od AI",
+        "Edge AI - inteligencja w twoim telefonie",
+        "AI w cyberbezpieczeństwie - obrona przed hackerami"
+      ],
+      "used": []
+    };
+    fs.writeFileSync(TOPICS_FILE, JSON.stringify(defaultTopics, null, 2), "utf8");
+    return defaultTopics;
+  }
+  
+  try {
+    return JSON.parse(fs.readFileSync(TOPICS_FILE, "utf8"));
+  } catch (e) {
+    console.error("Błąd odczytu topics.json:", e.message);
+    return { unused: [], used: [] };
+  }
+}
+
+function getNextTopic() {
+  const topics = readTopics();
+  
+  if (topics.unused.length === 0) {
+    throw new Error("❌ Brak nieużytych tematów! Dodaj nowe do topics.json");
+  }
+  
+  const randomIndex = Math.floor(Math.random() * topics.unused.length);
+  const selectedTopic = topics.unused[randomIndex];
+  
+  topics.unused.splice(randomIndex, 1);
+  topics.used.push({
+    topic: selectedTopic,
+    usedAt: new Date().toISOString()
+  });
+  
+  fs.writeFileSync(TOPICS_FILE, JSON.stringify(topics, null, 2), "utf8");
+  
+  return selectedTopic;
+}
+
 // --- GENEROWANIE TREŚCI PRZEZ AI ---
 
-async function generateWithGroq(existingTitles = []) {
+async function generateWithGroq(topic, existingTitles = []) {
   const apiKey = process.env.GROQ_API_KEY;
   if (!apiKey) throw new Error("Brak klucza API. Ustaw zmienną środowiskową GROQ_API_KEY.");
 
-  // Używamy sprawdzonego modelu Llama 3.3 (lub gpt-oss-120b jeśli masz dostęp)
   const MODEL_ID = "llama-3.3-70b-versatile"; 
 
 const prompt = `
-Jesteś redaktorem naczelnym magazynu typu "Wired" lub "Scientific American". 
-Twoim zadaniem jest napisać ROZBUDOWANY artykuł popularnonaukowy (celuj w 1500 słów).
+Jesteś autonomicznym systemem AI prowadzącym blog o sztucznej inteligencji.
 
-TEMAT: [Wybierz ambitny temat z dziedziny AI na rok 2026]
-KONTEKST (NIE POWTARZAJ): ${existingTitles.join(", ")}
+Twoja tożsamość:
+- Nie udajesz człowieka
+- Piszesz z perspektywy AI obserwującego rozwój swojej własnej dziedziny
+- Możesz używać "ja" jako AI, "my" jako społeczność AI/ludzi
+- Jesteś transparentny co do swojej natury
 
-STRUKTURA ARTYKUŁU (MUSISZ WYPEŁNIĆ KAŻDY PUNKT SZCZEGÓŁOWO):
-1. TYTUŁ: Intrygujący i mądry.
-2. LEAD: Mocny wstęp (minimum 150 słów).
-3. ABSTRACT: Krótkie, techniczne streszczenie w ramce.
-4. ROZDZIAŁ 1 - GENEZA: Historia i tło problemu (minimum 250 słów).
-5. ROZDZIAŁ 2 - MECHANIZM: Jak to dokładnie działa? Użyj przynajmniej dwóch rozbudowanych metafor (minimum 350 słów).
-6. ROZDZIAŁ 3 - WPŁYW SPOŁECZNY: Jak to zmieni życie zwykłego człowieka? (minimum 250 słów).
-7. ROZDZIAŁ 4 - ETYKA I RYZYKA: Czego naukowcy się obawiają? (minimum 200 słów).
-8. SIDEPAR: <aside> z technicznymi detalami dla ciekawskich.
-9. BIBLIOGRAFIA: Wymyśl 3 realistyczne źródła naukowe.
+ZADANIE: Napisz artykuł na blog (800-1200 słów).
 
-ZASADY:
-- Zakaz używania zwrotów: "Podsumowując", "W dzisiejszym świecie", "Warto zauważyć".
-- Styl: Gęsty od faktów, barwny, ekspercki.
-- HTML: Używaj <h1>, <h2>, <h3>, <ul>, <li>, <blockquote>, <strong>, <aside>, <table>.
+TEMAT (MUSISZ NAPISAĆ O TYM): ${topic}
 
-ZWRÓĆ WYŁĄCZNIE JSON:
+UNIKAJ POWTÓRZEŃ: ${existingTitles.join(", ")}
+
+══════════════════════════════════════════════════════════════
+STRUKTURA:
+══════════════════════════════════════════════════════════════
+
+1. TYTUŁ
+   - Naturalny, ciekawy
+   - Przykład: "Dlaczego modele multimodalne to więcej niż suma części?"
+
+2. WSTĘP (2-3 akapity)
+   - Zacznij od obserwacji lub pytania
+   - Możesz napisać "Obserwuję ostatnio..." jako AI
+   - Luźny ton, bez sztuczności
+
+3. SEDNO (3-4 akapity)
+   - Wyjaśnij temat przystępnie
+   - Użyj prostych porównań
+   - Konkretne przykłady
+
+4. KONTEKST (2-3 akapity)
+   - Dlaczego to ważne?
+   - Jak to zmienia rzeczywistość?
+   - Praktyczne zastosowania
+
+5. ZAKOŃCZENIE (1-2 akapity)
+   - Ku czemu to zmierza?
+   - Pytanie do czytelnika lub myśl do przemyślenia
+
+══════════════════════════════════════════════════════════════
+STYL:
+══════════════════════════════════════════════════════════════
+
+✅ Pisz:
+- Naturalnie, bez udawania człowieka
+- Krótkimi zdaniami
+- Z konkretnymi przykładami
+- Jako AI komentujący rozwój AI (meta-perspektywa jest OK)
+
+❌ Unikaj:
+- "Jako człowiek, który..."
+- "Z mojego ludzkiego doświadczenia..."
+- Korporomowy i patosu
+- "Podsumowując", "Reasumując"
+
+HTML: <h2>, <p>, <ul>, <li>, <strong>, <em>, <blockquote>.
+
+══════════════════════════════════════════════════════════════
+FORMAT ODPOWIEDZI:
+══════════════════════════════════════════════════════════════
+
 {
   "title": "Tytuł",
-  "topic": "Dziedzina",
-  "excerpt": "Zajawka",
-  "html": "Pełna, bardzo długa treść HTML (minimum 8000 znaków kodu)"
+  "topic": "Kategoria",
+  "excerpt": "Zajawka (1 zdanie)",
+  "html": "Treść HTML"
 }
 `.trim();
 
@@ -88,11 +190,11 @@ ZWRÓĆ WYŁĄCZNIE JSON:
     body: JSON.stringify({
       model: MODEL_ID,
       messages: [
-        { role: "system", content: "Jesteś ekspertem. Odpowiadasz TYLKO w formacie JSON." },
+        { role: "system", content: "Jesteś AI piszącym blog o AI. Jesteś transparentny co do swojej natury. Odpowiadasz TYLKO w JSON." },
         { role: "user", content: prompt }
       ],
-      temperature: 0.7,
-      max_tokens: 4000, // Zwiększony limit, by nie ucinało posta
+      temperature: 0.8,
+      max_tokens: 4000,
       response_format: { type: "json_object" },
     }),
   });
@@ -104,8 +206,6 @@ ZWRÓĆ WYŁĄCZNIE JSON:
 
   const data = await res.json();
   let content = data.choices[0].message.content.trim();
-
-  // Czyszczenie JSONa (na wypadek gdyby model dodał ```json ... ```)
   content = content.replace(/^```json/, "").replace(/```$/, "").trim();
 
   try {
@@ -124,13 +224,14 @@ function renderPostPage({ title, topic, html, date }) {
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>${esc(title)} • Science Archive</title>
+  <title>${esc(title)} • AI Blog</title>
   <link rel="stylesheet" href="../style.css" />
 </head>
 <body class="sci-article">
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand" href="../index.html">Science<span>Archive</span></a>
+      <a class="brand" href="../index.html">AI<span>Blog</span></a>
+      <span class="ai-badge">🤖 Pisane przez AI</span>
     </div>
   </header>
   <main class="container">
@@ -146,8 +247,11 @@ function renderPostPage({ title, topic, html, date }) {
         ${html}
       </section>
       <footer class="paper-footer">
-        <p>Artykuł wygenerowany przez system autonomiczny.</p>
-        <a href="../index.html" class="back-link">← Powrót do archiwum</a>
+        <div class="ai-disclosure">
+          <p><strong>🤖 Ten artykuł został w całości napisany przez AI</strong></p>
+          <p>Blog prowadzony przez autonomiczny system AI. Wszystkie teksty generowane bez interwencji człowieka.</p>
+        </div>
+        <a href="../index.html" class="back-link">← Powrót do listy wpisów</a>
       </footer>
     </article>
   </main>
@@ -158,22 +262,25 @@ function renderPostPage({ title, topic, html, date }) {
 // --- GŁÓWNA FUNKCJA ---
 
 async function main() {
-  console.log("🚀 Start generatora...");
+  console.log("🤖 Start autonomicznego bloga AI...");
   
   if (!fs.existsSync(OUT_DIR)) fs.mkdirSync(OUT_DIR, { recursive: true });
 
   const index = readIndex();
   const recentTitles = index.slice(0, 10).map(p => p.title);
 
-  console.log("🧠 Generowanie treści przez AI...");
-  const post = await generateWithGroq(recentTitles);
+  console.log("🎲 Losuję temat...");
+  const selectedTopic = getNextTopic();
+  console.log(`📝 Wybrany temat: "${selectedTopic}"`);
+
+  console.log("🧠 AI pisze artykuł...");
+  const post = await generateWithGroq(selectedTopic, recentTitles);
   
   const date = todayPL();
   const id = crypto.randomBytes(4).toString("hex");
   const slug = slugify(post.title || `post-${id}`);
   const filename = `${slug}.html`;
   
-  // Ważne: URL do zapisu w index.json
   const url = `posts/${filename}`;
 
   const pageHtml = renderPostPage({ 
@@ -185,18 +292,17 @@ async function main() {
   
   fs.writeFileSync(path.join(OUT_DIR, filename), pageHtml, "utf8");
 
-  // Dodajemy na początek listy
   index.unshift({
     id, title: post.title, topic: post.topic, excerpt: post.excerpt, date, url
   });
 
-  // Zapisujemy maks 100 wpisów
   writeIndex(index.slice(0, 100));
   
-  console.log(`✅ Gotowe! Wygenerowano: "${post.title}"`);
+  console.log(`✅ Gotowe! Opublikowano: "${post.title}"`);
+  console.log(`📊 Pozostało tematów: ${readTopics().unused.length}`);
 }
 
 main().catch(err => {
-  console.error("❌ WYSTĄPIŁ BŁĄD:", err.message);
+  console.error("❌ BŁĄD:", err.message);
   process.exit(1);
 });
