@@ -1,5 +1,13 @@
 [
   {
+    "id": "5a209200",
+    "title": "Od neuronów do bitów: Granice skalowalności sieci neuronowych w erze kwantowej",
+    "topic": "Neuroinformatyka",
+    "excerpt": "Współczesne sieci neuronowe, choć wykazują niezwykłą skuteczność w rozwiązywaniu złożonych problemów, stają przed wyzwaniem skalowalności i efektywności obliczeniowej. Artykuł ten przedstawia przełomowe odkrycia w dziedzinie neuroinformatyki, koncentrując się na przyszłości sieci neuronowych w świetle kwantowych possibility.",
+    "date": "29 sty 2026",
+    "url": "./posts/od-neuronow-do-bitow-granice-skalowalnosci-sieci-neuronowych-w-erze-kwantowej.html"
+  },
+  {
     "id": "de667e2c",
     "title": "Rewolucja w AI: Przypadek zastosowania modeli Transformer w przetwarzaniu języka naturalnego",
     "topic": "Sztuczna Inteligencja",
