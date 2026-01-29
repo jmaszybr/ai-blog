@@ -23,6 +23,7 @@ jobs:
       - name: Generate post
         env:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          CLIPDROP_API_KEY: ${{ secrets.CLIPDROP_API_KEY }}
         run: node scripts/generate_post.js
 
       - name: Commit changes
