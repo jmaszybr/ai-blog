@@ -56,28 +56,28 @@ async function generateWithGroq(existingTitles = []) {
   const selectedAngle = angles[Math.floor(Math.random() * angles.length)];
 
 const prompt = `
-Jesteś wybitnym popularyzatorem nauki i dziennikarzem śledczym w dziedzinie technologii. 
-Twoim celem jest napisanie dogłębnego artykułu popularnonaukowego (1200-1800 słów).
+Jesteś ekspertem, który potrafi wytłumaczyć dziecku, jak działa silnik odrzutowy. 
+Twoim zadaniem jest napisanie artykułu popularnonaukowego o AI dla osób, które nie potrafią programować.
 
-STRUKTURA ARTYKUŁU:
-1. Lead: Intrygujący, oparty na paradoksie lub przełomowym odkryciu.
-2. Abstract (Streszczenie): 3-4 zdania podsumowujące tezę artykułu.
-3. Kontekst historyczny/teoretyczny: Jak doszliśmy do tego punktu?
-4. Mechanizm: Wyjaśnij "jak to działa" używając analogii, ale zachowując precyzję.
-5. Analiza krytyczna: Potencjalne błędy, ograniczenia technologii (np. twierdzenie o nierozstrzygalności lub złożoność obliczeniowa).
-6. Futurologia oparta na danych: Co mówią obecne trendy matematyczne/statystyczne?
+DZISIEJSZY TEMAT: [Wylosuj coś z dziedziny AI, np. rozpoznawanie twarzy, tłumaczenie tekstów, generowanie grafiki]
+STYL: Ciepły, edukacyjny, fascynujący. Używaj metafor z życia codziennego (gotowanie, sport, ogrodnictwo).
 
-ZASADY TREŚCI:
-- Używaj terminologii fachowej (np. "sieci neuronowe typu Transformer", "entropia informacyjna", "kwantowa superpozycja"), ale wyjaśniaj ją w tekście.
-- Wymagane: Użyj notacji LaTeX do opisania kluczowych wzorów lub zależności (np. złożoność modelu $\mathcal{O}(n^2)$).
-- Wstaw co najmniej jeden cytat fikcyjnego profesora z prestiżowej uczelni (MIT, Stanford, Oxford).
+WYMAGANIA DOTYCZĄCE TREŚCI:
+1. LEAD: Zacznij od sceny z życia, w której ta technologia nam pomaga.
+2. ANALOGIA: Wyjaśnij główny mechanizm za pomocą porównania (np. "AI jest jak sito do mąki...").
+3. ZAKAZ: Nie używaj słów: "parametry", "warstwy ukryte", "backpropagation", "tokenizacja" bez ich uproszczenia.
+4. STRUKTURA HTML:
+   - <h2> dla głównych sekcji.
+   - <aside> dla krótkiej ciekawostki ("Czy wiesz, że?").
+   - <blockquote> dla inspirującego cytatu o przyszłości.
+   - Na końcu zrób sekcję "Słowniczek na spokojnie" w formie listy <ul>.
 
-WYMAGANIA TECHNICZNE (JSON):
+ZWRÓĆ CZYSTY JSON:
 {
-  "title": "Tytuł w stylu naukowym (np. 'Od neuronów do bitów: Granice skalowalności...')",
-  "topic": "Dziedzina (np. Neuroinformatyka)",
-  "excerpt": "Poważne, naukowe wprowadzenie",
-  "html": "Pełna treść z tagami <h2>, <h3>. Dodaj <aside> dla 'Ciekawostki technicznej'. Użyj <table> do zestawienia twardych danych."
+  "title": "Chwytliwy tytuł bez żargonu",
+  "topic": "Ludzkim głosem o AI",
+  "excerpt": "Obietnica zrozumienia trudnego tematu w 5 minut",
+  "html": "Pełna treść artykułu w HTML"
 }
 `.trim();
 
