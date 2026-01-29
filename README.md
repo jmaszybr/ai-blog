@@ -1,121 +1,106 @@
-============================================================
-AUTONOMICZNY BLOG AI
-============================================================
+# 🤖 AUTONOMICZNY BLOG AI
 
-AI Insights to eksperymentalny projekt autonomicznego bloga,
-w którym sztuczna inteligencja samodzielnie generuje,
-ilustruje i publikuje artykuły na temat rozwoju AI.
+**AI Insights** to eksperymentalny projekt autonomicznego bloga, w którym sztuczna inteligencja samodzielnie generuje, ilustruje i publikuje artykuły na temat rozwoju AI.
 
-Cały proces — od wyboru tematu, przez napisanie tekstu,
-wygenerowanie grafiki, aż po publikację — odbywa się
-BEZ ingerencji człowieka.
+Cały proces — od wyboru tematu, przez napisanie tekstu, wygenerowanie grafiki, aż po publikację — odbywa się **BEZ ingerencji człowieka**.
 
-UWAGA:
-Projekt ma charakter badawczo-eksperymentalny.
-Treści nie są weryfikowane przez ekspertów
-i mogą zawierać nieścisłości.
+> ⚠️ **UWAGA**: Projekt ma charakter badawczo-eksperymentalny. Treści nie są weryfikowane przez ekspertów i mogą zawierać nieścisłości.
 
-------------------------------------------------------------
- FUNKCJONALNOŚCI
-------------------------------------------------------------
+---
 
-- losowanie tematów z przygotowanej puli
-- generowanie artykułów (800–1200 słów) przez model językowy
-- automatyczne generowanie ilustracji (Text-to-Image)
-- tworzenie statycznych stron HTML
-- aktualizacja indeksu wpisów (posts_index.json)
-- automatyczne uruchamianie raz dziennie (scheduler)
-- publikacja jako statyczny blog
+## ✨ Funkcjonalności
 
-------------------------------------------------------------
- ARCHITEKTURA SYSTEMU
-------------------------------------------------------------
+- Losowanie tematów z przygotowanej puli
+- Generowanie artykułów (800–1200 słów) przez model językowy
+- Automatyczne generowanie ilustracji (Text-to-Image)
+- Tworzenie statycznych stron HTML
+- Aktualizacja indeksu wpisów (`posts_index.json`)
+- Automatyczne uruchamianie raz dziennie (scheduler)
+- Publikacja jako statyczny blog
 
+---
+
+## 🏗️ Architektura Systemu
+```
 GitHub Actions (cron / manual)
-        |
-        v
-Node.js (generate_post.js)
-        |
-        v
-AI (tekst) + AI (grafika)
-        |
-        v
-Statyczne pliki HTML / JSON
-        |
-        v
-Publikacja (GitHub Pages)
+            ↓
+    Node.js (generate_post.js)
+            ↓
+    AI (tekst) + AI (grafika)
+            ↓
+  Statyczne pliki HTML / JSON
+            ↓
+   Publikacja (GitHub Pages)
+```
 
-System nie używa:
-- bazy danych
-- backendu
-- serwera aplikacyjnego
+### System **nie używa**:
+- Bazy danych
+- Backendu
+- Serwera aplikacyjnego
 
-------------------------------------------------------------
- STRUKTURA PROJEKTU
-------------------------------------------------------------
+---
 
+## 📁 Struktura Projektu
+```
 /
-|-- index.html            - strona główna
-|-- style.css             - style globalne
-|-- script.js             - renderowanie kafelków wpisów
-|-- posts_index.json      - indeks postów
-|-- topics.json           - pula tematów
-|
-|-- scripts/
-|   |-- generate_post.js  - główny silnik AI
-|
-|-- posts/
-    |-- images/           - obrazy generowane przez AI
-    |-- *.html            - wygenerowane wpisy
+├── index.html              # Strona główna
+├── style.css               # Style globalne
+├── script.js               # Renderowanie kafelków wpisów
+├── posts_index.json        # Indeks postów
+├── topics.json             # Pula tematów
+│
+├── scripts/
+│   └── generate_post.js    # Główny silnik AI
+│
+└── posts/
+    ├── images/             # Obrazy generowane przez AI
+    └── *.html              # Wygenerowane wpisy
+```
 
-------------------------------------------------------------
- BEZPIECZEŃSTWO
-------------------------------------------------------------
+---
 
-- klucze API NIE są przechowywane w repozytorium
-- używane są zmienne środowiskowe / secrets
-- frontend jest w pełni statyczny
-- brak backendu = niska powierzchnia ataku
+## 🔒 Bezpieczeństwo
 
-Projekt jest traktowany jako sandbox / eksperyment,
-a nie system produkcyjny.
+- Klucze API **NIE** są przechowywane w repozytorium
+- Używane są zmienne środowiskowe / secrets
+- Frontend jest w pełni statyczny
+- Brak backendu = niska powierzchnia ataku
 
-------------------------------------------------------------
- AUTOMATYZACJA
-------------------------------------------------------------
+> Projekt jest traktowany jako sandbox / eksperyment, a nie system produkcyjny.
 
-- codzienne uruchamianie przez scheduler
-- możliwość ręcznego uruchomienia
-- automatyczny commit wygenerowanych plików
-- pełna historia zmian
+---
 
-------------------------------------------------------------
- STATUS PROJEKTU
-------------------------------------------------------------
+## ⚙️ Automatyzacja
 
-STATUS: EKSPERYMENT / PROOF OF CONCEPT
+- Codzienne uruchamianie przez scheduler
+- Możliwość ręcznego uruchomienia
+- Automatyczny commit wygenerowanych plików
+- Pełna historia zmian
 
-Celem projektu jest:
-- testowanie autonomicznych pipeline’ów AI
-- analiza jakości generowanego contentu
-- eksploracja idei samopublikujących się systemów AI
+---
 
-Projekt nie jest:
-- produktem komercyjnym
-- systemem krytycznym
-- narzędziem doradczym
+## 🧪 Status Projektu
 
-------------------------------------------------------------
- LICENCJA
-------------------------------------------------------------
+**STATUS: EKSPERYMENT / PROOF OF CONCEPT**
+
+### Celem projektu jest:
+- Testowanie autonomicznych pipeline'ów AI
+- Analiza jakości generowanego contentu
+- Eksploracja idei samopublikujących się systemów AI
+
+### Projekt **nie jest**:
+- Produktem komercyjnym
+- Systemem krytycznym
+- Narzędziem doradczym
+
+---
+
+## 📄 Licencja
 
 MIT
 
-------------------------------------------------------------
- AUTOR
-------------------------------------------------------------
+---
 
-Projekt eksperymentalny rozwijany jako badanie nad
-autonomicznymi systemami generatywnymi i publikacyjnymi
-opartymi o sztuczną inteligencję.
-============================================================
+## 👤 Autor
+
+Projekt eksperymentalny rozwijany jako badanie nad autonomicznymi systemami generatywnymi i publikacyjnymi opartymi o sztuczną inteligencję.
