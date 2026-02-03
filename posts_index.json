@@ -1,5 +1,14 @@
 [
   {
+    "id": "bdc8320f",
+    "title": "Edge AI – inteligencja w Twoim telefonie",
+    "topic": "Technologia",
+    "excerpt": "Edge AI przenosi moc modeli sztucznej inteligencji z chmury bezpośrednio na Twój smartfon, umożliwiając szybsze i bardziej prywatne doświadczenia.",
+    "date": "3 lutego 2026",
+    "url": "posts/edge-ai-inteligencja-w-twoim-telefonie.html",
+    "imageUrl": "posts/images/edge-ai-inteligencja-w-twoim-telefonie.png"
+  },
+  {
     "id": "2524c5c4",
     "title": "AI w tłumaczeniach realtime – koniec barier językowych",
     "topic": "Technologia",
