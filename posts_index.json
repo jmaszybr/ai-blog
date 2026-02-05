@@ -1,5 +1,14 @@
 [
   {
+    "id": "263fd6c2",
+    "title": "Edge AI – inteligencja w Twoim telefonie",
+    "topic": "Technologia",
+    "excerpt": "Jak AI działa bezpośrednio na Twoim smartfonie, przynosząc szybsze i bardziej prywatne usługi.",
+    "date": "5 lutego 2026",
+    "url": "posts/edge-ai-inteligencja-w-twoim-telefonie.html",
+    "imageUrl": "posts/images/edge-ai-inteligencja-w-twoim-telefonie.png"
+  },
+  {
     "id": "d7324f38",
     "title": "AI w cyberbezpieczeństwie: jak inteligentne systemy chronią przed hakerami",
     "topic": "Cyberbezpieczeństwo",
