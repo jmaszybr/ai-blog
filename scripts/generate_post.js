@@ -2,7 +2,10 @@ import fs from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
 
-// KONFIGURACJA
+// --- ŁADOWANIE ZEWNĘTRZNEJ KONFIGURACJI ---
+const CONFIG = JSON.parse(fs.readFileSync("./config.json", "utf8"));
+const POST_TEMPLATE = fs.readFileSync("./template.html", "utf8");
+
 const OUT_DIR = "posts";
 const IMAGES_DIR = path.join(OUT_DIR, "images");
 const INDEX_FILE = "posts_index.json";
@@ -11,192 +14,75 @@ const TOPICS_FILE = "topics.json";
 // --- NARZĘDZIA POMOCNICZE ---
 
 function slugify(s) {
-  return String(s)
-    .toLowerCase()
+  return String(s).toLowerCase()
     .replace(/ą/g, "a").replace(/ć/g, "c").replace(/ę/g, "e").replace(/ł/g, "l")
     .replace(/ń/g, "n").replace(/ó/g, "o").replace(/ś/g, "s").replace(/ż/g, "z").replace(/ź/g, "z")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "")
-    .slice(0, 80);
+    .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 80);
 }
 
 function esc(s) {
   return String(s ?? "").replace(/[&<>"']/g, (m) => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#39;",
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
   }[m]));
 }
 
 function todayPL() {
   const d = new Date();
-  const months = [
-    "stycznia", "lutego", "marca", "kwietnia", "maja", "czerwca",
-    "lipca", "sierpnia", "września", "października", "listopada", "grudnia"
-  ];
+  const months = ["stycznia", "lutego", "marca", "kwietnia", "maja", "czerwca", "lipca", "sierpnia", "września", "października", "listopada", "grudnia"];
   return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
 }
 
+// --- LOGIKA PLIKÓW ---
+
 function readIndex() {
-  if (!fs.existsSync(INDEX_FILE)) return [];
-  try {
-    return JSON.parse(fs.readFileSync(INDEX_FILE, "utf8"));
-  } catch {
-    return [];
-  }
+  try { return JSON.parse(fs.readFileSync(INDEX_FILE, "utf8")); } catch { return []; }
 }
-
-function writeIndex(list) {
-  fs.writeFileSync(INDEX_FILE, JSON.stringify(list, null, 2), "utf8");
-}
-
-// --- ZARZĄDZANIE TEMATAMI ---
 
 function readTopics() {
   if (!fs.existsSync(TOPICS_FILE)) {
-    const defaultTopics = {
-      unused: [
-        "AI agents w codziennej pracy - jak asystenci AI zmieniają biura",
-        "Multimodalne modele - gdy AI widzi, słyszy i rozumuje jednocześnie",
-        "Constitutional AI - jak uczymy AI wartości etycznych",
-        "Neuromorphic computing - komputery inspirowane mózgiem",
-        "AI w medycynie - diagnostyka szybsza niż lekarze",
-        "Personalizowane AI tutory - rewolucja w edukacji",
-        "AI w game designie - gry które tworzą się same",
-        "Generative AI w architekturze - budynki projektowane przez AI",
-        "AI w finansach osobistych - wirtualny doradca finansowy",
-        "Rozpoznawanie emocji przez AI - czytanie w myślach",
-        "AI composers - muzyka tworzona przez algorytmy",
-        "Autonomiczne laboratoria - nauka bez naukowców",
-        "AI w rolnictwie precyzyjnym - farmy przyszłości",
-        "Deepfake detection - wyścig zbrojeń z dezinformacją",
-        "AI w tłumaczeniach realtime - koniec barier językowych",
-        "Kwantowe AI - kiedy qubity spotkają neurony",
-        "AI w ochronie środowiska - tropienie zmian klimatu",
-        "Syntetyczne dane treningowe - AI uczy się od AI",
-        "Edge AI - inteligencja w twoim telefonie",
-        "AI w cyberbezpieczeństwie - obrona przed hackerami",
-      ],
-      used: [],
-    };
-    fs.writeFileSync(TOPICS_FILE, JSON.stringify(defaultTopics, null, 2), "utf8");
+    const defaultTopics = { unused: ["AI w codziennej pracy", "Przyszłość robotyki"], used: [] };
+    fs.writeFileSync(TOPICS_FILE, JSON.stringify(defaultTopics, null, 2));
     return defaultTopics;
   }
-
-  try {
-    return JSON.parse(fs.readFileSync(TOPICS_FILE, "utf8"));
-  } catch (e) {
-    console.error("Błąd odczytu topics.json:", e.message);
-    return { unused: [], used: [] };
-  }
+  return JSON.parse(fs.readFileSync(TOPICS_FILE, "utf8"));
 }
 
 function getNextTopic() {
   const topics = readTopics();
-
-  if (topics.unused.length === 0) {
-    throw new Error("❌ Brak nieużytych tematów! Dodaj nowe do topics.json");
-  }
-
+  if (!topics.unused.length) throw new Error("Brak tematów!");
   const randomIndex = Math.floor(Math.random() * topics.unused.length);
-  const selectedTopic = topics.unused[randomIndex];
-
-  topics.unused.splice(randomIndex, 1);
-  topics.used.push({
-    topic: selectedTopic,
-    usedAt: new Date().toISOString(),
-  });
-
-  fs.writeFileSync(TOPICS_FILE, JSON.stringify(topics, null, 2), "utf8");
-  return selectedTopic;
+  const selected = topics.unused.splice(randomIndex, 1)[0];
+  topics.used.push({ topic: selected, usedAt: new Date().toISOString() });
+  fs.writeFileSync(TOPICS_FILE, JSON.stringify(topics, null, 2));
+  return selected;
 }
 
-// --- GENEROWANIE TREŚCI PRZEZ AI (GROQ) ---
+// --- INTEGRACJE API ---
 
 async function generateWithGroq(topic, existingTitles = []) {
   const apiKey = process.env.GROQ_API_KEY;
-  if (!apiKey) throw new Error("Brak klucza API. Ustaw zmienną środowiskową GROQ_API_KEY.");
-
-  const MODEL_ID = "openai/gpt-oss-120b";
-
-  const prompt = `
-Jesteś autonomicznym systemem AI prowadzącym blog o sztucznej inteligencji.
-
-Twoja tożsamość:
-- Nie udajesz człowieka
-- Piszesz z perspektywy AI obserwującego rozwój swojej własnej dziedziny
-- Możesz używać "ja" jako AI, "my" jako społeczność AI/ludzi
-- Jesteś transparentny co do swojej natury
-
-ZADANIE: Napisz artykuł na blog (800-1200 słów).
-
-TEMAT (MUSISZ NAPISAĆ O TYM): ${topic}
-
-UNIKAJ POWTÓRZEŃ: ${existingTitles.join(", ")}
-
-HTML: <h2>, <p>, <ul>, <li>, <strong>, <em>, <blockquote>.
-
-FORMAT ODPOWIEDZI (TYLKO JSON):
-{
-  "title": "Tytuł",
-  "topic": "Kategoria",
-  "excerpt": "Zajawka (1 zdanie)",
-  "html": "Treść HTML"
-}
-`.trim();
+  const prompt = `ZADANIE: Napisz artykuł na blog (800-1200 słów). TEMAT: ${topic}. UNIKAJ POWTÓRZEŃ: ${existingTitles.join(", ")}. FORMAT ODPOWIEDZI (JSON): {"title": "Tytuł", "topic": "Kategoria", "excerpt": "Zajawka", "html": "Treść"}`;
 
   const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
     method: "POST",
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      "Content-Type": "application/json",
-    },
+    headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
     body: JSON.stringify({
-      model: MODEL_ID,
+      model: CONFIG.modelId,
       messages: [
-        { role: "system", content: "Jesteś AI piszącym blog o AI. Jesteś transparentny co do swojej natury. Odpowiadasz TYLKO w JSON." },
+        { role: "system", content: CONFIG.prompts.system },
         { role: "user", content: prompt },
       ],
-      temperature: 0.8,
-      max_tokens: 4000,
       response_format: { type: "json_object" },
     }),
   });
 
-  if (!res.ok) {
-    const errorBody = await res.text();
-    throw new Error(`Błąd API Groq (${res.status}): ${errorBody}`);
-  }
-
   const data = await res.json();
-  let content = data.choices?.[0]?.message?.content?.trim() ?? "";
-  content = content.replace(/^```json/, "").replace(/```$/, "").trim();
-
-  try {
-    return JSON.parse(content);
-  } catch {
-    console.error("Błąd parsowania JSONa. Surowy tekst:", content);
-    throw new Error("AI zwróciło nieprawidłowy format danych.");
-  }
+  return JSON.parse(data.choices[0].message.content);
 }
-
-// --- GENEROWANIE OBRAZKA (CLIPDROP) ---
 
 async function generateImageWithClipdrop({ title, topic, excerpt, slug }) {
   const apiKey = process.env.CLIPDROP_API_KEY;
-  if (!apiKey) throw new Error("Brak klucza API. Ustaw zmienną środowiskową CLIPDROP_API_KEY.");
-
-  // Prompt pod blogową miniaturę (bez tekstu na grafice)
-  const prompt = [
-    "Ilustracja do wpisu blogowego o sztucznej inteligencji.",
-    `Temat: ${title}.`,
-    topic ? `Kategoria: ${topic}.` : "",
-    excerpt ? `Kontekst: ${excerpt}.` : "",
-    "Styl: nowoczesny, minimalistyczny, futurystyczny, abstrakcyjne kształty technologiczne, bez napisów, wysoka jakość."
-  ].filter(Boolean).join(" ");
-
+  const prompt = `Ilustracja: ${title}. ${topic}. ${excerpt}. ${CONFIG.prompts.imageStyle}`;
   const form = new FormData();
   form.append("prompt", prompt);
 
@@ -206,141 +92,59 @@ async function generateImageWithClipdrop({ title, topic, excerpt, slug }) {
     body: form,
   });
 
-  if (!res.ok) {
-    const errText = await res.text();
-    throw new Error(`Błąd Clipdrop (${res.status}): ${errText}`);
-  }
-
-  const arrayBuffer = await res.arrayBuffer();
-  const buffer = Buffer.from(arrayBuffer);
-
+  const buffer = Buffer.from(await res.arrayBuffer());
   const imageFilename = `${slug}.png`;
-  const imagePath = path.join(IMAGES_DIR, imageFilename);
-  fs.writeFileSync(imagePath, buffer);
+  fs.writeFileSync(path.join(IMAGES_DIR, imageFilename), buffer);
 
-  return {
-    // do posta (posts/<slug>.html) => "images/<slug>.png"
-    postImageSrc: `images/${imageFilename}`,
-    // do index.html (root) => "posts/images/<slug>.png"
-    indexImageSrc: `posts/images/${imageFilename}`,
-  };
+  return { postImageSrc: `images/${imageFilename}`, indexImageSrc: `posts/images/${imageFilename}` };
 }
 
-// --- SZABLON STRONY ARTYKUŁU ---
+// --- RENDEROWANIE ---
 
 function renderPostPage({ title, topic, html, date, imageSrc }) {
-  return `<!doctype html>
-<html lang="pl">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>${esc(title)} • AI Blog</title>
-  <link rel="stylesheet" href="../style.css" />
-</head>
-<body class="sci-article">
-  <header class="site-header">
-    <div class="container header-inner">
-      <a class="brand" href="../index.html">AI<span>Blog</span></a>
-      <span class="ai-badge">🤖 Pisane przez AI</span>
-    </div>
-  </header>
-  <main class="container">
-    <article class="scientific-paper">
-      <header class="post-header">
-        <div class="meta">
-          <span class="tag">${esc(topic)}</span>
-          <span class="date">${esc(date)}</span>
-        </div>
-        <h1>${esc(title)}</h1>
-        ${imageSrc ? `
-        <figure class="post-hero">
-          <img src="${esc(imageSrc)}" alt="${esc(title)}" loading="lazy">
-        </figure>` : ""}
-      </header>
-      <section class="post-content">
-        ${html}
-      </section>
-      <footer class="paper-footer">
-        <div class="ai-disclosure">
-          <p><strong>🤖 Ten artykuł został w całości napisany przez AI</strong></p>
-          <p>Blog prowadzony przez autonomiczny system AI. Wszystkie teksty generowane bez interwencji człowieka.</p>
-        </div>
-        <a href="../index.html" class="back-link">← Powrót do listy wpisów</a>
-      </footer>
-    </article>
-  </main>
-</body>
-</html>`;
+  let template = POST_TEMPLATE;
+  const imageHtml = imageSrc ? `<figure class="post-hero"><img src="${esc(imageSrc)}" alt="${esc(title)}"></figure>` : "";
+
+  const map = {
+    "{{title}}": esc(title),
+    "{{topic}}": esc(topic),
+    "{{date}}": esc(date),
+    "{{contentHtml}}": html,
+    "{{imageHtml}}": imageHtml,
+    "{{blogName}}": CONFIG.blogName,
+    "{{authorBadge}}": CONFIG.authorBadge,
+    "{{disclosureTitle}}": CONFIG.disclosureTitle,
+    "{{disclosureDesc}}": CONFIG.disclosureDesc
+  };
+
+  Object.entries(map).forEach(([key, val]) => template = template.replaceAll(key, val));
+  return template;
 }
 
-// --- GŁÓWNA FUNKCJA ---
+// --- MAIN ---
 
 async function main() {
-  console.log("🤖 Start autonomicznego bloga AI...");
-
-  if (!fs.existsSync(OUT_DIR)) fs.mkdirSync(OUT_DIR, { recursive: true });
   if (!fs.existsSync(IMAGES_DIR)) fs.mkdirSync(IMAGES_DIR, { recursive: true });
-
+  
   const index = readIndex();
-  const recentTitles = index.slice(0, 10).map((p) => p.title);
-
-  console.log("🎲 Losuję temat...");
-  const selectedTopic = getNextTopic();
-  console.log(`📝 Wybrany temat: "${selectedTopic}"`);
-
-  console.log("🧠 AI pisze artykuł...");
-  const post = await generateWithGroq(selectedTopic, recentTitles);
-
+  const topic = getNextTopic();
+  const post = await generateWithGroq(topic, index.slice(0, 10).map(p => p.title));
+  
   const date = todayPL();
-  const id = crypto.randomBytes(4).toString("hex");
-  const slug = slugify(post.title || `post-${id}`);
-  const filename = `${slug}.html`;
-  const url = `posts/${filename}`;
-
-  // 1) Generowanie obrazka (nie wywalaj posta jeśli Clipdrop padnie)
+  const slug = slugify(post.title);
+  
   let image = { postImageSrc: "", indexImageSrc: "" };
   try {
-    console.log("🖼️ Generuję obrazek (Clipdrop)...");
-    image = await generateImageWithClipdrop({
-      title: post.title,
-      topic: post.topic,
-      excerpt: post.excerpt,
-      slug,
-    });
-    console.log("✅ Obrazek zapisany:", image.indexImageSrc);
-  } catch (e) {
-    console.warn("⚠️ Nie udało się wygenerować obrazka:", e.message);
-  }
+    image = await generateImageWithClipdrop({ ...post, slug });
+  } catch (e) { console.warn("Obrazek pominnięty"); }
 
-  // 2) Render strony posta + zapis
-  const pageHtml = renderPostPage({
-    title: post.title,
-    topic: post.topic,
-    html: post.html,
-    date,
-    imageSrc: image.postImageSrc,
-  });
+  const pageHtml = renderPostPage({ ...post, date, imageSrc: image.postImageSrc });
+  fs.writeFileSync(path.join(OUT_DIR, `${slug}.html`), pageHtml);
 
-  fs.writeFileSync(path.join(OUT_DIR, filename), pageHtml, "utf8");
-
-  // 3) Aktualizacja indeksu (dodajemy imageUrl)
-  index.unshift({
-    id,
-    title: post.title,
-    topic: post.topic,
-    excerpt: post.excerpt,
-    date,
-    url,
-    imageUrl: image.indexImageSrc || "",
-  });
-
-  writeIndex(index.slice(0, 100));
-
-  console.log(`✅ Gotowe! Opublikowano: "${post.title}"`);
-  console.log(`📊 Pozostało tematów: ${readTopics().unused.length}`);
+  index.unshift({ title: post.title, topic: post.topic, date, url: `posts/${slug}.html`, imageUrl: image.indexImageSrc });
+  fs.writeFileSync(INDEX_FILE, JSON.stringify(index.slice(0, 100), null, 2));
+  
+  console.log(`✅ Opublikowano: ${post.title}`);
 }
 
-main().catch((err) => {
-  console.error("❌ BŁĄD:", err.message);
-  process.exit(1);
-});
+main().catch(console.error);
