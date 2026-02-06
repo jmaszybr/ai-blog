@@ -116,48 +116,33 @@ function readTopics() {
 
     const defaultTopics = {
 
-      unused: [
-
-        "AI agents w codziennej pracy - jak asystenci AI zmieniają biura",
-
-        "Multimodalne modele - gdy AI widzi, słyszy i rozumuje jednocześnie",
-
-        "Constitutional AI - jak uczymy AI wartości etycznych",
-
-        "Neuromorphic computing - komputery inspirowane mózgiem",
-
-        "AI w medycynie - diagnostyka szybsza niż lekarze",
-
-        "Personalizowane AI tutory - rewolucja w edukacji",
-
-        "AI w game designie - gry które tworzą się same",
-
-        "Generative AI w architekturze - budynki projektowane przez AI",
-
-        "AI w finansach osobistych - wirtualny doradca finansowy",
-
-        "Rozpoznawanie emocji przez AI - czytanie w myślach",
-
-        "AI composers - muzyka tworzona przez algorytmy",
-
-        "Autonomiczne laboratoria - nauka bez naukowców",
-
-        "AI w rolnictwie precyzyjnym - farmy przyszłości",
-
-        "Deepfake detection - wyścig zbrojeń z dezinformacją",
-
-        "AI w tłumaczeniach realtime - koniec barier językowych",
-
-        "Kwantowe AI - kiedy qubity spotkają neurony",
-
-        "AI w ochronie środowiska - tropienie zmian klimatu",
-
-        "Syntetyczne dane treningowe - AI uczy się od AI",
-
-        "Edge AI - inteligencja w twoim telefonie",
-
-        "AI w cyberbezpieczeństwie - obrona przed hackerami",
-
+unused: [
+        "AI w archeologii - jak algorytmy odkrywają zaginione miasta pod dżunglą",
+        "Przyszłość mody: ubrania projektowane przez AI i wirtualne przymierzalnie",
+        "AI w sądownictwie - czy algorytm może być bardziej sprawiedliwy niż sędzia?",
+        "Internet of Bodies - gdy AI monitoruje nasze funkcje życiowe od środka",
+        "Koniec z korkami? Autonomiczne systemy zarządzania ruchem w miastach",
+        "AI i psychologia - czy chatbot może zastąpić terapeutę w kryzysie?",
+        "Sztuczna inteligencja w sporcie - jak dane wygrywają mecze i biją rekordy",
+        "AI w przemyśle filmowym - od odmładzania aktorów po generowanie scenariuszy",
+        "Robotyka miękka - maszyny inspirowane naturą wspomagane przez AI",
+        "Ewolucja wyszukiwarek - dlaczego Google zmienia się w Answer Engine",
+        "AI w zarządzaniu kryzysowym - przewidywanie powodzi i pożarów z wyprzedzeniem",
+        "Cyfrowe nieśmiertelność - czy AI pozwoli nam 'rozmawiać' ze zmarłymi?",
+        "Wpływ AI na rynek nieruchomości - jak algorytmy wyceniają Twój dom",
+        "Sztuczna Inteligencja w badaniach oceanów - mapowanie nieznanych głębin",
+        "AI i rzemiosło - jak technologia pomaga odradzać się ginącym zawodom",
+        "Inteligentne materiały - stopy metali i polimery odkryte przez algorytmy",
+        "AI w logistyce kosmicznej - jak budować bazy na Księżycu z pomocą robotów",
+        "Problem 'Czarnej Skrzynki' - dlaczego czasem nie wiemy, jak AI podjęło decyzję?",
+        "AI w gastronomii - personalizowane diety oparte na Twoim kodzie DNA",
+        "Wirtualni asystenci 2.0 - od prostych komend do pełnej autonomii działania",
+        "AI w walce z samotnością - czy towarzysze AI to przyszłość relacji społecznych?",
+        "Efektywność energetyczna AI - jak tworzyć potężne modele zużywając mniej prądu",
+        "Sztuka promptowania odchodzi do lamusa? Intuicyjne interfejsy przyszłości",
+        "AI w procesie rekrutacji - jak przejść przez sito algorytmów HR",
+        "Bio-AI - biologiczne komputery i hybrydowe systemy przetwarzania danych",
+        "AI w turystyce - planowanie podróży marzeń w 10 sekund przez AI Concierge"
       ],
 
       used: [],
