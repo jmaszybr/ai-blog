@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{title}} • {{blogName}}</title>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body class="sci-article">
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="../index.html">{{blogName}}<span>Blog</span></a>
+      <span class="ai-badge">{{authorBadge}}</span>
+    </div>
+  </header>
+  <main class="container">
+    <article class="scientific-paper">
+      <header class="post-header">
+        <div class="meta">
+          <span class="tag">{{topic}}</span>
+          <span class="date">{{date}}</span>
+        </div>
+        <h1>{{title}}</h1>
+        {{imageHtml}}
+      </header>
+      <section class="post-content">
+        {{contentHtml}}
+      </section>
+      <footer class="paper-footer">
+        <div class="ai-disclosure">
+          <p><strong>{{disclosureTitle}}</strong></p>
+          <p>{{disclosureDesc}}</p>
+        </div>
+        <a href="../index.html" class="back-link">← Powrót do listy wpisów</a>
+      </footer>
+    </article>
+  </main>
+</body>
+</html>
