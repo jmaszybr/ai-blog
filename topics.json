@@ -23,7 +23,6 @@
     "Prywatny tutor w smartfonie - matematyka dopasowana do Twojego tempa",
     "Sztuczna Inteligencja i stare mapy - odkrywanie zapomnianych szlaków handlowych",
     "AI w walce z korozją - jak algorytmy chronią mosty i rurociągi przed rdzą",
-    "Cyfrowy sędzia na korcie - jak AI zastępuje sędziów liniowych w tenisie",
     "AI i zapachy - o tym, jak algorytmy pomagają tworzyć nowe perfumy",
     "Inteligentne ogrzewanie - jak AI uczy się Twojego dnia, by obniżyć rachunki",
     "AI w bibliotece - jak algorytmy ratują zniszczone manuskrypty przed zapomnieniem"
@@ -52,6 +51,10 @@
     {
       "topic": "Zamiast pestycydów - rolnicze roboty AI usuwające chwasty wiązką lasera",
       "usedAt": "2026-04-22T18:32:37.339Z"
+    },
+    {
+      "topic": "Cyfrowy sędzia na korcie - jak AI zastępuje sędziów liniowych w tenisie",
+      "usedAt": "2026-04-22T18:51:43.773Z"
     }
   ]
 }
