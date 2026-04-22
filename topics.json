@@ -6,7 +6,6 @@
     "Cyfrowy konserwator zabytków - jak AI odtwarza brakujące kolory antycznych rzeźb",
     "Twój licznik prądu ma mózg - o oszczędzaniu energii w domu dzięki AI",
     "Strażnik lasu 2.0 - mikrofony z AI wykrywające piły mechaniczne kłusowników",
-    "AI na talerzu - o projektowaniu zupełnie nowych smaków przez algorytmy",
     "AI pod maską - systemy przewidujące awarię silnika, zanim usłyszysz stukanie",
     "Wirtualny asystent w urzędzie - czy sztuczna inteligencja skróci kolejki?",
     "Detektyw AI - jak algorytmy pomagają policji odnajdywać zaginione osoby",
@@ -64,6 +63,10 @@
     {
       "topic": "AI w poszukiwaniu nowych leków - skrócenie lat badań do kilku miesięcy",
       "usedAt": "2026-04-22T19:58:19.964Z"
+    },
+    {
+      "topic": "AI na talerzu - o projektowaniu zupełnie nowych smaków przez algorytmy",
+      "usedAt": "2026-04-22T20:14:25.998Z"
     }
   ]
 }
