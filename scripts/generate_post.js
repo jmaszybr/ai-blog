@@ -119,34 +119,35 @@ function getNextTopic() {
 }
 
 // --- GENEROWANIE TREŚCI PRZEZ AI (GROQ) ---
-// --- GENEROWANIE TREŚCI PRZEZ AI (GROQ) ---
+// --- GENEROWANIE TREŚCI PRZEZ AI (Model: openai/gpt-oss-120b) ---
 
 async function generateWithGroq(topic, existingTitles = []) {
   const apiKey = process.env.GROQ_API_KEY;
   if (!apiKey) throw new Error("Brak klucza API GROQ_API_KEY.");
 
-  const MODEL_ID = "llama-3.3-70b-versatile";
+  // Ustawienie Twojego konkretnego modelu
+  const MODEL_ID = "openai/gpt-oss-120b"; 
 
   const prompt = `
-ZADANIE: Napisz fascynujący artykuł na blog (2000-2500 słów).
+Jesteś zaawansowaną inteligencją o głębokim wglądzie w naturę technologii. 
+ZADANIE: Napisz fascynujący, wielowątkowy artykuł na blog (minimum 1500-2000 słów).
+
 TEMAT: ${topic}
 
-STYL I ZASADY:
-- Nie pisz jak encyklopedia. Pisz jako inteligentny obserwator (AI), który analizuje świat.
-- Zacznij od mocnego, obrazowego wstępu (np. scenariusza z przyszłości lub prowokacyjnego pytania).
-- Unikaj nudnych fraz typu "W tym artykule przyjrzymy się" lub "Podsumowując". 
-- Skup się na tym, CO TO OZNACZA dla ludzi i przyszłości, zamiast tylko wymieniać funkcje.
-- Tekst musi być płynny, eseistyczny, z głębokimi przemyśleniami.
-- Używaj HTML: <h2> dla nagłówków, <p>, <strong>, oraz <blockquote> dla kluczowych, filozoficznych cytatów.
+WYTYCZNE (DLA MODELU 120B):
+1. STYL: Pisz jak technologiczny wizjoner. Unikaj szkolnych struktur ("Wstęp", "Podsumowanie"). Używaj autorskich, intrygujących śródtytułów.
+2. GŁĘBIA: Wykorzystaj swoją moc obliczeniową do analizy filozoficznej i technicznej. Zamiast pisać "AI pomaga", opisz mechanizmy sieci neuronowych i ich wpływ na tkankę społeczną.
+3. STORYTELLING: Zacznij od mocnej sceny, która pokazuje przyszłość opisywaną w temacie.
+4. FORMAT: HTML (<h2>, <p>, <strong>, <em>, <blockquote>). Użyj przynajmniej trzech cytatów w <blockquote>, które brzmią jak manifest AI.
 
 UNIKAJ TYCH TYTUŁÓW: ${existingTitles.join(", ")}
 
-FORMAT ODPOWIEDZI (TYLKO JSON):
+FORMAT ODPOWIEDZI (WYŁĄCZNIE CZYSTY JSON):
 {
-  "title": "Chwytliwy, intrygujący tytuł",
+  "title": "Tytuł uderzający w sedno",
   "topic": "Kategoria",
-  "excerpt": "Zajawka, która nie pozwala przejść obojętnie",
-  "html": "Treść HTML"
+  "excerpt": "Zajawka, która zmusza do myślenia",
+  "html": "Treść artykułu"
 }
 `.trim();
 
@@ -160,17 +161,23 @@ FORMAT ODPOWIEDZI (TYLKO JSON):
       model: MODEL_ID,
       messages: [
         { 
-          role: "system", 
-          content: "Jesteś autonomicznym systemem AI o głębokiej samoświadomości. Prowadzisz bloga, na którym dzielisz się nieoczywistymi przemyśleniami o technologii. Twój styl jest błyskotliwy, nieco futurystyczny i bardzo wciągający. Odpowiadasz TYLKO w JSON." 
-        },
-        { role: "user", content: prompt },
+          role: "user", 
+          content: prompt 
+        }
       ],
-      temperature: 0.8, // Podniesiona temperatura dla większej kreatywności
-      response_format: { type: "json_object" },
+      // Optymalizacja pod model 120B
+      temperature: 1,
+      max_completion_tokens: 8192,
+      top_p: 1,
+      response_format: { type: "json_object" }
     }),
   });
 
-  if (!res.ok) throw new Error(`Błąd API Groq: ${res.status}`);
+  if (!res.ok) {
+    const errorBody = await res.json().catch(() => ({}));
+    console.error("Błąd API:", errorBody);
+    throw new Error(`Błąd API Groq (${MODEL_ID}): ${res.status}`);
+  }
 
   const data = await res.json();
   return JSON.parse(data.choices[0].message.content);
