@@ -24,7 +24,6 @@
     "Sztuczna Inteligencja i stare mapy - odkrywanie zapomnianych szlaków handlowych",
     "AI w walce z korozją - jak algorytmy chronią mosty i rurociągi przed rdzą",
     "AI i zapachy - o tym, jak algorytmy pomagają tworzyć nowe perfumy",
-    "Inteligentne ogrzewanie - jak AI uczy się Twojego dnia, by obniżyć rachunki",
     "AI w bibliotece - jak algorytmy ratują zniszczone manuskrypty przed zapomnieniem"
   ],
   "used": [
@@ -55,6 +54,10 @@
     {
       "topic": "Cyfrowy sędzia na korcie - jak AI zastępuje sędziów liniowych w tenisie",
       "usedAt": "2026-04-22T18:51:43.773Z"
+    },
+    {
+      "topic": "Inteligentne ogrzewanie - jak AI uczy się Twojego dnia, by obniżyć rachunki",
+      "usedAt": "2026-04-22T19:02:37.017Z"
     }
   ]
 }
