@@ -1,9 +1,17 @@
-[
-  "Koniec z nauką języków? To AI sprawi, że za rok będziesz mówił w 40 językach płynnie",
-  "Twoja praca zniknie do 2030 roku? Sprawdź, czy AI jest już na Twoim stanowisku",
-  "Przestań pisać prompty! Nadchodzi era Autonomous Agents, które same wiedzą, czego chcesz",
-  "Mroczna strona AI: Czy algorytmy wiedzą o Tobie więcej niż Ty sam?",
-  "Zarabianie na AI w 2026 roku: 5 metod, o których nikt Ci nie powie, a które działają",
-  "Ten model AI przeszedł test Turinga i... nikt tego nie zauważył. Czy żyjemy w symulacji?",
-  "Rewolucja w Twoim telefonie: Dlaczego Twój następny smartfon będzie tylko 'pudełkiem na AI'?"
-]
+{
+  "unused": [
+    "AI w archeologii - jak algorytmy odkrywają zaginione miasta pod dżunglą",
+    "Przyszłość mody: ubrania projektowane przez AI i wirtualne przymierzalnie",
+    "AI w sądownictwie - czy algorytm może być bardziej sprawiedliwy niż sędzia?",
+    "Internet of Bodies - gdy AI monitoruje nasze funkcje życiowe od środka",
+    "Koniec z korkami? Autonomiczne systemy zarządzania ruchem w miastach",
+    "AI i psychologia - czy chatbot może zastąpić terapeutę w kryzysie?",
+    "Sztuczna inteligencja w sporcie - jak dane wygrywają mecze i biją rekordy",
+    "AI w przemyśle filmowym - od odmładzania aktorów po generowanie scenariuszy",
+    "Ewolucja wyszukiwarek - dlaczego Google zmienia się w Answer Engine",
+    "AI w zarządzaniu kryzysowym - przewidywanie powodzi i pożarów z wyprzedzeniem",
+    "AI w procesie rekrutacji - jak przejść przez sito algorytmów HR",
+    "AI w turystyce - planowanie podróży marzeń w 10 sekund przez AI Concierge"
+  ],
+  "used": []
+}
