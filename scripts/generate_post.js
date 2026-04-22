@@ -11,19 +11,13 @@
  *    - CLIPDROP_API_KEY   - klucz do Clipdrop (opcjonalny - bez niego brak obrazka)
  *
  *  Uruchomienie:
- *    node generate-post.mjs
+ *    node scripts/generate_post.js
  *
  *  Struktura wyjściowa (względem katalogu uruchomienia):
  *    ./posts/<slug>.html           - wygenerowany artykuł
  *    ./posts/images/<slug>.png     - ilustracja (jeśli się udała)
  *    ./posts_index.json            - indeks wszystkich wpisów (max 100)
  *    ./topics.json                 - pula tematów (unused/used)
- *
- *  Założenia projektowe:
- *    - Atomowe zapisy JSON (tmp + rename) chroniące przed uszkodzeniem pliku
- *    - Temat jest oznaczany jako "użyty" dopiero po pełnym sukcesie generacji,
- *      dzięki czemu błąd API nie marnuje tematu.
- *    - Kod zorganizowany w małe, jednoodpowiedzialne funkcje.
  * =============================================================================
  */
 
@@ -44,21 +38,18 @@ const CONFIG = {
     topics: path.join(process.cwd(), "topics.json"),
   },
 
-  // Parametry Gemini
-gemini: {
-  model: "gemini-2.5-flash",
-  temperature: 0.8,
-  maxOutputTokens: 8192,
-  timeoutMs: 90_000,
-},
+  gemini: {
+    model: "gemini-2.5-flash",
+    temperature: 0.8,
+    maxOutputTokens: 8192,
+    timeoutMs: 90_000,
+  },
 
-  // Parametry Clipdrop (generowanie obrazka)
   clipdrop: {
     endpoint: "https://clipdrop-api.co/text-to-image/v1",
     timeoutMs: 45_000,
   },
 
-  // Limity
   maxIndexEntries: 100,
   recentTitlesLookback: 10,
   slugMaxLength: 80,
@@ -80,16 +71,16 @@ const DEFAULT_TOPICS = [
 ];
 
 // =============================================================================
-//  LOGGERtimeoutMs: 60_000
+//  LOGGER
 // =============================================================================
 
 const log = {
   _ts: () => new Date().toISOString().slice(11, 19),
-  info: (msg) => console.log(`[${log._ts()}] ℹ️  ${msg}`),
+  info:    (msg) => console.log(`[${log._ts()}] ℹ️  ${msg}`),
   success: (msg) => console.log(`[${log._ts()}] ✅ ${msg}`),
-  warn: (msg) => console.warn(`[${log._ts()}] ⚠️  ${msg}`),
-  error: (msg) => console.error(`[${log._ts()}] ❌ ${msg}`),
-  step: (msg) => console.log(`[${log._ts()}] → ${msg}`),
+  warn:    (msg) => console.warn(`[${log._ts()}] ⚠️  ${msg}`),
+  error:   (msg) => console.error(`[${log._ts()}] ❌ ${msg}`),
+  step:    (msg) => console.log(`[${log._ts()}] → ${msg}`),
 };
 
 // =============================================================================
@@ -111,13 +102,7 @@ function slugify(input) {
 }
 
 function escapeHtml(input) {
-  const map = {
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#39;",
-  };
+  const map = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
   return String(input ?? "").replace(/[&<>"']/g, (ch) => map[ch]);
 }
 
@@ -131,8 +116,7 @@ function formatDatePL(date = new Date()) {
 
 function writeJsonAtomic(filePath, data) {
   const tmpPath = `${filePath}.tmp.${process.pid}`;
-  const payload = JSON.stringify(data, null, 2);
-  fs.writeFileSync(tmpPath, payload, "utf8");
+  fs.writeFileSync(tmpPath, JSON.stringify(data, null, 2), "utf8");
   fs.renameSync(tmpPath, filePath);
 }
 
@@ -167,8 +151,7 @@ function readIndex() {
 }
 
 function writeIndex(list) {
-  const trimmed = list.slice(0, CONFIG.maxIndexEntries);
-  writeJsonAtomic(CONFIG.paths.index, trimmed);
+  writeJsonAtomic(CONFIG.paths.index, list.slice(0, CONFIG.maxIndexEntries));
 }
 
 // =============================================================================
@@ -177,17 +160,15 @@ function writeIndex(list) {
 
 function readTopics() {
   const defaults = { unused: [...DEFAULT_TOPICS], used: [] };
-
   if (!fs.existsSync(CONFIG.paths.topics)) {
     log.info("Tworzę nowy plik topics.json z domyślną pulą tematów.");
     writeJsonAtomic(CONFIG.paths.topics, defaults);
     return defaults;
   }
-
   const parsed = readJsonSafe(CONFIG.paths.topics, defaults);
   return {
     unused: Array.isArray(parsed.unused) ? parsed.unused : defaults.unused,
-    used: Array.isArray(parsed.used) ? parsed.used : [],
+    used:   Array.isArray(parsed.used)   ? parsed.used   : [],
   };
 }
 
@@ -240,7 +221,8 @@ Zwróć WYŁĄCZNIE poprawny JSON o następującej strukturze (bez żadnego teks
   "title": "Chwytliwy tytuł artykułu",
   "topic": "Krótka kategoria (1-3 słowa)",
   "excerpt": "Zajawka 1-2 zdania do wyświetlenia na liście wpisów",
-  "html": "Pełna treść artykułu w HTML"
+  "html": "Pełna treść artykułu w HTML",
+  "sourceTitles": ["Tytuł źródła 1", "Tytuł źródła 2"]
 }`;
 }
 
@@ -253,10 +235,6 @@ function validatePostPayload(payload) {
   }
 }
 
-/**
- * Wywołuje Gemini API z groundingiem Google Search.
- * Zwraca sparsowany obiekt wpisu + listę źródeł.
- */
 async function generatePostWithGemini(topic, existingTitles = []) {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) throw new Error("Brak zmiennej środowiskowej GEMINI_API_KEY.");
@@ -271,15 +249,10 @@ async function generatePostWithGemini(topic, existingTitles = []) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         contents: [{ parts: [{ text: prompt }] }],
-
-        // Grounding - Gemini przeszukuje Google przed odpowiedzią
         tools: [{ googleSearch: {} }],
-
         generationConfig: {
           temperature: CONFIG.gemini.temperature,
           maxOutputTokens: CONFIG.gemini.maxOutputTokens,
-          // Nie używamy responseMimeType: "application/json" razem z groundingiem
-          // bo Gemini nie obsługuje obu naraz - parsujemy JSON ręcznie
         },
       }),
     },
@@ -294,10 +267,9 @@ async function generatePostWithGemini(topic, existingTitles = []) {
 
   const data = await response.json();
   const content = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-
   if (!content) throw new Error("Gemini API zwrócił odpowiedź bez pola content.");
 
-  // Gemini może owinąć JSON w ```json ... ``` - czyścimy to
+  // Gemini czasem owija JSON w ```json ... ``` - czyścimy to
   const cleaned = content.replace(/^```json\s*/i, "").replace(/```\s*$/, "").trim();
 
   let parsed;
@@ -309,14 +281,17 @@ async function generatePostWithGemini(topic, existingTitles = []) {
 
   validatePostPayload(parsed);
 
-  // Wyciągamy źródła z metadanych groundingu
+  // Wyciągamy URL-e źródeł z metadanych groundingu
   const sources = data?.candidates?.[0]?.groundingMetadata?.groundingChunks
     ?.map((c) => c.web?.uri)
     .filter(Boolean) ?? [];
 
-  log.info(`Grounding: znaleziono ${sources.length} źródeł.`);
+  // sourceTitles z JSON - tablica tytułów podana przez Gemini
+  const sourceTitles = Array.isArray(parsed.sourceTitles) ? parsed.sourceTitles : [];
 
-  return { ...parsed, sources };
+  log.info(`Grounding: znaleziono ${sources.length} źródeł, ${sourceTitles.length} tytułów.`);
+
+  return { ...parsed, sources, sourceTitles };
 }
 
 // =============================================================================
@@ -348,12 +323,11 @@ async function generateImageWithClipdrop({ title, topic, slug }) {
 
   const buffer = Buffer.from(await response.arrayBuffer());
   const filename = `${slug}.png`;
-  const absolutePath = path.join(CONFIG.paths.images, filename);
-  fs.writeFileSync(absolutePath, buffer);
+  fs.writeFileSync(path.join(CONFIG.paths.images, filename), buffer);
 
   return {
     forArticle: `images/${filename}`,
-    forIndex: `posts/images/${filename}`,
+    forIndex:   `posts/images/${filename}`,
   };
 }
 
@@ -361,16 +335,22 @@ async function generateImageWithClipdrop({ title, topic, slug }) {
 //  SZABLON HTML ARTYKUŁU
 // =============================================================================
 
-function renderArticlePage({ title, topic, html, date, imageSrc, excerpt, sources }) {
+function renderArticlePage({ title, topic, html, date, imageSrc, excerpt, sources, sourceTitles }) {
   const heroImg = imageSrc
     ? `<img src="${escapeHtml(imageSrc)}" class="post-hero" alt="${escapeHtml(title)}">`
     : "";
 
-  // Sekcja źródeł - tylko jeśli Gemini zwrócił jakieś
+  // Data dostępu w formacie polskim
+  const accessDate = formatDatePL();
+
+  // Sekcja źródeł w stylu numerycznym [1] Tytuł. Dostępny w: link 1 [dostęp: data]
   const sourcesHtml = sources?.length
-    ? `<h2>Źródła</h2><ul class="sources-list">
-        ${sources.map((s) => `<li><a href="${escapeHtml(s)}" target="_blank" rel="noopener">${escapeHtml(s)}</a></li>`).join("\n")}
-      </ul>`
+    ? `<h2>Źródła</h2><ol class="sources-list">
+        ${sources.map((url, i) => {
+          const title = sourceTitles?.[i] ?? `Źródło ${i + 1}`;
+          return `<li>[${i + 1}] <em>${escapeHtml(title)}</em>. Dostępny w: <a href="${escapeHtml(url)}" target="_blank" rel="noopener">link ${i + 1}</a> [dostęp: ${accessDate}]</li>`;
+        }).join("\n")}
+      </ol>`
     : "";
 
   return `<!doctype html>
@@ -432,14 +412,14 @@ async function main() {
   // Krok 1: foldery
   ensureDirectories();
 
-  // Krok 2: indeks i ostatnie tytuły
+  // Krok 2: indeks i ostatnie tytuły (anty-powtórki)
   const index = readIndex();
   const recentTitles = index
     .slice(0, CONFIG.recentTitlesLookback)
     .map((p) => p.title)
     .filter(Boolean);
 
-  // Krok 3: losowanie tematu
+  // Krok 3: losowanie tematu (bez commita!)
   log.step("Losuję temat z puli...");
   const { topic: selectedTopic } = pickRandomTopic();
   log.info(`Wybrany temat: "${selectedTopic}"`);
@@ -454,7 +434,7 @@ async function main() {
   const id = crypto.randomBytes(4).toString("hex");
   const slug = slugify(post.title) || `post-${id}`;
 
-  // Krok 5: obrazek (opcjonalny)
+  // Krok 5: obrazek (opcjonalny - błąd nie zabija procesu)
   let image = { forArticle: "", forIndex: "" };
   try {
     log.step("Generuję ilustrację przez Clipdrop...");
@@ -464,34 +444,35 @@ async function main() {
     log.warn(`Ilustracja pominięta: ${err.message}`);
   }
 
-  // Krok 6: zapis HTML
+  // Krok 6: zapis HTML artykułu
   log.step("Zapisuję plik HTML artykułu...");
   const pageHtml = renderArticlePage({
-    title: post.title,
-    topic: post.topic,
-    excerpt: post.excerpt,
-    html: post.html,
+    title:        post.title,
+    topic:        post.topic,
+    excerpt:      post.excerpt,
+    html:         post.html,
     date,
-    imageSrc: image.forArticle,
-    sources: post.sources,
+    imageSrc:     image.forArticle,
+    sources:      post.sources,
+    sourceTitles: post.sourceTitles,
   });
   const articlePath = path.join(CONFIG.paths.posts, `${slug}.html`);
   fs.writeFileSync(articlePath, pageHtml, "utf8");
 
-  // Krok 7: aktualizacja indeksu
+  // Krok 7: aktualizacja indeksu (atomowa)
   log.step("Aktualizuję indeks wpisów...");
   index.unshift({
     id,
-    title: post.title,
-    topic: post.topic,
-    excerpt: post.excerpt,
+    title:    post.title,
+    topic:    post.topic,
+    excerpt:  post.excerpt,
     date,
-    url: `posts/${slug}.html`,
+    url:      `posts/${slug}.html`,
     imageUrl: image.forIndex || "",
   });
   writeIndex(index);
 
-  // Krok 8: commit tematu
+  // Krok 8: dopiero teraz "zużywamy" temat
   commitTopicAsUsed(selectedTopic);
 
   log.success(`🎉 Opublikowano: "${post.title}" → ${articlePath}`);
