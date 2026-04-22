@@ -23,7 +23,6 @@
     "Zarządzanie tłumem - jak AI pomaga unikać ścisku na peronach metra",
     "AI w Twojej lodówce - planowanie posiłków tak, by nie wyrzucać jedzenia",
     "Prywatny tutor w smartfonie - matematyka dopasowana do Twojego tempa",
-    "Prognoza pogody 2.0 - przewidywanie lokalnych burz z dokładnością do ulicy",
     "Sztuczna Inteligencja i stare mapy - odkrywanie zapomnianych szlaków handlowych",
     "AI w walce z korozją - jak algorytmy chronią mosty i rurociągi przed rdzą",
     "Cyfrowy sędzia na korcie - jak AI zastępuje sędziów liniowych w tenisie",
@@ -43,6 +42,10 @@
     {
       "topic": "Wojny algorytmów - jak niewidzialne starcia botów na giełdach niszczą realne gospodarki",
       "usedAt": "2026-04-22T14:27:10.997Z"
+    },
+    {
+      "topic": "Prognoza pogody 2.0 - przewidywanie lokalnych burz z dokładnością do ulicy",
+      "usedAt": "2026-04-22T18:03:23.917Z"
     }
   ]
 }
