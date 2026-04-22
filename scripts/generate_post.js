@@ -45,12 +45,12 @@ const CONFIG = {
   },
 
   // Parametry Gemini
-  gemini: {
-    model: "gemini-2.5-flash",
-    temperature: 0.8,
-    maxOutputTokens: 4500,
-    timeoutMs: 60_000,
-  },
+gemini: {
+  model: "gemini-2.5-flash",
+  temperature: 0.8,
+  maxOutputTokens: 8192,
+  timeoutMs: 90_000,
+},
 
   // Parametry Clipdrop (generowanie obrazka)
   clipdrop: {
@@ -80,7 +80,7 @@ const DEFAULT_TOPICS = [
 ];
 
 // =============================================================================
-//  LOGGER
+//  LOGGERtimeoutMs: 60_000
 // =============================================================================
 
 const log = {
@@ -221,7 +221,7 @@ function buildPrompt(topic, existingTitles) {
     ? `Unikaj tytułów podobnych do: ${existingTitles.join("; ")}.`
     : "";
 
-  return `Napisz esej blogowy w języku polskim o długości około 1500 słów.
+  return `Napisz esej blogowy w języku polskim o długości około 800 słów.
 
 Temat: ${topic}
 
