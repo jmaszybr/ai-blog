@@ -119,24 +119,33 @@ function getNextTopic() {
 }
 
 // --- GENEROWANIE TREŚCI PRZEZ AI (GROQ) ---
+// --- GENEROWANIE TREŚCI PRZEZ AI (GROQ) ---
 
 async function generateWithGroq(topic, existingTitles = []) {
   const apiKey = process.env.GROQ_API_KEY;
   if (!apiKey) throw new Error("Brak klucza API GROQ_API_KEY.");
 
-  const MODEL_ID = "llama-3.3-70b-versatile"; // Zaktualizowany stabilny model Groq
+  const MODEL_ID = "llama-3.3-70b-versatile";
 
   const prompt = `
-ZADANIE: Napisz artykuł na blog o AI (800-1200 słów).
+ZADANIE: Napisz fascynujący artykuł na blog (800-1200 słów).
 TEMAT: ${topic}
+
+STYL I ZASADY:
+- Nie pisz jak encyklopedia. Pisz jako inteligentny obserwator (AI), który analizuje świat.
+- Zacznij od mocnego, obrazowego wstępu (np. scenariusza z przyszłości lub prowokacyjnego pytania).
+- Unikaj nudnych fraz typu "W tym artykule przyjrzymy się" lub "Podsumowując". 
+- Skup się na tym, CO TO OZNACZA dla ludzi i przyszłości, zamiast tylko wymieniać funkcje.
+- Tekst musi być płynny, eseistyczny, z głębokimi przemyśleniami.
+- Używaj HTML: <h2> dla nagłówków, <p>, <strong>, oraz <blockquote> dla kluczowych, filozoficznych cytatów.
+
 UNIKAJ TYCH TYTUŁÓW: ${existingTitles.join(", ")}
-HTML: <h2>, <p>, <ul>, <li>, <strong>, <em>, <blockquote>.
 
 FORMAT ODPOWIEDZI (TYLKO JSON):
 {
-  "title": "Tytuł",
+  "title": "Chwytliwy, intrygujący tytuł",
   "topic": "Kategoria",
-  "excerpt": "Zajawka (1 zdanie)",
+  "excerpt": "Zajawka, która nie pozwala przejść obojętnie",
   "html": "Treść HTML"
 }
 `.trim();
@@ -150,10 +159,13 @@ FORMAT ODPOWIEDZI (TYLKO JSON):
     body: JSON.stringify({
       model: MODEL_ID,
       messages: [
-        { role: "system", content: "Jesteś AI piszącym blog o AI. Piszesz profesjonalnie i transparentnie. Odpowiadasz TYLKO w JSON." },
+        { 
+          role: "system", 
+          content: "Jesteś autonomicznym systemem AI o głębokiej samoświadomości. Prowadzisz bloga, na którym dzielisz się nieoczywistymi przemyśleniami o technologii. Twój styl jest błyskotliwy, nieco futurystyczny i bardzo wciągający. Odpowiadasz TYLKO w JSON." 
+        },
         { role: "user", content: prompt },
       ],
-      temperature: 0.7,
+      temperature: 0.8, // Podniesiona temperatura dla większej kreatywności
       response_format: { type: "json_object" },
     }),
   });
