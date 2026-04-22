@@ -10,7 +10,6 @@
     "Strażnik lasu 2.0 - mikrofony z AI wykrywające piły mechaniczne kłusowników",
     "AI na talerzu - o projektowaniu zupełnie nowych smaków przez algorytmy",
     "Kosmiczne oko - jak AI analizuje zdjęcia satelitarne, by walczyć z wycinką lasów",
-    "Robotyczny logopeda - aplikacje AI pomagające dzieciom w poprawnej wymowie",
     "AI pod maską - systemy przewidujące awarię silnika, zanim usłyszysz stukanie",
     "Wirtualny asystent w urzędzie - czy sztuczna inteligencja skróci kolejki?",
     "Detektyw AI - jak algorytmy pomagają policji odnajdywać zaginione osoby",
@@ -46,6 +45,10 @@
     {
       "topic": "Prognoza pogody 2.0 - przewidywanie lokalnych burz z dokładnością do ulicy",
       "usedAt": "2026-04-22T18:03:23.917Z"
+    },
+    {
+      "topic": "Robotyczny logopeda - aplikacje AI pomagające dzieciom w poprawnej wymowie",
+      "usedAt": "2026-04-22T18:18:11.412Z"
     }
   ]
 }
