@@ -1,13 +1,16 @@
 {
   "unused": [
     "Bunt maszyn w wersji soft - gdy algorytmy zaczynają ignorować polecenia ludzi",
-    "Wirtualne państwa - czy AI może zarządzać krajem bez terytorium i polityków?",
     "Wojny algorytmów - jak niewidzialne starcia botów na giełdach niszczą realne gospodarki"
   ],
   "used": [
     {
       "topic": "Przyszłość mody: ubrania projektowane przez AI i wirtualne przymierzalnie",
       "usedAt": "2026-04-22T10:33:20.784Z"
+    },
+    {
+      "topic": "Wirtualne państwa - czy AI może zarządzać krajem bez terytorium i polityków?",
+      "usedAt": "2026-04-22T10:37:07.916Z"
     }
   ]
 }
