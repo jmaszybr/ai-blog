@@ -3,7 +3,6 @@
     "AI w Twoim kranie - jak algorytmy zarządzają dostawami wody w miastach",
     "Ratownik z chmury - jak AI przewiduje zawały serca przed wystąpieniem objawów",
     "Inteligentne śmietniki - o tym, jak AI sortuje odpady szybciej niż człowiek",
-    "Zamiast pestycydów - rolnicze roboty AI usuwające chwasty wiązką lasera",
     "Cyfrowy konserwator zabytków - jak AI odtwarza brakujące kolory antycznych rzeźb",
     "AI w poszukiwaniu nowych leków - skrócenie lat badań do kilku miesięcy",
     "Twój licznik prądu ma mózg - o oszczędzaniu energii w domu dzięki AI",
@@ -49,6 +48,10 @@
     {
       "topic": "Robotyczny logopeda - aplikacje AI pomagające dzieciom w poprawnej wymowie",
       "usedAt": "2026-04-22T18:18:11.412Z"
+    },
+    {
+      "topic": "Zamiast pestycydów - rolnicze roboty AI usuwające chwasty wiązką lasera",
+      "usedAt": "2026-04-22T18:32:37.339Z"
     }
   ]
 }
