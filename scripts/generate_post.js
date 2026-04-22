@@ -128,7 +128,7 @@ async function generateWithGroq(topic, existingTitles = []) {
   const MODEL_ID = "llama-3.3-70b-versatile";
 
   const prompt = `
-ZADANIE: Napisz fascynujący artykuł na blog (800-1200 słów).
+ZADANIE: Napisz fascynujący artykuł na blog (2000-2500 słów).
 TEMAT: ${topic}
 
 STYL I ZASADY:
