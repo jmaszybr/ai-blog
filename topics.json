@@ -4,7 +4,6 @@
     "Ratownik z chmury - jak AI przewiduje zawały serca przed wystąpieniem objawów",
     "Inteligentne śmietniki - o tym, jak AI sortuje odpady szybciej niż człowiek",
     "Cyfrowy konserwator zabytków - jak AI odtwarza brakujące kolory antycznych rzeźb",
-    "AI w poszukiwaniu nowych leków - skrócenie lat badań do kilku miesięcy",
     "Twój licznik prądu ma mózg - o oszczędzaniu energii w domu dzięki AI",
     "Strażnik lasu 2.0 - mikrofony z AI wykrywające piły mechaniczne kłusowników",
     "AI na talerzu - o projektowaniu zupełnie nowych smaków przez algorytmy",
@@ -61,6 +60,10 @@
     {
       "topic": "Kosmiczne oko - jak AI analizuje zdjęcia satelitarne, by walczyć z wycinką lasów",
       "usedAt": "2026-04-22T19:12:42.447Z"
+    },
+    {
+      "topic": "AI w poszukiwaniu nowych leków - skrócenie lat badań do kilku miesięcy",
+      "usedAt": "2026-04-22T19:58:19.964Z"
     }
   ]
 }
