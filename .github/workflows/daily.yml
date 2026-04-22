@@ -2,34 +2,68 @@ name: Daily AI Post
 
 on:
   schedule:
-    - cron: "0 6 * * *"   # 06:00 UTC (w PL zwykle 7/8 zależnie od DST)
+    # Uruchamia skrypt codziennie o 06:00 UTC (ok. 7:00/8:00 rano w Polsce)
+    - cron: "0 6 * * *"
+  # Pozwala na ręczne uruchomienie przyciskiem w zakładce Actions
   workflow_dispatch:
 
+# Nadaje uprawnienia do zapisu zmian w repozytorium (kluczowe dla "git push")
 permissions:
   contents: write
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
 
-      - name: Setup Node
+    steps:
+      # 1. Pobranie kodu repozytorium
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          # Pobiera całą historię (opcjonalne, ale zalecane przy commitach)
+          fetch-depth: 0
+
+      # 2. Instalacja środowiska Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
+          # cache: 'npm' # Odkomentuj, jeśli masz plik package-lock.json
 
+      # 3. Instalacja zależności (jeśli używasz zewnętrznych paczek)
+      # Jeśli Twój skrypt nie wymaga npm install, możesz pominąć ten krok
+      - name: Install dependencies
+        run: |
+          if [ -f package.json ]; then
+            npm install
+          else
+            echo "Brak pliku package.json, pomijam instalację."
+          fi
+
+      # 4. Generowanie posta
       - name: Generate post
         env:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           CLIPDROP_API_KEY: ${{ secrets.CLIPDROP_API_KEY }}
         run: node scripts/generate_post.js
 
-      - name: Commit changes
+      # 5. Zapisanie zmian z powrotem w repozytorium
+      - name: Commit and push changes
         run: |
-          git config user.name "ai-blog-bot"
-          git config user.email "ai-blog-bot@users.noreply.github.com"
-          git add posts posts_index.json
-          git commit -m "Daily post" || echo "No changes"
-          git push
+          git config --global user.name "ai-blog-bot"
+          git config --global user.email "action@github.com"
+          
+          # Dodajemy:
+          # - folder posts/ (nowe HTML)
+          # - folder posts/images/ (nowe obrazy)
+          # - posts_index.json (aktualizacja listy)
+          # - topics.json (aktualizacja użytych tematów)
+          git add posts/ posts_index.json topics.json
+          
+          # Sprawdzamy, czy są jakiekolwiek zmiany przed wykonaniem commit
+          if git diff --staged --quiet; then
+            echo "Brak zmian do zapisania."
+          else
+            git commit -m "🤖 Auto-generacja posta: $(date +'%Y-%m-%d')"
+            git push
+          fi
