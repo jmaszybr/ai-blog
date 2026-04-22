@@ -1,7 +1,6 @@
 {
   "unused": [
     "AI w archeologii - jak algorytmy odkrywają zaginione miasta pod dżunglą",
-    "Przyszłość mody: ubrania projektowane przez AI i wirtualne przymierzalnie",
     "AI w sądownictwie - czy algorytm może być bardziej sprawiedliwy niż sędzia?",
     "Internet of Bodies - gdy AI monitoruje nasze funkcje życiowe od środka",
     "Koniec z korkami? Autonomiczne systemy zarządzania ruchem w miastach",
@@ -13,5 +12,10 @@
     "AI w procesie rekrutacji - jak przejść przez sito algorytmów HR",
     "AI w turystyce - planowanie podróży marzeń w 10 sekund przez AI Concierge"
   ],
-  "used": []
+  "used": [
+    {
+      "topic": "Przyszłość mody: ubrania projektowane przez AI i wirtualne przymierzalnie",
+      "usedAt": "2026-04-22T10:33:20.784Z"
+    }
+  ]
 }
