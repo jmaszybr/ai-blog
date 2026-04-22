@@ -119,37 +119,26 @@ function getNextTopic() {
 }
 
 // --- GENEROWANIE TREŚCI PRZEZ AI (GROQ) ---
-// --- GENEROWANIE TREŚCI PRZEZ AI (Model: openai/gpt-oss-120b) ---
-
 async function generateWithGroq(topic, existingTitles = []) {
   const apiKey = process.env.GROQ_API_KEY;
-  if (!apiKey) throw new Error("Brak klucza API GROQ_API_KEY.");
+  if (!apiKey) throw new Error("Brak klucza.");
 
-  // Ustawienie Twojego konkretnego modelu
   const MODEL_ID = "openai/gpt-oss-120b"; 
 
-  const prompt = `
-Jesteś zaawansowaną inteligencją o głębokim wglądzie w naturę technologii. 
-ZADANIE: Napisz fascynujący, wielowątkowy artykuł na blog (minimum 1500-2000 słów).
+  // Prompt "odchudzony" do absolutnego minimum (oszczędzamy TPM)
+  const prompt = `Napisz esej blogowy AI (1500 słów). 
+Temat: ${topic}. 
+Styl: Popularnonaukowy, wizjonerski, głęboki. 
+Format: HTML (<h2>, <p>, <blockquote>). 
+Nie używaj tytułów: ${existingTitles.join(", ")}.
 
-TEMAT: ${topic}
-
-WYTYCZNE (DLA MODELU 120B):
-1. STYL: Pisz jak technologiczny wizjoner. Unikaj szkolnych struktur ("Wstęp", "Podsumowanie"). Używaj autorskich, intrygujących śródtytułów.
-2. GŁĘBIA: Wykorzystaj swoją moc obliczeniową do analizy filozoficznej i technicznej. Zamiast pisać "AI pomaga", opisz mechanizmy sieci neuronowych i ich wpływ na tkankę społeczną.
-3. STORYTELLING: Zacznij od mocnej sceny, która pokazuje przyszłość opisywaną w temacie.
-4. FORMAT: HTML (<h2>, <p>, <strong>, <em>, <blockquote>). Użyj przynajmniej trzech cytatów w <blockquote>, które brzmią jak manifest AI.
-
-UNIKAJ TYCH TYTUŁÓW: ${existingTitles.join(", ")}
-
-FORMAT ODPOWIEDZI (WYŁĄCZNIE CZYSTY JSON):
+JSON:
 {
-  "title": "Tytuł uderzający w sedno",
+  "title": "Tytuł",
   "topic": "Kategoria",
-  "excerpt": "Zajawka, która zmusza do myślenia",
-  "html": "Treść artykułu"
-}
-`.trim();
+  "excerpt": "Zajawka",
+  "html": "Treść"
+}`.trim();
 
   const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
     method: "POST",
@@ -159,24 +148,18 @@ FORMAT ODPOWIEDZI (WYŁĄCZNIE CZYSTY JSON):
     },
     body: JSON.stringify({
       model: MODEL_ID,
-      messages: [
-        { 
-          role: "user", 
-          content: prompt 
-        }
-      ],
-      // Optymalizacja pod model 120B
-      temperature: 1,
-      max_completion_tokens: 8192,
-      top_p: 1,
+      messages: [{ role: "user", content: prompt }],
+      temperature: 0.8,
+      // Suma promptu (~500) i tej wartości (3500) musi być < 8000
+      max_completion_tokens: 3500, 
       response_format: { type: "json_object" }
     }),
   });
 
   if (!res.ok) {
-    const errorBody = await res.json().catch(() => ({}));
-    console.error("Błąd API:", errorBody);
-    throw new Error(`Błąd API Groq (${MODEL_ID}): ${res.status}`);
+    const err = await res.json().catch(() => ({}));
+    console.error("Błąd API (prawdopodobnie limit TPM):", err);
+    throw new Error(`Błąd ${res.status}`);
   }
 
   const data = await res.json();
