@@ -31,6 +31,10 @@ jobs:
             echo "Brak pliku package.json, pomijam instalację."
           fi
       # 4. Generowanie posta
+      # Krok tymczasowy - pokaże gdzie leżą pliki JS/MJS
+      - name: Debug - znajdź skrypt
+        run: find . -name "*.mjs" -o -name "*.js" | grep -v node_modules
+
       - name: Generate post
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
