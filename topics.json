@@ -9,7 +9,6 @@
     "AI pod maską - systemy przewidujące awarię silnika, zanim usłyszysz stukanie",
     "Wirtualny asystent w urzędzie - czy sztuczna inteligencja skróci kolejki?",
     "Detektyw AI - jak algorytmy pomagają policji odnajdywać zaginione osoby",
-    "Przewodnik dla niewidomych - okulary z AI opisujące świat w czasie rzeczywistym",
     "AI w piekarni - jak algorytmy wyliczają wypiek, by nie marnować ani bochenka",
     "Inteligentne przejścia dla pieszych - jak AI dba o bezpieczeństwo na drogach",
     "Tłumacz wideo na żywo - oglądanie zagranicznych mediów w Twoim języku",
@@ -67,6 +66,10 @@
     {
       "topic": "AI na talerzu - o projektowaniu zupełnie nowych smaków przez algorytmy",
       "usedAt": "2026-04-22T20:14:25.998Z"
+    },
+    {
+      "topic": "Przewodnik dla niewidomych - okulary z AI opisujące świat w czasie rzeczywistym",
+      "usedAt": "2026-04-23T07:24:24.850Z"
     }
   ]
 }
