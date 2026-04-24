@@ -19,7 +19,6 @@
     "Prywatny tutor w smartfonie - matematyka dopasowana do Twojego tempa",
     "Sztuczna Inteligencja i stare mapy - odkrywanie zapomnianych szlaków handlowych",
     "AI w walce z korozją - jak algorytmy chronią mosty i rurociągi przed rdzą",
-    "AI i zapachy - o tym, jak algorytmy pomagają tworzyć nowe perfumy",
     "AI w bibliotece - jak algorytmy ratują zniszczone manuskrypty przed zapomnieniem"
   ],
   "used": [
@@ -70,6 +69,10 @@
     {
       "topic": "Przewodnik dla niewidomych - okulary z AI opisujące świat w czasie rzeczywistym",
       "usedAt": "2026-04-23T07:24:24.850Z"
+    },
+    {
+      "topic": "AI i zapachy - o tym, jak algorytmy pomagają tworzyć nowe perfumy",
+      "usedAt": "2026-04-24T07:50:21.260Z"
     }
   ]
 }
