@@ -13,7 +13,6 @@
     "Inteligentne przejścia dla pieszych - jak AI dba o bezpieczeństwo na drogach",
     "Tłumacz wideo na żywo - oglądanie zagranicznych mediów w Twoim języku",
     "Sztuczna Inteligencja w sporcie - czujniki poprawiające technikę skoku narciarza",
-    "AI zamiast testów na zwierzętach - o symulacjach ludzkiej skóry w laboratoriach",
     "Zarządzanie tłumem - jak AI pomaga unikać ścisku na peronach metra",
     "AI w Twojej lodówce - planowanie posiłków tak, by nie wyrzucać jedzenia",
     "Prywatny tutor w smartfonie - matematyka dopasowana do Twojego tempa",
@@ -73,6 +72,10 @@
     {
       "topic": "AI i zapachy - o tym, jak algorytmy pomagają tworzyć nowe perfumy",
       "usedAt": "2026-04-24T07:50:21.260Z"
+    },
+    {
+      "topic": "AI zamiast testów na zwierzętach - o symulacjach ludzkiej skóry w laboratoriach",
+      "usedAt": "2026-04-26T07:18:11.217Z"
     }
   ]
 }
