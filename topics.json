@@ -15,7 +15,6 @@
     "Sztuczna Inteligencja w sporcie - czujniki poprawiające technikę skoku narciarza",
     "Zarządzanie tłumem - jak AI pomaga unikać ścisku na peronach metra",
     "AI w Twojej lodówce - planowanie posiłków tak, by nie wyrzucać jedzenia",
-    "Prywatny tutor w smartfonie - matematyka dopasowana do Twojego tempa",
     "Sztuczna Inteligencja i stare mapy - odkrywanie zapomnianych szlaków handlowych",
     "AI w walce z korozją - jak algorytmy chronią mosty i rurociągi przed rdzą",
     "AI w bibliotece - jak algorytmy ratują zniszczone manuskrypty przed zapomnieniem"
@@ -76,6 +75,10 @@
     {
       "topic": "AI zamiast testów na zwierzętach - o symulacjach ludzkiej skóry w laboratoriach",
       "usedAt": "2026-04-26T07:18:11.217Z"
+    },
+    {
+      "topic": "Prywatny tutor w smartfonie - matematyka dopasowana do Twojego tempa",
+      "usedAt": "2026-04-28T19:49:36.468Z"
     }
   ]
 }
