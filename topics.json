@@ -12,7 +12,6 @@
     "AI w piekarni - jak algorytmy wyliczają wypiek, by nie marnować ani bochenka",
     "Inteligentne przejścia dla pieszych - jak AI dba o bezpieczeństwo na drogach",
     "Tłumacz wideo na żywo - oglądanie zagranicznych mediów w Twoim języku",
-    "Sztuczna Inteligencja w sporcie - czujniki poprawiające technikę skoku narciarza",
     "Zarządzanie tłumem - jak AI pomaga unikać ścisku na peronach metra",
     "AI w Twojej lodówce - planowanie posiłków tak, by nie wyrzucać jedzenia",
     "Sztuczna Inteligencja i stare mapy - odkrywanie zapomnianych szlaków handlowych",
@@ -79,6 +78,10 @@
     {
       "topic": "Prywatny tutor w smartfonie - matematyka dopasowana do Twojego tempa",
       "usedAt": "2026-04-28T19:49:36.468Z"
+    },
+    {
+      "topic": "Sztuczna Inteligencja w sporcie - czujniki poprawiające technikę skoku narciarza",
+      "usedAt": "2026-05-01T08:03:13.844Z"
     }
   ]
 }
