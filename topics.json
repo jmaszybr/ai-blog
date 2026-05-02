@@ -6,7 +6,6 @@
     "Cyfrowy konserwator zabytków - jak AI odtwarza brakujące kolory antycznych rzeźb",
     "Twój licznik prądu ma mózg - o oszczędzaniu energii w domu dzięki AI",
     "Strażnik lasu 2.0 - mikrofony z AI wykrywające piły mechaniczne kłusowników",
-    "AI pod maską - systemy przewidujące awarię silnika, zanim usłyszysz stukanie",
     "Wirtualny asystent w urzędzie - czy sztuczna inteligencja skróci kolejki?",
     "Detektyw AI - jak algorytmy pomagają policji odnajdywać zaginione osoby",
     "AI w piekarni - jak algorytmy wyliczają wypiek, by nie marnować ani bochenka",
@@ -82,6 +81,10 @@
     {
       "topic": "Sztuczna Inteligencja w sporcie - czujniki poprawiające technikę skoku narciarza",
       "usedAt": "2026-05-01T08:03:13.844Z"
+    },
+    {
+      "topic": "AI pod maską - systemy przewidujące awarię silnika, zanim usłyszysz stukanie",
+      "usedAt": "2026-05-02T07:21:00.731Z"
     }
   ]
 }
