@@ -4,7 +4,6 @@
     "Ratownik z chmury - jak AI przewiduje zawały serca przed wystąpieniem objawów",
     "Inteligentne śmietniki - o tym, jak AI sortuje odpady szybciej niż człowiek",
     "Cyfrowy konserwator zabytków - jak AI odtwarza brakujące kolory antycznych rzeźb",
-    "Strażnik lasu 2.0 - mikrofony z AI wykrywające piły mechaniczne kłusowników",
     "Wirtualny asystent w urzędzie - czy sztuczna inteligencja skróci kolejki?",
     "Detektyw AI - jak algorytmy pomagają policji odnajdywać zaginione osoby",
     "AI w piekarni - jak algorytmy wyliczają wypiek, by nie marnować ani bochenka",
@@ -88,6 +87,10 @@
     {
       "topic": "Twój licznik prądu ma mózg - o oszczędzaniu energii w domu dzięki AI",
       "usedAt": "2026-05-03T07:49:45.355Z"
+    },
+    {
+      "topic": "Strażnik lasu 2.0 - mikrofony z AI wykrywające piły mechaniczne kłusowników",
+      "usedAt": "2026-05-04T08:19:20.171Z"
     }
   ]
 }
