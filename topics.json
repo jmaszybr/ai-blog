@@ -7,7 +7,6 @@
     "Wirtualny asystent w urzędzie - czy sztuczna inteligencja skróci kolejki?",
     "Detektyw AI - jak algorytmy pomagają policji odnajdywać zaginione osoby",
     "AI w piekarni - jak algorytmy wyliczają wypiek, by nie marnować ani bochenka",
-    "Inteligentne przejścia dla pieszych - jak AI dba o bezpieczeństwo na drogach",
     "Tłumacz wideo na żywo - oglądanie zagranicznych mediów w Twoim języku",
     "Zarządzanie tłumem - jak AI pomaga unikać ścisku na peronach metra",
     "AI w Twojej lodówce - planowanie posiłków tak, by nie wyrzucać jedzenia",
@@ -91,6 +90,10 @@
     {
       "topic": "Strażnik lasu 2.0 - mikrofony z AI wykrywające piły mechaniczne kłusowników",
       "usedAt": "2026-05-04T08:19:20.171Z"
+    },
+    {
+      "topic": "Inteligentne przejścia dla pieszych - jak AI dba o bezpieczeństwo na drogach",
+      "usedAt": "2026-05-05T07:55:58.989Z"
     }
   ]
 }
