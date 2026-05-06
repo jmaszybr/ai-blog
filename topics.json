@@ -1,7 +1,6 @@
 {
   "unused": [
     "AI w Twoim kranie - jak algorytmy zarządzają dostawami wody w miastach",
-    "Ratownik z chmury - jak AI przewiduje zawały serca przed wystąpieniem objawów",
     "Inteligentne śmietniki - o tym, jak AI sortuje odpady szybciej niż człowiek",
     "Cyfrowy konserwator zabytków - jak AI odtwarza brakujące kolory antycznych rzeźb",
     "Wirtualny asystent w urzędzie - czy sztuczna inteligencja skróci kolejki?",
@@ -94,6 +93,10 @@
     {
       "topic": "Inteligentne przejścia dla pieszych - jak AI dba o bezpieczeństwo na drogach",
       "usedAt": "2026-05-05T07:55:58.989Z"
+    },
+    {
+      "topic": "Ratownik z chmury - jak AI przewiduje zawały serca przed wystąpieniem objawów",
+      "usedAt": "2026-05-06T08:10:22.099Z"
     }
   ]
 }
