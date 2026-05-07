@@ -388,12 +388,8 @@ function renderArticlePage({ title, topic, html, date, imageSrc, excerpt, source
 
   const sourcesHtml = sourceTitles?.length
     ? `<h2>Źródła</h2><ol class="sources-list">
-        ${sourceTitles.map((title, i) => {
-          const url = sources?.[i];
-          const label = escapeHtml(title || `Źródło ${i + 1}`);
-          return url
-            ? `<li><a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${label}</a> [dostęp: ${escapeHtml(date)}]</li>`
-            : `<li>${label} [dostęp: ${escapeHtml(date)}]</li>`;
+        ${sourceTitles.map((title) => {
+          return `<li>${escapeHtml(title)}</li>`;
         }).join("\n")}
       </ol>`
     : "";
