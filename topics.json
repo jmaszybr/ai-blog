@@ -3,7 +3,6 @@
     "AI w Twoim kranie - jak algorytmy zarządzają dostawami wody w miastach",
     "Inteligentne śmietniki - o tym, jak AI sortuje odpady szybciej niż człowiek",
     "Cyfrowy konserwator zabytków - jak AI odtwarza brakujące kolory antycznych rzeźb",
-    "Wirtualny asystent w urzędzie - czy sztuczna inteligencja skróci kolejki?",
     "Detektyw AI - jak algorytmy pomagają policji odnajdywać zaginione osoby",
     "AI w piekarni - jak algorytmy wyliczają wypiek, by nie marnować ani bochenka",
     "Tłumacz wideo na żywo - oglądanie zagranicznych mediów w Twoim języku",
@@ -100,6 +99,10 @@
     {
       "topic": "Zarządzanie tłumem - jak AI pomaga unikać ścisku na peronach metra",
       "usedAt": "2026-05-07T20:15:24.816Z"
+    },
+    {
+      "topic": "Wirtualny asystent w urzędzie - czy sztuczna inteligencja skróci kolejki?",
+      "usedAt": "2026-05-07T20:19:38.885Z"
     }
   ]
 }
