@@ -1,1 +1,8 @@
-
+{
+  "name": "ai-blog",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "sanitize-html": "^2.13.0"
+  }
+}
