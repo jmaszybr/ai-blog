@@ -388,9 +388,8 @@ function renderArticlePage({ title, topic, html, date, imageSrc, excerpt, source
 
   const sourcesHtml = sources?.length
     ? `<h2>Źródła</h2><ol class="sources-list">
-        ${sources.map((url, i) => {
-          const srcTitle = sourceTitles?.[i] ?? `Źródło ${i + 1}`;
-          return `<li>[${i + 1}] <em>${escapeHtml(srcTitle)}</em>. Dostępny w: <a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">link ${i + 1}</a> [dostęp: ${escapeHtml(date)}]</li>`;
+        ${sources.map((url) => {
+          return `<li><a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(url)}</a> [dostęp: ${escapeHtml(date)}]</li>`;
         }).join("\n")}
       </ol>`
     : "";
