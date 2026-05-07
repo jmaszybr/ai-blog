@@ -7,7 +7,6 @@
     "Detektyw AI - jak algorytmy pomagają policji odnajdywać zaginione osoby",
     "AI w piekarni - jak algorytmy wyliczają wypiek, by nie marnować ani bochenka",
     "Tłumacz wideo na żywo - oglądanie zagranicznych mediów w Twoim języku",
-    "Zarządzanie tłumem - jak AI pomaga unikać ścisku na peronach metra",
     "AI w Twojej lodówce - planowanie posiłków tak, by nie wyrzucać jedzenia",
     "Sztuczna Inteligencja i stare mapy - odkrywanie zapomnianych szlaków handlowych",
     "AI w walce z korozją - jak algorytmy chronią mosty i rurociągi przed rdzą",
@@ -97,6 +96,10 @@
     {
       "topic": "Ratownik z chmury - jak AI przewiduje zawały serca przed wystąpieniem objawów",
       "usedAt": "2026-05-06T08:10:22.099Z"
+    },
+    {
+      "topic": "Zarządzanie tłumem - jak AI pomaga unikać ścisku na peronach metra",
+      "usedAt": "2026-05-07T20:15:24.816Z"
     }
   ]
 }
