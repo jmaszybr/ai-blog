@@ -299,8 +299,6 @@ async function generatePostWithGemini(topic, existingTitles = []) {
           generationConfig: {
             temperature: CONFIG.gemini.temperature,
             maxOutputTokens: CONFIG.gemini.maxOutputTokens,
-            // Wymuszamy czysty JSON bez markdown fence
-            responseMimeType: "application/json",
           },
         }),
       },
