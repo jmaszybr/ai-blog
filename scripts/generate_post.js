@@ -386,10 +386,14 @@ function renderArticlePage({ title, topic, html, date, imageSrc, excerpt, source
     ? `<img src="${escapeHtml(imageSrc)}" class="post-hero" alt="${escapeHtml(title)}">`
     : "";
 
-  const sourcesHtml = sources?.length
+  const sourcesHtml = sourceTitles?.length
     ? `<h2>Źródła</h2><ol class="sources-list">
-        ${sources.map((url) => {
-          return `<li><a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(url)}</a> [dostęp: ${escapeHtml(date)}]</li>`;
+        ${sourceTitles.map((title, i) => {
+          const url = sources?.[i];
+          const label = escapeHtml(title || `Źródło ${i + 1}`);
+          return url
+            ? `<li><a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${label}</a> [dostęp: ${escapeHtml(date)}]</li>`
+            : `<li>${label} [dostęp: ${escapeHtml(date)}]</li>`;
         }).join("\n")}
       </ol>`
     : "";
