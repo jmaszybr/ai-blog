@@ -24,6 +24,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
+import sanitizeHtml from "sanitize-html";
 
 // =============================================================================
 //  KONFIGURACJA
@@ -43,12 +44,17 @@ const CONFIG = {
     temperature: 0.8,
     maxOutputTokens: 8192,
     timeoutMs: 90_000,
+    maxRetries: 3,
+    retryDelayMs: 2_000,
   },
 
   clipdrop: {
     endpoint: "https://clipdrop-api.co/text-to-image/v1",
     timeoutMs: 45_000,
   },
+
+  // Tagi HTML dozwolone w treści artykułu - wszystko inne jest wycinane
+  allowedHtmlTags: ["h2", "h3", "p", "blockquote", "strong", "em", "ul", "ol", "li", "br"],
 
   maxIndexEntries: 100,
   recentTitlesLookback: 10,
@@ -106,6 +112,18 @@ function escapeHtml(input) {
   return String(input ?? "").replace(/[&<>"']/g, (ch) => map[ch]);
 }
 
+/**
+ * Sanityzuje HTML z Gemini - usuwa <script>, event handlery i wszystko
+ * czego nie ma na allowedHtmlTags. Chroni przed XSS injection.
+ */
+function sanitizePostHtml(rawHtml) {
+  return sanitizeHtml(rawHtml, {
+    allowedTags: CONFIG.allowedHtmlTags,
+    allowedAttributes: {},       // żadnych atrybutów (w tym onclick, href itp.)
+    disallowedTagsMode: "discard",
+  });
+}
+
 function formatDatePL(date = new Date()) {
   const months = [
     "stycznia", "lutego", "marca", "kwietnia", "maja", "czerwca",
@@ -141,6 +159,28 @@ async function fetchWithTimeout(url, options = {}, timeoutMs = 30_000) {
   }
 }
 
+/**
+ * Wykonuje async operację z automatycznym retry przy błędach sieciowych.
+ * @param {Function} fn         - async funkcja do wykonania
+ * @param {number}   maxRetries - ile razy powtórzyć przy błędzie
+ * @param {number}   delayMs    - opóźnienie między próbami (ms)
+ */
+async function withRetry(fn, maxRetries = CONFIG.gemini.maxRetries, delayMs = CONFIG.gemini.retryDelayMs) {
+  let lastError;
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      return await fn();
+    } catch (err) {
+      lastError = err;
+      const isRetryable = err.name === "AbortError" || /5\d\d/.test(String(err.message));
+      if (!isRetryable || attempt === maxRetries) throw err;
+      log.warn(`Próba ${attempt}/${maxRetries} nieudana: ${err.message}. Retry za ${delayMs}ms...`);
+      await new Promise((res) => setTimeout(res, delayMs));
+    }
+  }
+  throw lastError;
+}
+
 // =============================================================================
 //  ZARZĄDZANIE INDEKSEM WPISÓW
 // =============================================================================
@@ -151,7 +191,11 @@ function readIndex() {
 }
 
 function writeIndex(list) {
-  writeJsonAtomic(CONFIG.paths.index, list.slice(0, CONFIG.maxIndexEntries));
+  const trimmed = list.slice(0, CONFIG.maxIndexEntries);
+  if (list.length > CONFIG.maxIndexEntries) {
+    log.warn(`Indeks przekroczył ${CONFIG.maxIndexEntries} wpisów - najstarsze ${list.length - CONFIG.maxIndexEntries} zostały usunięte.`);
+  }
+  writeJsonAtomic(CONFIG.paths.index, trimmed);
 }
 
 // =============================================================================
@@ -172,25 +216,26 @@ function readTopics() {
   };
 }
 
-function pickRandomTopic() {
+/**
+ * Losuje temat i od razu go "rezerwuje" (przenosi do used) żeby uniknąć
+ * duplikatów przy równoległych uruchomieniach.
+ * Zwraca wybrany temat (string).
+ */
+function pickAndReserveTopic() {
   const topics = readTopics();
   if (topics.unused.length === 0) {
     throw new Error("Brak nieużytych tematów w topics.json! Dodaj nowe tematy do listy `unused`.");
   }
-  const idx = Math.floor(Math.random() * topics.unused.length);
-  return { topic: topics.unused[idx], index: idx };
-}
 
-function commitTopicAsUsed(topicText) {
-  const topics = readTopics();
-  const idx = topics.unused.indexOf(topicText);
-  if (idx === -1) {
-    log.warn(`Nie znalazłem tematu "${topicText}" w unused przy commit - pomijam.`);
-    return;
-  }
+  const idx = Math.floor(Math.random() * topics.unused.length);
+  const selected = topics.unused[idx];
+
+  // Rezerwujemy od razu - nie czekamy na koniec skryptu
   topics.unused.splice(idx, 1);
-  topics.used.push({ topic: topicText, usedAt: new Date().toISOString() });
+  topics.used.push({ topic: selected, usedAt: new Date().toISOString() });
   writeJsonAtomic(CONFIG.paths.topics, topics);
+
+  return selected;
 }
 
 // =============================================================================
@@ -242,56 +287,59 @@ async function generatePostWithGemini(topic, existingTitles = []) {
   const prompt = buildPrompt(topic, existingTitles);
   const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${CONFIG.gemini.model}:generateContent?key=${apiKey}`;
 
-  const response = await fetchWithTimeout(
-    endpoint,
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        contents: [{ parts: [{ text: prompt }] }],
-        tools: [{ googleSearch: {} }],
-        generationConfig: {
-          temperature: CONFIG.gemini.temperature,
-          maxOutputTokens: CONFIG.gemini.maxOutputTokens,
-        },
-      }),
-    },
-    CONFIG.gemini.timeoutMs
-  );
+  return withRetry(async () => {
+    const response = await fetchWithTimeout(
+      endpoint,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: prompt }] }],
+          tools: [{ googleSearch: {} }],
+          generationConfig: {
+            temperature: CONFIG.gemini.temperature,
+            maxOutputTokens: CONFIG.gemini.maxOutputTokens,
+            // Wymuszamy czysty JSON bez markdown fence
+            responseMimeType: "application/json",
+          },
+        }),
+      },
+      CONFIG.gemini.timeoutMs
+    );
 
-  if (!response.ok) {
-    const errBody = await response.json().catch(() => ({}));
-    log.error(`Gemini API ${response.status}: ${JSON.stringify(errBody)}`);
-    throw new Error(`Gemini API zwróciło status ${response.status}`);
-  }
+    if (!response.ok) {
+      const errBody = await response.json().catch(() => ({}));
+      log.error(`Gemini API ${response.status}: ${JSON.stringify(errBody)}`);
+      throw new Error(`Gemini API zwróciło status ${response.status}`);
+    }
 
-  const data = await response.json();
-  const content = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-  if (!content) throw new Error("Gemini API zwrócił odpowiedź bez pola content.");
+    const data = await response.json();
+    const content = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+    if (!content) throw new Error("Gemini API zwrócił odpowiedź bez pola content.");
 
-  // Gemini czasem owija JSON w ```json ... ``` - czyścimy to
-  const cleaned = content.replace(/^```json\s*/i, "").replace(/```\s*$/, "").trim();
+    // Fallback na wypadek gdyby model mimo responseMimeType owinie JSON w ```
+    const cleaned = content.replace(/^```json\s*/i, "").replace(/```\s*$/, "").trim();
 
-  let parsed;
-  try {
-    parsed = JSON.parse(cleaned);
-  } catch (err) {
-    throw new Error(`Nie udało się sparsować JSON z Gemini: ${err.message}\nTreść: ${cleaned.slice(0, 200)}`);
-  }
+    let parsed;
+    try {
+      parsed = JSON.parse(cleaned);
+    } catch (err) {
+      throw new Error(`Nie udało się sparsować JSON z Gemini: ${err.message}\nTreść: ${cleaned.slice(0, 200)}`);
+    }
 
-  validatePostPayload(parsed);
+    validatePostPayload(parsed);
 
-  // Wyciągamy URL-e źródeł z metadanych groundingu
-  const sources = data?.candidates?.[0]?.groundingMetadata?.groundingChunks
-    ?.map((c) => c.web?.uri)
-    .filter(Boolean) ?? [];
+    // Wyciągamy URL-e źródeł z metadanych groundingu
+    const sources = data?.candidates?.[0]?.groundingMetadata?.groundingChunks
+      ?.map((c) => c.web?.uri)
+      .filter(Boolean) ?? [];
 
-  // sourceTitles z JSON - tablica tytułów podana przez Gemini
-  const sourceTitles = Array.isArray(parsed.sourceTitles) ? parsed.sourceTitles : [];
+    const sourceTitles = Array.isArray(parsed.sourceTitles) ? parsed.sourceTitles : [];
 
-  log.info(`Grounding: znaleziono ${sources.length} źródeł, ${sourceTitles.length} tytułów.`);
+    log.info(`Grounding: znaleziono ${sources.length} źródeł, ${sourceTitles.length} tytułów.`);
 
-  return { ...parsed, sources, sourceTitles };
+    return { ...parsed, sources, sourceTitles };
+  });
 }
 
 // =============================================================================
@@ -340,15 +388,11 @@ function renderArticlePage({ title, topic, html, date, imageSrc, excerpt, source
     ? `<img src="${escapeHtml(imageSrc)}" class="post-hero" alt="${escapeHtml(title)}">`
     : "";
 
-  // Data dostępu w formacie polskim
-  const accessDate = formatDatePL();
-
-  // Sekcja źródeł w stylu numerycznym [1] Tytuł. Dostępny w: link 1 [dostęp: data]
   const sourcesHtml = sources?.length
     ? `<h2>Źródła</h2><ol class="sources-list">
         ${sources.map((url, i) => {
-          const title = sourceTitles?.[i] ?? `Źródło ${i + 1}`;
-          return `<li>[${i + 1}] <em>${escapeHtml(title)}</em>. Dostępny w: <a href="${escapeHtml(url)}" target="_blank" rel="noopener">link ${i + 1}</a> [dostęp: ${accessDate}]</li>`;
+          const srcTitle = sourceTitles?.[i] ?? `Źródło ${i + 1}`;
+          return `<li>[${i + 1}] <em>${escapeHtml(srcTitle)}</em>. Dostępny w: <a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">link ${i + 1}</a> [dostęp: ${escapeHtml(date)}]</li>`;
         }).join("\n")}
       </ol>`
     : "";
@@ -419,22 +463,34 @@ async function main() {
     .map((p) => p.title)
     .filter(Boolean);
 
-  // Krok 3: losowanie tematu (bez commita!)
-  log.step("Losuję temat z puli...");
-  const { topic: selectedTopic } = pickRandomTopic();
+  // Krok 3: losowanie tematu + natychmiastowa rezerwacja (anty-race condition)
+  log.step("Losuję i rezerwuję temat z puli...");
+  const selectedTopic = pickAndReserveTopic();
   log.info(`Wybrany temat: "${selectedTopic}"`);
 
-  // Krok 4: generowanie treści przez Gemini z groundingiem
+  // Krok 4: generowanie treści przez Gemini z groundingiem (z retry)
   log.step("Generuję treść artykułu przez Gemini (Google Search grounding)...");
   const post = await generatePostWithGemini(selectedTopic, recentTitles);
   log.success(`Artykuł wygenerowany - tytuł: "${post.title}"`);
 
-  // Metadane
-  const date = formatDatePL();
+  // Metadane - data ustawiana raz i używana wszędzie (brak rozbieżności przy północy)
+  const now = new Date();
+  const date = formatDatePL(now);
   const id = crypto.randomBytes(4).toString("hex");
-  const slug = slugify(post.title) || `post-${id}`;
 
-  // Krok 5: obrazek (opcjonalny - błąd nie zabija procesu)
+  // Generowanie sluga z fallbackiem przy kolizji
+  let slug = slugify(post.title) || `post-${id}`;
+  const articlePath = path.join(CONFIG.paths.posts, `${slug}.html`);
+  if (fs.existsSync(articlePath)) {
+    log.warn(`Plik ${slug}.html już istnieje - dopisuję ID do nazwy.`);
+    slug = `${slug}-${id}`;
+  }
+
+  // Krok 5: sanityzacja HTML przed jakimkolwiek użyciem
+  log.step("Sanityzuję HTML artykułu...");
+  const safeHtml = sanitizePostHtml(post.html);
+
+  // Krok 6: obrazek (opcjonalny - błąd nie zabija procesu)
   let image = { forArticle: "", forIndex: "" };
   try {
     log.step("Generuję ilustrację przez Clipdrop...");
@@ -444,22 +500,22 @@ async function main() {
     log.warn(`Ilustracja pominięta: ${err.message}`);
   }
 
-  // Krok 6: zapis HTML artykułu
+  // Krok 7: zapis HTML artykułu (używamy safeHtml, nie post.html)
   log.step("Zapisuję plik HTML artykułu...");
   const pageHtml = renderArticlePage({
     title:        post.title,
     topic:        post.topic,
     excerpt:      post.excerpt,
-    html:         post.html,
+    html:         safeHtml,       // ← sanityzowany HTML
     date,
     imageSrc:     image.forArticle,
     sources:      post.sources,
     sourceTitles: post.sourceTitles,
   });
-  const articlePath = path.join(CONFIG.paths.posts, `${slug}.html`);
-  fs.writeFileSync(articlePath, pageHtml, "utf8");
+  const finalArticlePath = path.join(CONFIG.paths.posts, `${slug}.html`);
+  fs.writeFileSync(finalArticlePath, pageHtml, "utf8");
 
-  // Krok 7: aktualizacja indeksu (atomowa)
+  // Krok 8: aktualizacja indeksu (atomowa)
   log.step("Aktualizuję indeks wpisów...");
   index.unshift({
     id,
@@ -472,10 +528,7 @@ async function main() {
   });
   writeIndex(index);
 
-  // Krok 8: dopiero teraz "zużywamy" temat
-  commitTopicAsUsed(selectedTopic);
-
-  log.success(`🎉 Opublikowano: "${post.title}" → ${articlePath}`);
+  log.success(`🎉 Opublikowano: "${post.title}" → ${finalArticlePath}`);
 }
 
 // =============================================================================
