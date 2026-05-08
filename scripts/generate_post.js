@@ -45,7 +45,7 @@ const CONFIG = {
     maxOutputTokens: 8192,
     timeoutMs: 90_000,
     maxRetries: 3,
-    retryDelayMs: 2_000,
+    retryDelayMs: 5_000,
   },
 
   clipdrop: {
@@ -312,10 +312,16 @@ async function generatePostWithGemini(topic, existingTitles = []) {
     }
 
     const data = await response.json();
-    const content = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+    const candidate = data?.candidates?.[0];
+    const finishReason = candidate?.finishReason;
+    const content = candidate?.content?.parts?.[0]?.text;
+
     if (!content) {
       log.error(`Surowa odpowiedź Gemini: ${JSON.stringify(data).slice(0, 500)}`);
-      throw new Error("Gemini API zwrócił odpowiedź bez pola content.");
+      // Gdy Gemini zrobił search ale nie wygenerował tekstu - wymuszamy retry
+      const err = new Error(`Gemini zwrócił pustą treść (finishReason: ${finishReason})`);
+      err.name = "AbortError"; // traktuj jak błąd sieciowy - retry
+      throw err;
     }
 
     // Fallback na wypadek gdyby model mimo responseMimeType owinie JSON w ```
