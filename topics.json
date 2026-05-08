@@ -1,7 +1,6 @@
 {
   "unused": [
     "AI w Twoim kranie - jak algorytmy zarządzają dostawami wody w miastach",
-    "Inteligentne śmietniki - o tym, jak AI sortuje odpady szybciej niż człowiek",
     "Cyfrowy konserwator zabytków - jak AI odtwarza brakujące kolory antycznych rzeźb",
     "AI w piekarni - jak algorytmy wyliczają wypiek, by nie marnować ani bochenka",
     "AI w Twojej lodówce - planowanie posiłków tak, by nie wyrzucać jedzenia",
@@ -109,6 +108,10 @@
     {
       "topic": "Tłumacz wideo na żywo - oglądanie zagranicznych mediów w Twoim języku",
       "usedAt": "2026-05-08T07:17:38.732Z"
+    },
+    {
+      "topic": "Inteligentne śmietniki - o tym, jak AI sortuje odpady szybciej niż człowiek",
+      "usedAt": "2026-05-08T09:28:32.850Z"
     }
   ]
 }
