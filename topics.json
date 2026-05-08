@@ -4,7 +4,6 @@
     "Inteligentne śmietniki - o tym, jak AI sortuje odpady szybciej niż człowiek",
     "Cyfrowy konserwator zabytków - jak AI odtwarza brakujące kolory antycznych rzeźb",
     "AI w piekarni - jak algorytmy wyliczają wypiek, by nie marnować ani bochenka",
-    "Tłumacz wideo na żywo - oglądanie zagranicznych mediów w Twoim języku",
     "AI w Twojej lodówce - planowanie posiłków tak, by nie wyrzucać jedzenia",
     "Sztuczna Inteligencja i stare mapy - odkrywanie zapomnianych szlaków handlowych",
     "AI w walce z korozją - jak algorytmy chronią mosty i rurociągi przed rdzą",
@@ -106,6 +105,10 @@
     {
       "topic": "Detektyw AI - jak algorytmy pomagają policji odnajdywać zaginione osoby",
       "usedAt": "2026-05-07T20:25:33.226Z"
+    },
+    {
+      "topic": "Tłumacz wideo na żywo - oglądanie zagranicznych mediów w Twoim języku",
+      "usedAt": "2026-05-08T07:17:38.732Z"
     }
   ]
 }
