@@ -313,7 +313,10 @@ async function generatePostWithGemini(topic, existingTitles = []) {
 
     const data = await response.json();
     const content = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-    if (!content) throw new Error("Gemini API zwrócił odpowiedź bez pola content.");
+    if (!content) {
+      log.error(`Surowa odpowiedź Gemini: ${JSON.stringify(data).slice(0, 500)}`);
+      throw new Error("Gemini API zwrócił odpowiedź bez pola content.");
+    }
 
     // Fallback na wypadek gdyby model mimo responseMimeType owinie JSON w ```
     const cleaned = content.replace(/^```json\s*/i, "").replace(/```\s*$/, "").trim();
