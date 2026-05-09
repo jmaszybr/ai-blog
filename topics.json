@@ -1,7 +1,6 @@
 {
   "unused": [
     "AI w Twoim kranie - jak algorytmy zarządzają dostawami wody w miastach",
-    "Cyfrowy konserwator zabytków - jak AI odtwarza brakujące kolory antycznych rzeźb",
     "AI w piekarni - jak algorytmy wyliczają wypiek, by nie marnować ani bochenka",
     "AI w Twojej lodówce - planowanie posiłków tak, by nie wyrzucać jedzenia",
     "Sztuczna Inteligencja i stare mapy - odkrywanie zapomnianych szlaków handlowych",
@@ -112,6 +111,10 @@
     {
       "topic": "Inteligentne śmietniki - o tym, jak AI sortuje odpady szybciej niż człowiek",
       "usedAt": "2026-05-08T09:28:32.850Z"
+    },
+    {
+      "topic": "Cyfrowy konserwator zabytków - jak AI odtwarza brakujące kolory antycznych rzeźb",
+      "usedAt": "2026-05-09T07:44:22.953Z"
     }
   ]
 }
