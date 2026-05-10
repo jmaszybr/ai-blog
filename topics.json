@@ -3,7 +3,6 @@
     "AI w Twoim kranie - jak algorytmy zarządzają dostawami wody w miastach",
     "AI w piekarni - jak algorytmy wyliczają wypiek, by nie marnować ani bochenka",
     "AI w Twojej lodówce - planowanie posiłków tak, by nie wyrzucać jedzenia",
-    "Sztuczna Inteligencja i stare mapy - odkrywanie zapomnianych szlaków handlowych",
     "AI w walce z korozją - jak algorytmy chronią mosty i rurociągi przed rdzą",
     "AI w bibliotece - jak algorytmy ratują zniszczone manuskrypty przed zapomnieniem"
   ],
@@ -115,6 +114,10 @@
     {
       "topic": "Cyfrowy konserwator zabytków - jak AI odtwarza brakujące kolory antycznych rzeźb",
       "usedAt": "2026-05-09T07:44:22.953Z"
+    },
+    {
+      "topic": "Sztuczna Inteligencja i stare mapy - odkrywanie zapomnianych szlaków handlowych",
+      "usedAt": "2026-05-10T07:58:12.518Z"
     }
   ]
 }
