@@ -1,7 +1,6 @@
 {
   "unused": [
     "AI w Twoim kranie - jak algorytmy zarządzają dostawami wody w miastach",
-    "AI w piekarni - jak algorytmy wyliczają wypiek, by nie marnować ani bochenka",
     "AI w Twojej lodówce - planowanie posiłków tak, by nie wyrzucać jedzenia",
     "AI w bibliotece - jak algorytmy ratują zniszczone manuskrypty przed zapomnieniem"
   ],
@@ -121,6 +120,10 @@
     {
       "topic": "AI w walce z korozją - jak algorytmy chronią mosty i rurociągi przed rdzą",
       "usedAt": "2026-05-11T08:59:39.079Z"
+    },
+    {
+      "topic": "AI w piekarni - jak algorytmy wyliczają wypiek, by nie marnować ani bochenka",
+      "usedAt": "2026-05-12T08:27:48.059Z"
     }
   ]
 }
