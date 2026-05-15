@@ -1,7 +1,6 @@
 {
   "unused": [
-    "AI w Twoim kranie - jak algorytmy zarządzają dostawami wody w miastach",
-    "AI w bibliotece - jak algorytmy ratują zniszczone manuskrypty przed zapomnieniem"
+    "AI w Twoim kranie - jak algorytmy zarządzają dostawami wody w miastach"
   ],
   "used": [
     {
@@ -127,6 +126,10 @@
     {
       "topic": "AI w Twojej lodówce - planowanie posiłków tak, by nie wyrzucać jedzenia",
       "usedAt": "2026-05-13T08:34:59.131Z"
+    },
+    {
+      "topic": "AI w bibliotece - jak algorytmy ratują zniszczone manuskrypty przed zapomnieniem",
+      "usedAt": "2026-05-15T08:39:49.661Z"
     }
   ]
 }
