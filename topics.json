@@ -1,7 +1,5 @@
 {
-  "unused": [
-    "AI w Twoim kranie - jak algorytmy zarządzają dostawami wody w miastach"
-  ],
+  "unused": [],
   "used": [
     {
       "topic": "Przyszłość mody: ubrania projektowane przez AI i wirtualne przymierzalnie",
@@ -130,6 +128,10 @@
     {
       "topic": "AI w bibliotece - jak algorytmy ratują zniszczone manuskrypty przed zapomnieniem",
       "usedAt": "2026-05-15T08:39:49.661Z"
+    },
+    {
+      "topic": "AI w Twoim kranie - jak algorytmy zarządzają dostawami wody w miastach",
+      "usedAt": "2026-05-16T07:51:14.479Z"
     }
   ]
 }
