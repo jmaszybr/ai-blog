@@ -25,7 +25,6 @@
     "Cyfrowy kurator sztuki - algorytmy wybierające obrazy dopasowane do nastroju",
     "Sztuczna inteligencja i pamięć rodzinna - porządkowanie starych zdjęć, listów i nagrań",
     "AI w akwarystyce - inteligentne systemy dbające o wodę, światło i zdrowie ryb",
-    "Cyfrowy instruktor jogi - kamera, która pomaga poprawić postawę i oddech",
     "AI w logistyce prezentów - jak algorytmy przewidują, czego ludzie będą szukać przed świętami",
     "Sztuczna inteligencja w ogrodach zoologicznych - monitoring dobrostanu zwierząt",
     "AI w renowacji starych filmów - odzyskiwanie kolorów, dźwięku i detali sprzed dekad"
@@ -166,6 +165,10 @@
     {
       "topic": "AI w projektowaniu leków dla rzadkich chorób - szybsze szukanie nowych terapii",
       "usedAt": "2026-05-17T20:09:45.165Z"
+    },
+    {
+      "topic": "Cyfrowy instruktor jogi - kamera, która pomaga poprawić postawę i oddech",
+      "usedAt": "2026-05-18T09:42:09.673Z"
     }
   ]
 }
