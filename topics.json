@@ -25,7 +25,6 @@
     "Sztuczna inteligencja i pamięć rodzinna - porządkowanie starych zdjęć, listów i nagrań",
     "AI w akwarystyce - inteligentne systemy dbające o wodę, światło i zdrowie ryb",
     "AI w logistyce prezentów - jak algorytmy przewidują, czego ludzie będą szukać przed świętami",
-    "Sztuczna inteligencja w ogrodach zoologicznych - monitoring dobrostanu zwierząt",
     "AI w renowacji starych filmów - odzyskiwanie kolorów, dźwięku i detali sprzed dekad"
   ],
   "used": [
@@ -172,6 +171,10 @@
     {
       "topic": "AI w produkcji muzyki filmowej - ścieżki dźwiękowe dopasowane do emocji sceny",
       "usedAt": "2026-05-19T09:00:01.799Z"
+    },
+    {
+      "topic": "Sztuczna inteligencja w ogrodach zoologicznych - monitoring dobrostanu zwierząt",
+      "usedAt": "2026-05-20T08:54:34.204Z"
     }
   ]
 }
