@@ -2,7 +2,6 @@
   "unused": [
     "AI w muzeach przyszłości - wystawy, które zmieniają się pod każdego zwiedzającego",
     "Cyfrowy dietetyk - jak AI układa jadłospis na podstawie stylu życia",
-    "AI w ratowaniu raf koralowych - algorytmy słuchające dźwięków podwodnych ekosystemów",
     "Sztuczna inteligencja w teatrze - scenografie reagujące na ruch publiczności",
     "AI w walce z hałasem miasta - inteligentne mapy ciszy i dźwiękowego stresu",
     "Robotyczny ogrodnik - jak AI pielęgnuje rośliny w domach, szklarniach i parkach",
@@ -175,6 +174,10 @@
     {
       "topic": "Sztuczna inteligencja w ogrodach zoologicznych - monitoring dobrostanu zwierząt",
       "usedAt": "2026-05-20T08:54:34.204Z"
+    },
+    {
+      "topic": "AI w ratowaniu raf koralowych - algorytmy słuchające dźwięków podwodnych ekosystemów",
+      "usedAt": "2026-05-21T08:58:27.868Z"
     }
   ]
 }
