@@ -1,0 +1,10 @@
+Editorial illustration for a Polish popular-science blog article.
+
+Title: Kino Przyszłości: Jak Sztuczna Inteligencja Przekształca Przemysł Filmowy
+Category: AI w filmie
+Excerpt: Sztuczna inteligencja rewolucjonizuje przemysł filmowy, od odmładzania gwiazd ekranu po kreowanie złożonych scenariuszy i efektów specjalnych. Czy jesteśmy świadkami narodzin nowej ery kinematografii, w której granice wyobraźni zostaną całkowicie zatarte?
+
+Create a horizontal hero image, 1200 × 630 px.
+Style: futuristic, intelligent, atmospheric, premium editorial illustration, high detail, modern composition.
+Important: no text, no letters, no logos, no watermark, no UI screenshots.
+The image should work as a clean article header and Open Graph preview.
