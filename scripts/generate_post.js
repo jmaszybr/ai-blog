@@ -1,23 +1,20 @@
 /**
  * =============================================================================
- *  AUTONOMICZNY GENERATOR BLOGA AI
+ *  AI BLOG STUDIO — GENERATOR SZKICÓW
  * =============================================================================
- *  Skrypt generuje jeden wpis blogowy przy pomocy:
- *    - Gemini API (treść artykułu + grounding Google Search)
- *    - Clipdrop API (ilustracja do wpisu)
+ *  Ten skrypt NIE publikuje wpisów automatycznie.
  *
- *  Wymagane zmienne środowiskowe:
- *    - GEMINI_API_KEY     - klucz do Gemini (Google AI Studio)
- *    - CLIPDROP_API_KEY   - klucz do Clipdrop (opcjonalny - bez niego brak obrazka)
+ *  Tryb podstawowy:
+ *    node scripts/generate_post.js --draft
  *
- *  Uruchomienie:
- *    node scripts/generate_post.js
+ *  Efekt:
+ *    - posts/drafts/<slug>.html      szkic artykułu z placeholderem obrazu
+ *    - prompts/<slug>.txt            prompt do ręcznego wygenerowania obrazu
+ *    - data/pending_posts.json       kolejka szkiców widoczna w /admin/
+ *    - data/topics.json              pula tematów
  *
- *  Struktura wyjściowa (względem katalogu uruchomienia):
- *    ./posts/<slug>.html           - wygenerowany artykuł
- *    ./posts/images/<slug>.png     - ilustracja (jeśli się udała)
- *    ./posts_index.json            - indeks wszystkich wpisów (max 100)
- *    ./topics.json                 - pula tematów (unused/used)
+ *  Wymagana zmienna środowiskowa:
+ *    - GEMINI_API_KEY
  * =============================================================================
  */
 
@@ -26,17 +23,16 @@ import path from "node:path";
 import crypto from "node:crypto";
 import sanitizeHtml from "sanitize-html";
 
-// =============================================================================
-//  KONFIGURACJA
-// =============================================================================
-
 const CONFIG = {
   paths: {
     root: process.cwd(),
     posts: path.join(process.cwd(), "posts"),
+    drafts: path.join(process.cwd(), "posts", "drafts"),
     images: path.join(process.cwd(), "posts", "images"),
-    index: path.join(process.cwd(), "posts_index.json"),
-    topics: path.join(process.cwd(), "topics.json"),
+    prompts: path.join(process.cwd(), "prompts"),
+    data: path.join(process.cwd(), "data"),
+    pending: path.join(process.cwd(), "data", "pending_posts.json"),
+    topics: path.join(process.cwd(), "data", "topics.json"),
   },
 
   gemini: {
@@ -48,15 +44,12 @@ const CONFIG = {
     retryDelayMs: 5_000,
   },
 
-  clipdrop: {
-    endpoint: "https://clipdrop-api.co/text-to-image/v1",
-    timeoutMs: 45_000,
+  image: {
+    width: 1200,
+    height: 630,
   },
 
-  // Tagi HTML dozwolone w treści artykułu - wszystko inne jest wycinane
   allowedHtmlTags: ["h2", "h3", "p", "blockquote", "strong", "em", "ul", "ol", "li", "br"],
-
-  maxIndexEntries: 100,
   recentTitlesLookback: 10,
   slugMaxLength: 80,
 };
@@ -76,10 +69,6 @@ const DEFAULT_TOPICS = [
   "AI w turystyce - planowanie podróży marzeń w 10 sekund przez AI Concierge",
 ];
 
-// =============================================================================
-//  LOGGER
-// =============================================================================
-
 const log = {
   _ts: () => new Date().toISOString().slice(11, 19),
   info:    (msg) => console.log(`[${log._ts()}] ℹ️  ${msg}`),
@@ -88,10 +77,6 @@ const log = {
   error:   (msg) => console.error(`[${log._ts()}] ❌ ${msg}`),
   step:    (msg) => console.log(`[${log._ts()}] → ${msg}`),
 };
-
-// =============================================================================
-//  NARZĘDZIA POMOCNICZE
-// =============================================================================
 
 const POLISH_DIACRITICS = {
   ą: "a", ć: "c", ę: "e", ł: "l", ń: "n",
@@ -112,14 +97,10 @@ function escapeHtml(input) {
   return String(input ?? "").replace(/[&<>"']/g, (ch) => map[ch]);
 }
 
-/**
- * Sanityzuje HTML z Gemini - usuwa <script>, event handlery i wszystko
- * czego nie ma na allowedHtmlTags. Chroni przed XSS injection.
- */
 function sanitizePostHtml(rawHtml) {
   return sanitizeHtml(rawHtml, {
     allowedTags: CONFIG.allowedHtmlTags,
-    allowedAttributes: {},       // żadnych atrybutów (w tym onclick, href itp.)
+    allowedAttributes: {},
     disallowedTagsMode: "discard",
   });
 }
@@ -159,12 +140,6 @@ async function fetchWithTimeout(url, options = {}, timeoutMs = 30_000) {
   }
 }
 
-/**
- * Wykonuje async operację z automatycznym retry przy błędach sieciowych.
- * @param {Function} fn         - async funkcja do wykonania
- * @param {number}   maxRetries - ile razy powtórzyć przy błędzie
- * @param {number}   delayMs    - opóźnienie między próbami (ms)
- */
 async function withRetry(fn, maxRetries = CONFIG.gemini.maxRetries, delayMs = CONFIG.gemini.retryDelayMs) {
   let lastError;
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
@@ -181,31 +156,25 @@ async function withRetry(fn, maxRetries = CONFIG.gemini.maxRetries, delayMs = CO
   throw lastError;
 }
 
-// =============================================================================
-//  ZARZĄDZANIE INDEKSEM WPISÓW
-// =============================================================================
+function ensureDirectories() {
+  for (const dir of [CONFIG.paths.posts, CONFIG.paths.drafts, CONFIG.paths.images, CONFIG.paths.prompts, CONFIG.paths.data]) {
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+  }
+}
 
-function readIndex() {
-  const data = readJsonSafe(CONFIG.paths.index, []);
+function readPending() {
+  const data = readJsonSafe(CONFIG.paths.pending, []);
   return Array.isArray(data) ? data : [];
 }
 
-function writeIndex(list) {
-  const trimmed = list.slice(0, CONFIG.maxIndexEntries);
-  if (list.length > CONFIG.maxIndexEntries) {
-    log.warn(`Indeks przekroczył ${CONFIG.maxIndexEntries} wpisów - najstarsze ${list.length - CONFIG.maxIndexEntries} zostały usunięte.`);
-  }
-  writeJsonAtomic(CONFIG.paths.index, trimmed);
+function writePending(list) {
+  writeJsonAtomic(CONFIG.paths.pending, list);
 }
-
-// =============================================================================
-//  ZARZĄDZANIE TEMATAMI
-// =============================================================================
 
 function readTopics() {
   const defaults = { unused: [...DEFAULT_TOPICS], used: [] };
   if (!fs.existsSync(CONFIG.paths.topics)) {
-    log.info("Tworzę nowy plik topics.json z domyślną pulą tematów.");
+    log.info("Tworzę data/topics.json z domyślną pulą tematów.");
     writeJsonAtomic(CONFIG.paths.topics, defaults);
     return defaults;
   }
@@ -216,31 +185,21 @@ function readTopics() {
   };
 }
 
-/**
- * Losuje temat i od razu go "rezerwuje" (przenosi do used) żeby uniknąć
- * duplikatów przy równoległych uruchomieniach.
- * Zwraca wybrany temat (string).
- */
 function pickAndReserveTopic() {
   const topics = readTopics();
   if (topics.unused.length === 0) {
-    throw new Error("Brak nieużytych tematów w topics.json! Dodaj nowe tematy do listy `unused`.");
+    throw new Error("Brak nieużytych tematów w data/topics.json. Dodaj nowe tematy do listy `unused`.");
   }
 
   const idx = Math.floor(Math.random() * topics.unused.length);
   const selected = topics.unused[idx];
 
-  // Rezerwujemy od razu - nie czekamy na koniec skryptu
   topics.unused.splice(idx, 1);
   topics.used.push({ topic: selected, usedAt: new Date().toISOString() });
   writeJsonAtomic(CONFIG.paths.topics, topics);
 
   return selected;
 }
-
-// =============================================================================
-//  GENEROWANIE TREŚCI (GEMINI)
-// =============================================================================
 
 function buildPrompt(topic, existingTitles) {
   const avoidClause = existingTitles.length
@@ -317,14 +276,11 @@ async function generatePostWithGemini(topic, existingTitles = []) {
     const content = candidate?.content?.parts?.[0]?.text;
 
     if (!content) {
-      log.error(`Surowa odpowiedź Gemini: ${JSON.stringify(data).slice(0, 500)}`);
-      // Gdy Gemini zrobił search ale nie wygenerował tekstu - wymuszamy retry
       const err = new Error(`Gemini zwrócił pustą treść (finishReason: ${finishReason})`);
-      err.name = "AbortError"; // traktuj jak błąd sieciowy - retry
+      err.name = "AbortError";
       throw err;
     }
 
-    // Fallback na wypadek gdyby model mimo responseMimeType owinie JSON w ```
     const cleaned = content.replace(/^```json\s*/i, "").replace(/```\s*$/, "").trim();
 
     let parsed;
@@ -336,7 +292,6 @@ async function generatePostWithGemini(topic, existingTitles = []) {
 
     validatePostPayload(parsed);
 
-    // Wyciągamy URL-e źródeł z metadanych groundingu
     const sources = data?.candidates?.[0]?.groundingMetadata?.groundingChunks
       ?.map((c) => c.web?.uri)
       .filter(Boolean) ?? [];
@@ -344,64 +299,38 @@ async function generatePostWithGemini(topic, existingTitles = []) {
     const sourceTitles = Array.isArray(parsed.sourceTitles) ? parsed.sourceTitles : [];
 
     log.info(`Grounding: znaleziono ${sources.length} źródeł, ${sourceTitles.length} tytułów.`);
-
     return { ...parsed, sources, sourceTitles };
   });
 }
 
-// =============================================================================
-//  GENEROWANIE OBRAZKA (CLIPDROP)
-// =============================================================================
+function buildImagePrompt({ title, topic, excerpt }) {
+  return `Editorial illustration for a Polish popular-science blog article.
 
-async function generateImageWithClipdrop({ title, topic, slug }) {
-  const apiKey = process.env.CLIPDROP_API_KEY;
-  if (!apiKey) throw new Error("Brak zmiennej środowiskowej CLIPDROP_API_KEY.");
+Title: ${title}
+Category: ${topic}
+Excerpt: ${excerpt}
 
-  const prompt =
-    `Futuristic digital art illustration for blog post about ${title}, ` +
-    `category ${topic}. Minimalist, high tech, sharp focus, 8k.`;
-
-  const form = new FormData();
-  form.append("prompt", prompt);
-
-  const response = await fetchWithTimeout(
-    CONFIG.clipdrop.endpoint,
-    {
-      method: "POST",
-      headers: { "x-api-key": apiKey },
-      body: form,
-    },
-    CONFIG.clipdrop.timeoutMs
-  );
-
-  if (!response.ok) throw new Error(`Clipdrop API zwróciło status ${response.status}`);
-
-  const buffer = Buffer.from(await response.arrayBuffer());
-  const filename = `${slug}.png`;
-  fs.writeFileSync(path.join(CONFIG.paths.images, filename), buffer);
-
-  return {
-    forArticle: `images/${filename}`,
-    forIndex:   `posts/images/${filename}`,
-  };
+Create a horizontal hero image, 1200 × 630 px.
+Style: futuristic, intelligent, atmospheric, premium editorial illustration, high detail, modern composition.
+Important: no text, no letters, no logos, no watermark, no UI screenshots.
+The image should work as a clean article header and Open Graph preview.`;
 }
 
-// =============================================================================
-//  SZABLON HTML ARTYKUŁU
-// =============================================================================
-
-function renderArticlePage({ title, topic, html, date, imageSrc, excerpt, sources, sourceTitles }) {
-  const heroImg = imageSrc
-    ? `<img src="${escapeHtml(imageSrc)}" class="post-hero" alt="${escapeHtml(title)}">`
-    : "";
-
+function renderArticlePage({ title, topic, html, date, excerpt, sourceTitles }) {
   const sourcesHtml = sourceTitles?.length
     ? `<h2>Źródła</h2><ol class="sources-list">
-        ${sourceTitles.map((title) => {
-          return `<li>${escapeHtml(title)}</li>`;
-        }).join("\n")}
+        ${sourceTitles.map((title) => `<li>${escapeHtml(title)}</li>`).join("\n")}
       </ol>`
     : "";
+
+  const placeholder = `<!--BLOG_IMAGE_PLACEHOLDER_START-->
+        <div class="post-image-placeholder" style="aspect-ratio: 1200 / 630; display: grid; place-items: center; border: 2px dashed #94a3b8; border-radius: 24px; color: #64748b; margin: 2rem 0; padding: 2rem; text-align: center;">
+          <div>
+            <strong>Miejsce na ilustrację</strong><br>
+            Wymagany rozmiar: ${CONFIG.image.width} × ${CONFIG.image.height} px
+          </div>
+        </div>
+        <!--BLOG_IMAGE_PLACEHOLDER_END-->`;
 
   return `<!doctype html>
 <html lang="pl">
@@ -413,7 +342,6 @@ function renderArticlePage({ title, topic, html, date, imageSrc, excerpt, source
   <meta property="og:title" content="${escapeHtml(title)}" />
   <meta property="og:description" content="${escapeHtml(excerpt)}" />
   <meta property="og:type" content="article" />
-  ${imageSrc ? `<meta property="og:image" content="${escapeHtml(imageSrc)}" />` : ""}
   <link rel="stylesheet" href="../style.css" />
 </head>
 <body class="sci-article">
@@ -429,15 +357,15 @@ function renderArticlePage({ title, topic, html, date, imageSrc, excerpt, source
           <span>${escapeHtml(topic)}</span> | <span>${escapeHtml(date)}</span>
         </div>
         <h1>${escapeHtml(title)}</h1>
-        ${heroImg}
+        ${placeholder}
       </header>
       <section class="post-content">
         ${html}
         ${sourcesHtml}
       </section>
       <footer class="paper-footer">
-        <p><strong>🤖 Artykuł wygenerowany automatycznie przez AI z wykorzystaniem Google Search.</strong></p>
-        <p><em>⚠️ Mimo groundingu w źródłach, zawsze weryfikuj kluczowe fakty przed cytowaniem.</em></p>
+        <p><strong>🤖 Szkic wygenerowany automatycznie przez AI z wykorzystaniem Google Search.</strong></p>
+        <p><em>⚠️ Wpis powinien zostać sprawdzony i zatwierdzony przed publikacją.</em></p>
         <a href="../index.html">← Powrót na stronę główną</a>
       </footer>
     </article>
@@ -446,103 +374,101 @@ function renderArticlePage({ title, topic, html, date, imageSrc, excerpt, source
 </html>`;
 }
 
-// =============================================================================
-//  ORKIESTRACJA
-// =============================================================================
-
-function ensureDirectories() {
-  for (const dir of [CONFIG.paths.posts, CONFIG.paths.images]) {
-    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-  }
-}
-
-async function main() {
-  log.info("🤖 Start autonomicznego generatora bloga AI (Gemini + Google Search)");
-
-  // Krok 1: foldery
+async function createDraft() {
+  log.info("🤖 Start AI Blog Studio — generowanie szkicu");
   ensureDirectories();
 
-  // Krok 2: indeks i ostatnie tytuły (anty-powtórki)
-  const index = readIndex();
-  const recentTitles = index
+  const pending = readPending();
+  const recentTitles = pending
     .slice(0, CONFIG.recentTitlesLookback)
     .map((p) => p.title)
     .filter(Boolean);
 
-  // Krok 3: losowanie tematu + natychmiastowa rezerwacja (anty-race condition)
   log.step("Losuję i rezerwuję temat z puli...");
   const selectedTopic = pickAndReserveTopic();
   log.info(`Wybrany temat: "${selectedTopic}"`);
 
-  // Krok 4: generowanie treści przez Gemini z groundingiem (z retry)
-  log.step("Generuję treść artykułu przez Gemini (Google Search grounding)...");
+  log.step("Generuję treść artykułu przez Gemini...");
   const post = await generatePostWithGemini(selectedTopic, recentTitles);
-  log.success(`Artykuł wygenerowany - tytuł: "${post.title}"`);
+  log.success(`Szkic wygenerowany - tytuł: "${post.title}"`);
 
-  // Metadane - data ustawiana raz i używana wszędzie (brak rozbieżności przy północy)
   const now = new Date();
   const date = formatDatePL(now);
   const id = crypto.randomBytes(4).toString("hex");
-
-  // Generowanie sluga z fallbackiem przy kolizji
   let slug = slugify(post.title) || `post-${id}`;
-  const articlePath = path.join(CONFIG.paths.posts, `${slug}.html`);
-  if (fs.existsSync(articlePath)) {
-    log.warn(`Plik ${slug}.html już istnieje - dopisuję ID do nazwy.`);
+
+  if (
+    fs.existsSync(path.join(CONFIG.paths.drafts, `${slug}.html`)) ||
+    fs.existsSync(path.join(CONFIG.paths.posts, `${slug}.html`)) ||
+    pending.some((item) => item.slug === slug)
+  ) {
     slug = `${slug}-${id}`;
   }
 
-  // Krok 5: sanityzacja HTML przed jakimkolwiek użyciem
   log.step("Sanityzuję HTML artykułu...");
   const safeHtml = sanitizePostHtml(post.html);
 
-  // Krok 6: obrazek (opcjonalny - błąd nie zabija procesu)
-  let image = { forArticle: "", forIndex: "" };
-  try {
-    log.step("Generuję ilustrację przez Clipdrop...");
-    image = await generateImageWithClipdrop({ title: post.title, topic: post.topic, slug });
-    log.success("Ilustracja zapisana.");
-  } catch (err) {
-    log.warn(`Ilustracja pominięta: ${err.message}`);
-  }
+  const imagePrompt = buildImagePrompt({
+    title: post.title,
+    topic: post.topic,
+    excerpt: post.excerpt,
+  });
 
-  // Krok 7: zapis HTML artykułu (używamy safeHtml, nie post.html)
-  log.step("Zapisuję plik HTML artykułu...");
+  const draftPath = path.join(CONFIG.paths.drafts, `${slug}.html`);
+  const promptPath = path.join(CONFIG.paths.prompts, `${slug}.txt`);
+
+  log.step("Zapisuję szkic i prompt do grafiki...");
+  fs.writeFileSync(promptPath, imagePrompt, "utf8");
+
   const pageHtml = renderArticlePage({
-    title:        post.title,
-    topic:        post.topic,
-    excerpt:      post.excerpt,
-    html:         safeHtml,       // ← sanityzowany HTML
+    title: post.title,
+    topic: post.topic,
+    excerpt: post.excerpt,
+    html: safeHtml,
     date,
-    imageSrc:     image.forArticle,
-    sources:      post.sources,
     sourceTitles: post.sourceTitles,
   });
-  const finalArticlePath = path.join(CONFIG.paths.posts, `${slug}.html`);
-  fs.writeFileSync(finalArticlePath, pageHtml, "utf8");
 
-  // Krok 8: aktualizacja indeksu (atomowa)
-  log.step("Aktualizuję indeks wpisów...");
-  index.unshift({
+  fs.writeFileSync(draftPath, pageHtml, "utf8");
+
+  pending.unshift({
     id,
-    title:    post.title,
-    topic:    post.topic,
-    excerpt:  post.excerpt,
+    slug,
+    title: post.title,
+    topic: post.topic,
+    excerpt: post.excerpt,
     date,
-    url:      `posts/${slug}.html`,
-    imageUrl: image.forIndex || "",
+    status: "pending_image",
+    draftPath: `posts/drafts/${slug}.html`,
+    promptPath: `prompts/${slug}.txt`,
+    imagePath: "",
+    createdAt: now.toISOString(),
   });
-  writeIndex(index);
 
-  log.success(`🎉 Opublikowano: "${post.title}" → ${finalArticlePath}`);
+  writePending(pending);
+  log.success(`Szkic gotowy: posts/drafts/${slug}.html`);
+  log.success(`Prompt gotowy: prompts/${slug}.txt`);
+  log.info("Publikacja odbędzie się dopiero z panelu /admin/ po dodaniu obrazu.");
 }
 
-// =============================================================================
-//  ENTRY POINT
-// =============================================================================
+function printHelp() {
+  console.log(`
+AI Blog Studio
 
-main().catch((err) => {
-  log.error(`BŁĄD KRYTYCZNY: ${err.message}`);
-  if (err.stack) console.error(err.stack);
-  process.exit(1);
-});
+Użycie:
+  node scripts/generate_post.js --draft
+
+Ten skrypt tworzy tylko szkic. Publikacja odbywa się z panelu /admin/.
+`);
+}
+
+const args = process.argv.slice(2);
+if (args.includes("--draft") || args.length === 0) {
+  createDraft().catch((err) => {
+    log.error(`BŁĄD KRYTYCZNY: ${err.message}`);
+    if (err.stack) console.error(err.stack);
+    process.exit(1);
+  });
+} else {
+  printHelp();
+}
