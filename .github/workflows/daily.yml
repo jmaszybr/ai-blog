@@ -1,13 +1,21 @@
-name: Daily AI Post
+name: Generate AI Draft
+
 on:
   schedule:
+    # Codziennie o 06:00 UTC
+    # W Polsce to zwykle 07:00 zimą albo 08:00 latem
     - cron: "0 6 * * *"
+
+  # Pozwala uruchomić workflow ręcznie z zakładki Actions
   workflow_dispatch:
+
 permissions:
   contents: write
+
 jobs:
-  build:
+  generate-draft:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -27,20 +35,36 @@ jobs:
             echo "Brak pliku package.json, pomijam instalację."
           fi
 
-      - name: Generate post
+      - name: Ensure required folders and files exist
+        run: |
+          mkdir -p posts/drafts
+          mkdir -p posts/images
+          mkdir -p prompts
+          mkdir -p data
+
+          if [ ! -f data/pending_posts.json ]; then
+            echo "[]" > data/pending_posts.json
+          fi
+
+          if [ ! -f data/rejected_posts.json ]; then
+            echo "[]" > data/rejected_posts.json
+          fi
+
+      - name: Generate draft
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          CLIPDROP_API_KEY: ${{ secrets.CLIPDROP_API_KEY }}
-        run: node scripts/generate_post.js
+        run: node scripts/generate_post.js --draft
 
-      - name: Commit and push changes
+      - name: Commit and push draft
         run: |
           git config --global user.name "ai-blog-bot"
           git config --global user.email "action@github.com"
-          git add posts/ posts_index.json topics.json
+
+          git add posts/drafts/ posts/images/ prompts/ data/pending_posts.json data/rejected_posts.json topics.json
+
           if git diff --staged --quiet; then
             echo "Brak zmian do zapisania."
           else
-            git commit -m "🤖 Auto-generacja posta: $(date +'%Y-%m-%d')"
+            git commit -m "📝 Szkic AI: $(date +'%Y-%m-%d')"
             git push
           fi
