@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Blog Studio — panel admina</title>
+  <link rel="stylesheet" href="./admin.css" />
+</head>
+<body>
+  <main class="app">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">AI Blog Studio</p>
+        <h1>Panel redakcyjny</h1>
+        <p class="lead">Zatwierdzaj szkice, dodawaj ilustracje 1200 × 630 px i publikuj wpisy przez GitHub API.</p>
+      </div>
+      <button id="reloadBtn" class="secondary">Odśwież</button>
+    </section>
+
+    <section class="card setup">
+      <h2>Połączenie z GitHub</h2>
+      <div class="grid">
+        <label>
+          Właściciel repo
+          <input id="ownerInput" value="jmaszybr" autocomplete="off" />
+        </label>
+        <label>
+          Repozytorium
+          <input id="repoInput" value="ai-blog" autocomplete="off" />
+        </label>
+        <label>
+          Branch
+          <input id="branchInput" value="main" autocomplete="off" />
+        </label>
+      </div>
+      <label>
+        GitHub token
+        <input id="tokenInput" type="password" placeholder="ghp_... albo github_pat_..." autocomplete="off" />
+      </label>
+      <div class="actions">
+        <button id="connectBtn">Połącz i pobierz szkice</button>
+        <button id="forgetBtn" class="secondary">Wyczyść token</button>
+      </div>
+      <p class="hint">Token jest trzymany tylko w pamięci tej karty przeglądarki. Nie zapisuj go w kodzie strony.</p>
+    </section>
+
+    <section id="status" class="status hidden"></section>
+
+    <section class="workspace">
+      <aside class="card drafts">
+        <div class="section-head">
+          <h2>Szkice</h2>
+          <span id="draftCount" class="pill">0</span>
+        </div>
+        <div id="draftList" class="draft-list empty">Połącz z GitHub, żeby zobaczyć szkice.</div>
+      </aside>
+
+      <section class="card editor">
+        <div id="emptyState" class="empty-state">
+          <h2>Wybierz szkic</h2>
+          <p>Po lewej pojawią się wpisy z <code>data/pending_posts.json</code>.</p>
+        </div>
+
+        <div id="draftView" class="hidden">
+          <div class="section-head">
+            <div>
+              <p id="selectedStatus" class="eyebrow">Szkic</p>
+              <h2 id="selectedTitle"></h2>
+            </div>
+            <button id="rejectBtn" class="danger secondary">Odrzuć</button>
+          </div>
+
+          <div class="meta-grid">
+            <div><span>Slug</span><strong id="selectedSlug"></strong></div>
+            <div><span>Kategoria</span><strong id="selectedTopic"></strong></div>
+            <div><span>Data</span><strong id="selectedDate"></strong></div>
+          </div>
+
+          <label>
+            Zajawka
+            <textarea id="excerptInput" rows="3"></textarea>
+          </label>
+
+          <div class="split">
+            <section>
+              <div class="section-head">
+                <h3>Prompt do grafiki</h3>
+                <button id="copyPromptBtn" class="secondary">Kopiuj prompt</button>
+              </div>
+              <textarea id="promptBox" rows="10" readonly></textarea>
+            </section>
+
+            <section>
+              <h3>Obrazek</h3>
+              <div id="imageDrop" class="drop">
+                <input id="imageInput" type="file" accept="image/png,image/jpeg,image/webp" />
+                <p>Wybierz obraz 1200 × 630 px</p>
+                <small>PNG, JPG albo WebP. Panel sam nazwie plik zgodnie ze slugiem.</small>
+              </div>
+              <div id="imagePreview" class="image-preview hidden"></div>
+            </section>
+          </div>
+
+          <section>
+            <h3>Podgląd szkicu</h3>
+            <iframe id="draftFrame" title="Podgląd szkicu"></iframe>
+          </section>
+
+          <div class="publish-bar">
+            <p id="publishHint">Dodaj obraz, aby opublikować.</p>
+            <button id="publishBtn" disabled>Publikuj</button>
+          </div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script src="./admin.js"></script>
+</body>
+</html>
