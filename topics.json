@@ -6,7 +6,6 @@
     "AI w walce z hałasem miasta - inteligentne mapy ciszy i dźwiękowego stresu",
     "Robotyczny ogrodnik - jak AI pielęgnuje rośliny w domach, szklarniach i parkach",
     "AI w bankowości osobistej - portfel, który pomaga planować codzienne wydatki",
-    "Cyfrowy trener snu - algorytmy pomagające lepiej rozumieć nocny odpoczynek",
     "AI w oceanografii - tropienie mikroplastiku od plaż po głębiny oceanów",
     "Inteligentne windy - jak AI przewiduje ruch ludzi w biurowcach i szpitalach",
     "AI w ochronie pszczół - cyfrowe ule monitorujące zdrowie całych kolonii",
@@ -178,6 +177,10 @@
     {
       "topic": "AI w ratowaniu raf koralowych - algorytmy słuchające dźwięków podwodnych ekosystemów",
       "usedAt": "2026-05-21T08:58:27.868Z"
+    },
+    {
+      "topic": "Cyfrowy trener snu - algorytmy pomagające lepiej rozumieć nocny odpoczynek",
+      "usedAt": "2026-05-22T08:50:14.982Z"
     }
   ]
 }
