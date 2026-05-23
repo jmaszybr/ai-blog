@@ -1,1 +1,15 @@
-[]
+[
+  {
+    "id": "89b8c8ea",
+    "slug": "ai-concierge-podroz-marzen-w-10-sekund-przyszlosc-ktora-nadchodzi",
+    "title": "AI Concierge: Podróż marzeń w 10 sekund – przyszłość, która nadchodzi",
+    "topic": "AI, Turystyka, Podróże",
+    "excerpt": "Wyobraź sobie, że planowanie idealnych wakacji zajmuje tyle, co wypicie filiżanki kawy. Dzięki sztucznej inteligencji, wizja osobistego konsjerża tworzącego spersonalizowane plany podróży w mgnieniu oka staje się rzeczywistością, rewolucjonizując sposób, w jaki odkrywamy świat.",
+    "date": "23 maja 2026",
+    "status": "pending_image",
+    "draftPath": "posts/drafts/ai-concierge-podroz-marzen-w-10-sekund-przyszlosc-ktora-nadchodzi.html",
+    "promptPath": "prompts/ai-concierge-podroz-marzen-w-10-sekund-przyszlosc-ktora-nadchodzi.txt",
+    "imagePath": "",
+    "createdAt": "2026-05-23T08:07:39.644Z"
+  }
+]
