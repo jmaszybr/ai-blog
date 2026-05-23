@@ -1,0 +1,10 @@
+Editorial illustration for a Polish popular-science blog article.
+
+Title: Internet Ciał: Gdy AI Monitoruje Nasze Funkcje Życiowe od Środka
+Category: Medycyna, AI, Przyszłość
+Excerpt: Wyobraź sobie świat, w którym Twoje ciało jest nieustannie monitorowane przez niewidzialnego strażnika – sztuczną inteligencję, która czuwa nad Twoim zdrowiem od środka. To już nie science fiction, to wizja Internetu Ciał (IoB), która staje się naszą rzeczywistością.
+
+Create a horizontal hero image, 1200 × 630 px.
+Style: futuristic, intelligent, atmospheric, premium editorial illustration, high detail, modern composition.
+Important: no text, no letters, no logos, no watermark, no UI screenshots.
+The image should work as a clean article header and Open Graph preview.
