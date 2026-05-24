@@ -1,0 +1,10 @@
+Editorial illustration for a Polish popular-science blog article.
+
+Title: Koniec z korkami? Autonomiczna rewolucja w zarządzaniu ruchem miejskim
+Category: Smart City, Transport
+Excerpt: Czy zatłoczone ulice i niekończące się korki to już przeszłość? Poznaj, jak sztuczna inteligencja i autonomiczne systemy zarządzania ruchem transformują miejską mobilność, tworząc miasta przyszłości.
+
+Create a horizontal hero image, 1200 × 630 px.
+Style: futuristic, intelligent, atmospheric, premium editorial illustration, high detail, modern composition.
+Important: no text, no letters, no logos, no watermark, no UI screenshots.
+The image should work as a clean article header and Open Graph preview.
