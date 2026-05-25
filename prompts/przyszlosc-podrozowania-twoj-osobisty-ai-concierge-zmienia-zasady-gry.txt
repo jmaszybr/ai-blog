@@ -1,0 +1,10 @@
+Editorial illustration for a Polish popular-science blog article.
+
+Title: Przyszłość podróżowania: Twój osobisty AI Concierge zmienia zasady gry
+Category: AI w turystyce
+Excerpt: Wyobraź sobie, że planowanie podróży marzeń zajmuje Ci zaledwie 10 sekund. Dzięki sztucznej inteligencji, która staje się Twoim osobistym asystentem, ten scenariusz przestaje być fantazją, a staje się rzeczywistością.
+
+Create a horizontal hero image, 1200 × 630 px.
+Style: futuristic, intelligent, atmospheric, premium editorial illustration, high detail, modern composition.
+Important: no text, no letters, no logos, no watermark, no UI screenshots.
+The image should work as a clean article header and Open Graph preview.
