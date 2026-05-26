@@ -1,0 +1,10 @@
+Editorial illustration for a Polish popular-science blog article.
+
+Title: Kiedy maszyna widzi zagrożenie, zanim nadejdzie – AI w awangardzie walki z żywiołami
+Category: AI, Zarządzanie Kryzysowe
+Excerpt: Sztuczna inteligencja rewolucjonizuje sposób, w jaki przygotowujemy się na klęski żywiołowe, oferując bezprecedensową zdolność przewidywania powodzi i pożarów z wyprzedzeniem. To nowa era bezpieczeństwa, w której algorytmy stają się naszymi niewidzialnymi strażnikami.
+
+Create a horizontal hero image, 1200 × 630 px.
+Style: futuristic, intelligent, atmospheric, premium editorial illustration, high detail, modern composition.
+Important: no text, no letters, no logos, no watermark, no UI screenshots.
+The image should work as a clean article header and Open Graph preview.
