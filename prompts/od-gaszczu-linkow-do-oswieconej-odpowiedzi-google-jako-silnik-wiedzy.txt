@@ -1,0 +1,10 @@
+Editorial illustration for a Polish popular-science blog article.
+
+Title: Od Gąszczu Linków do Oświeconej Odpowiedzi: Google jako Silnik Wiedzy
+Category: Ewolucja wyszukiwarek, AI
+Excerpt: W świecie cyfrowym, gdzie informacja to waluta, wyszukiwarki przeszły długą drogę. Od prostych list linków do inteligentnych systemów dostarczających precyzyjne odpowiedzi – Google redefiniuje sposób, w jaki pozyskujemy wiedzę, stając się prawdziwym silnikiem odpowiedzi.
+
+Create a horizontal hero image, 1200 × 630 px.
+Style: futuristic, intelligent, atmospheric, premium editorial illustration, high detail, modern composition.
+Important: no text, no letters, no logos, no watermark, no UI screenshots.
+The image should work as a clean article header and Open Graph preview.
