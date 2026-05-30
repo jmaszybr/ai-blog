@@ -1,0 +1,10 @@
+Editorial illustration for a Polish popular-science blog article.
+
+Title: Garderoba Przyszłości: Jak AI Szyje Nowe Trendy i Zmienia Doświadczenia Zakupowe
+Category: Moda i AI
+Excerpt: Sztuczna inteligencja rewolucjonizuje świat mody, od projektowania po doświadczenia zakupowe. Odkryj, jak ubrania tworzone przez AI i wirtualne przymierzalnie kształtują przyszłość branży, czyniąc ją bardziej spersonalizowaną i zrównoważoną.
+
+Create a horizontal hero image, 1200 × 630 px.
+Style: futuristic, intelligent, atmospheric, premium editorial illustration, high detail, modern composition.
+Important: no text, no letters, no logos, no watermark, no UI screenshots.
+The image should work as a clean article header and Open Graph preview.
