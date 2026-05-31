@@ -1,5 +1,18 @@
 [
   {
+    "id": "6d02a084",
+    "slug": "przebudzenie-algorytmow-jak-ai-redefiniuje-rekrutacje-i-twoja-sciezke-do-kariery",
+    "title": "Przebudzenie Algorytmów: Jak AI Redefiniuje Rekrutację i Twoją Ścieżkę do Kariery",
+    "topic": "AI w rekrutacji",
+    "excerpt": "Sztuczna inteligencja zmienia oblicze rekrutacji, stając się niewidzialnym strażnikiem bram do wymarzonej pracy. Dowiedz się, jak przejść przez sito algorytmów i wykorzystać technologię na swoją korzyść.",
+    "date": "31 maja 2026",
+    "status": "pending_image",
+    "draftPath": "posts/drafts/przebudzenie-algorytmow-jak-ai-redefiniuje-rekrutacje-i-twoja-sciezke-do-kariery.html",
+    "promptPath": "prompts/przebudzenie-algorytmow-jak-ai-redefiniuje-rekrutacje-i-twoja-sciezke-do-kariery.txt",
+    "imagePath": "",
+    "createdAt": "2026-05-31T08:35:35.174Z"
+  },
+  {
     "id": "412bd6f5",
     "slug": "garderoba-przyszlosci-jak-ai-szyje-nowe-trendy-i-zmienia-doswiadczenia-zakupowe",
     "title": "Garderoba Przyszłości: Jak AI Szyje Nowe Trendy i Zmienia Doświadczenia Zakupowe",

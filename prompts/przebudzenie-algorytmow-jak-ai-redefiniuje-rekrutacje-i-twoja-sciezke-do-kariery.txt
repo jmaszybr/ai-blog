@@ -1,0 +1,10 @@
+Editorial illustration for a Polish popular-science blog article.
+
+Title: Przebudzenie Algorytmów: Jak AI Redefiniuje Rekrutację i Twoją Ścieżkę do Kariery
+Category: AI w rekrutacji
+Excerpt: Sztuczna inteligencja zmienia oblicze rekrutacji, stając się niewidzialnym strażnikiem bram do wymarzonej pracy. Dowiedz się, jak przejść przez sito algorytmów i wykorzystać technologię na swoją korzyść.
+
+Create a horizontal hero image, 1200 × 630 px.
+Style: futuristic, intelligent, atmospheric, premium editorial illustration, high detail, modern composition.
+Important: no text, no letters, no logos, no watermark, no UI screenshots.
+The image should work as a clean article header and Open Graph preview.
