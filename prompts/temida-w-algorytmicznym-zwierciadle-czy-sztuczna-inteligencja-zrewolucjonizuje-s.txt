@@ -1,0 +1,10 @@
+Editorial illustration for a Polish popular-science blog article.
+
+Title: Temida w algorytmicznym zwierciadle: Czy sztuczna inteligencja zrewolucjonizuje sprawiedliwość?
+Category: AI w sądownictwie
+Excerpt: W dobie rosnącej potęgi sztucznej inteligencji, pojawia się fascynujące pytanie: czy algorytmy mogą być bardziej sprawiedliwe niż ludzki sędzia? Zanurzmy się w świat, gdzie technologia spotyka się z Temidą, by odkryć jej potencjał i ograniczenia.
+
+Create a horizontal hero image, 1200 × 630 px.
+Style: futuristic, intelligent, atmospheric, premium editorial illustration, high detail, modern composition.
+Important: no text, no letters, no logos, no watermark, no UI screenshots.
+The image should work as a clean article header and Open Graph preview.
