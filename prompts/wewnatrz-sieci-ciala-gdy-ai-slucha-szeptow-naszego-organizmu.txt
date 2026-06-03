@@ -1,0 +1,10 @@
+Editorial illustration for a Polish popular-science blog article.
+
+Title: Wewnątrz Sieci Ciała: Gdy AI Słucha Szeptów Naszego Organizmu
+Category: Internet Ciał, AI, Zdrowie
+Excerpt: Wyobraź sobie świat, w którym Twoje ciało jest stale monitorowane przez niewidzialnego strażnika, a sztuczna inteligencja, niczym wewnętrzny lekarz, czuwa nad każdą funkcją życiową. To wizja Internetu Ciał – przyszłość, która już puka do naszych drzwi.
+
+Create a horizontal hero image, 1200 × 630 px.
+Style: futuristic, intelligent, atmospheric, premium editorial illustration, high detail, modern composition.
+Important: no text, no letters, no logos, no watermark, no UI screenshots.
+The image should work as a clean article header and Open Graph preview.
