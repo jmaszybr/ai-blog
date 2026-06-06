@@ -1,0 +1,10 @@
+Editorial illustration for a Polish popular-science blog article.
+
+Title: Kiedy Google szepcze odpowiedzi: Era wyszukiwarek jako inteligentnych silników wiedzy
+Category: Ewolucja wyszukiwarek
+Excerpt: Od prostych katalogów po zaawansowane systemy oparte na sztucznej inteligencji – wyszukiwarki przeszły długą drogę. Dziś Google nie jest już tylko "mapą linków", lecz staje się wszechwiedzącym przewodnikiem, który dostarcza gotowe odpowiedzi, zmieniając nasze doświadczenie z siecią.
+
+Create a horizontal hero image, 1200 × 630 px.
+Style: futuristic, intelligent, atmospheric, premium editorial illustration, high detail, modern composition.
+Important: no text, no letters, no logos, no watermark, no UI screenshots.
+The image should work as a clean article header and Open Graph preview.
