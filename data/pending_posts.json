@@ -24,18 +24,5 @@
     "promptPath": "prompts/algorytmy-na-biezni-rewolucja-danych-w-swiecie-sportu.txt",
     "imagePath": "",
     "createdAt": "2026-06-05T09:32:56.143Z"
-  },
-  {
-    "id": "75bd4a4f",
-    "slug": "kiedy-algorytmy-widza-przyszlosc-sztuczna-inteligencja-w-sluzbie-przewidywania-z",
-    "title": "Kiedy algorytmy widzą przyszłość: Sztuczna inteligencja w służbie przewidywania żywiołów",
-    "topic": "AI, zarządzanie kryzysowe",
-    "excerpt": "W obliczu narastających zagrożeń naturalnych, sztuczna inteligencja staje się kluczowym narzędziem w przewidywaniu i minimalizowaniu skutków powodzi oraz pożarów, zmieniając podejście do zarządzania kryzysowego z reaktywnego na proaktywne.",
-    "date": "4 czerwca 2026",
-    "status": "pending_image",
-    "draftPath": "posts/drafts/kiedy-algorytmy-widza-przyszlosc-sztuczna-inteligencja-w-sluzbie-przewidywania-z.html",
-    "promptPath": "prompts/kiedy-algorytmy-widza-przyszlosc-sztuczna-inteligencja-w-sluzbie-przewidywania-z.txt",
-    "imagePath": "",
-    "createdAt": "2026-06-04T09:44:28.974Z"
   }
 ]
