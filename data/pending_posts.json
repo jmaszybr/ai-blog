@@ -89,18 +89,5 @@
     "promptPath": "prompts/przebudzenie-algorytmow-jak-ai-redefiniuje-rekrutacje-i-twoja-sciezke-do-kariery.txt",
     "imagePath": "",
     "createdAt": "2026-05-31T08:35:35.174Z"
-  },
-  {
-    "id": "412bd6f5",
-    "slug": "garderoba-przyszlosci-jak-ai-szyje-nowe-trendy-i-zmienia-doswiadczenia-zakupowe",
-    "title": "Garderoba Przyszłości: Jak AI Szyje Nowe Trendy i Zmienia Doświadczenia Zakupowe",
-    "topic": "Moda i AI",
-    "excerpt": "Sztuczna inteligencja rewolucjonizuje świat mody, od projektowania po doświadczenia zakupowe. Odkryj, jak ubrania tworzone przez AI i wirtualne przymierzalnie kształtują przyszłość branży, czyniąc ją bardziej spersonalizowaną i zrównoważoną.",
-    "date": "30 maja 2026",
-    "status": "pending_image",
-    "draftPath": "posts/drafts/garderoba-przyszlosci-jak-ai-szyje-nowe-trendy-i-zmienia-doswiadczenia-zakupowe.html",
-    "promptPath": "prompts/garderoba-przyszlosci-jak-ai-szyje-nowe-trendy-i-zmienia-doswiadczenia-zakupowe.txt",
-    "imagePath": "",
-    "createdAt": "2026-05-30T08:17:45.566Z"
   }
 ]
