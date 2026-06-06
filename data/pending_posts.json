@@ -11,18 +11,5 @@
     "promptPath": "prompts/kiedy-google-szepcze-odpowiedzi-era-wyszukiwarek-jako-inteligentnych-silnikow-wi.txt",
     "imagePath": "",
     "createdAt": "2026-06-06T08:25:00.108Z"
-  },
-  {
-    "id": "2fc7de35",
-    "slug": "algorytmy-na-biezni-rewolucja-danych-w-swiecie-sportu",
-    "title": "Algorytmy na bieżni: Rewolucja danych w świecie sportu",
-    "topic": "Sport, AI, Dane",
-    "excerpt": "Sztuczna inteligencja przestaje być jedynie futurystyczną wizją, stając się cichym architektem sportowych sukcesów. Odkryj, jak analiza danych przekształca treningi, strategie i zdolność do bicia rekordów.",
-    "date": "5 czerwca 2026",
-    "status": "pending_image",
-    "draftPath": "posts/drafts/algorytmy-na-biezni-rewolucja-danych-w-swiecie-sportu.html",
-    "promptPath": "prompts/algorytmy-na-biezni-rewolucja-danych-w-swiecie-sportu.txt",
-    "imagePath": "",
-    "createdAt": "2026-06-05T09:32:56.143Z"
   }
 ]
