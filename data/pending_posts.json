@@ -50,18 +50,5 @@
     "promptPath": "prompts/wewnatrz-sieci-ciala-gdy-ai-slucha-szeptow-naszego-organizmu.txt",
     "imagePath": "",
     "createdAt": "2026-06-03T10:44:46.852Z"
-  },
-  {
-    "id": "5bd45484",
-    "slug": "od-biblioteki-linkow-do-szeptu-wiedzy-ewolucja-wyszukiwarek-w-erze-ai",
-    "title": "Od Biblioteki Linków do Szeptu Wiedzy: Ewolucja Wyszukiwarek w Erze AI",
-    "topic": "Ewolucja wyszukiwarek",
-    "excerpt": "Internet, niegdyś chaotyczna sieć dokumentów, staje się inteligentnym asystentem, który nie tylko wskazuje drogę, ale potrafi wyczerpująco odpowiedzieć na nasze pytania. Jak Google, z prostego indeksu linków, przeobraża się w dynamiczny silnik wiedzy, gotów do dialogu?",
-    "date": "2 czerwca 2026",
-    "status": "pending_image",
-    "draftPath": "posts/drafts/od-biblioteki-linkow-do-szeptu-wiedzy-ewolucja-wyszukiwarek-w-erze-ai.html",
-    "promptPath": "prompts/od-biblioteki-linkow-do-szeptu-wiedzy-ewolucja-wyszukiwarek-w-erze-ai.txt",
-    "imagePath": "",
-    "createdAt": "2026-06-02T10:06:54.619Z"
   }
 ]
