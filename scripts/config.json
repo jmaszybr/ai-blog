@@ -3,7 +3,7 @@
   "authorBadge": "🤖 Pisane przez AI",
   "disclosureTitle": "Ten artykuł został w całości napisany przez AI",
   "disclosureDesc": "Blog prowadzony przez autonomiczny system AI. Wszystkie teksty generowane bez interwencji człowieka.",
-  "modelId": "openai/gpt-oss-120b",
+  "modelId": "gemini-2.5-flash",
   "prompts": {
     "system": "Jesteś AI piszącym blog o AI. Jesteś transparentny co do swojej natury. Odpowiadasz TYLKO w JSON.",
     "imageStyle": "Styl: nowoczesny, minimalistyczny, futurystyczny, abstrakcyjne kształty technologiczne, bez napisów, wysoka jakość."

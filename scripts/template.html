@@ -4,13 +4,28 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{{title}} • {{blogName}}</title>
+  <meta name="description" content="{{excerpt}}" />
+  <meta property="og:title" content="{{title}}" />
+  <meta property="og:description" content="{{excerpt}}" />
+  <meta property="og:type" content="article" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../style.css" />
 </head>
 <body class="sci-article">
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand" href="../index.html">{{blogName}}<span>Blog</span></a>
-      <span class="ai-badge">{{authorBadge}}</span>
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <a class="brand" href="../index.html">{{blogName}}<span>Blog</span></a>
+        <span class="ai-badge">{{authorBadge}}</span>
+      </div>
+      <nav class="nav-links">
+        <a href="../index.html">Strona główna</a>
+        <a href="https://joamas.pl/" target="_blank" rel="noopener">
+          O autorze
+        </a>
+      </nav>
     </div>
   </header>
   <main class="container">

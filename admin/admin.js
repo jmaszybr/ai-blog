@@ -209,16 +209,65 @@ async function selectDraft(index) {
   state.imageExt = "";
   state.imageBase64 = "";
 
-  const draftPath = post.draftPath || `posts/drafts/${post.slug}.html`;
+  const draftPath = post.draftPath || `posts/drafts/${post.slug}.json`;
   const promptPath = post.promptPath || `prompts/${post.slug}.txt`;
 
-  const [draftHtml, prompt] = await Promise.all([
-    getTextFile(draftPath, ""),
+  const [draftJsonRaw, prompt, templateHtml, configRaw] = await Promise.all([
+    getTextFile(draftPath, "{}"),
     getTextFile(promptPath, ""),
+    getTextFile("scripts/template.html", ""),
+    getTextFile("scripts/config.json", "{}"),
   ]);
 
-  state.selectedDraftHtml = draftHtml;
+  state.selectedDraftHtml = draftJsonRaw;
   state.selectedPrompt = prompt;
+
+  let draftData = {};
+  try {
+    draftData = JSON.parse(draftJsonRaw);
+  } catch (e) {
+    console.error("Error parsing draft JSON:", e);
+  }
+
+  let userConfig = {
+    blogName: "AI Blog",
+    authorBadge: "🤖 Pisane przez AI",
+    disclosureTitle: "Oświadczenie Autonomicznego Systemu",
+    disclosureDesc: "Ten tekst został wygenerowany w całości przez model sztucznej inteligencji. Wszelkie fakty i powiązania zostały dobrane automatycznie w celach demonstracyjnych."
+  };
+  try {
+    const cfg = JSON.parse(configRaw);
+    userConfig = { ...userConfig, ...cfg };
+  } catch (e) {}
+
+  const placeholder = `<!--BLOG_IMAGE_PLACEHOLDER_START-->
+        <div class="post-image-placeholder" style="aspect-ratio: 1200 / 630; display: grid; place-items: center; border: 2px dashed #94a3b8; border-radius: 24px; color: #64748b; margin: 2rem 0; padding: 2rem; text-align: center;">
+          <div>
+            <strong>Miejsce na ilustrację</strong><br>
+            Wymagany rozmiar: 1200 × 630 px
+          </div>
+        </div>
+        <!--BLOG_IMAGE_PLACEHOLDER_END-->`;
+
+  const sourcesHtml = draftData.sourceTitles?.length
+    ? `<h2>Źródła</h2><ol class="sources-list">
+        ${draftData.sourceTitles.map((title) => `<li>${escapeHtml(title)}</li>`).join("\n")}
+      </ol>`
+    : "";
+
+  const contentHtml = (draftData.html || "") + "\n" + sourcesHtml;
+
+  const previewHtml = templateHtml
+    .replaceAll("{{title}}", escapeHtml(draftData.title || post.title || ""))
+    .replaceAll("{{blogName}}", escapeHtml(userConfig.blogName))
+    .replaceAll("{{authorBadge}}", escapeHtml(userConfig.authorBadge))
+    .replaceAll("{{topic}}", escapeHtml(draftData.topic || post.topic || ""))
+    .replaceAll("{{date}}", escapeHtml(draftData.date || post.date || ""))
+    .replaceAll("{{excerpt}}", escapeHtml(draftData.excerpt || post.excerpt || ""))
+    .replaceAll("{{imageHtml}}", placeholder)
+    .replaceAll("{{contentHtml}}", contentHtml)
+    .replaceAll("{{disclosureTitle}}", escapeHtml(userConfig.disclosureTitle))
+    .replaceAll("{{disclosureDesc}}", escapeHtml(userConfig.disclosureDesc));
 
   $("emptyState").classList.add("hidden");
   $("draftView").classList.remove("hidden");
@@ -230,7 +279,7 @@ async function selectDraft(index) {
   $("selectedDate").textContent = post.date || "—";
   $("excerptInput").value = post.excerpt || "";
   $("promptBox").value = prompt || "Brak promptu.";
-  $("draftFrame").srcdoc = draftHtml || "<p>Brak treści szkicu.</p>";
+  $("draftFrame").srcdoc = previewHtml || "<p>Brak treści szkicu.</p>";
   $("imagePreview").classList.add("hidden");
   $("imagePreview").innerHTML = "";
   $("publishBtn").disabled = true;
@@ -317,24 +366,38 @@ async function publishSelected() {
     excerpt: $("excerptInput").value.trim() || state.selected.excerpt || "",
   };
 
-  const imagePathForArticle = `images/${post.slug}.${state.imageExt}`;
   const imagePathForIndex = `posts/images/${post.slug}.${state.imageExt}`;
   const repoImagePath = `posts/images/${post.slug}.${state.imageExt}`;
-  const finalPostPath = `posts/${post.slug}.html`;
+  const finalPostDataPath = `posts/data/${post.slug}.json`;
 
-  const finalHtml = replaceImagePlaceholder(
-    state.selectedDraftHtml,
-    imagePathForArticle,
-    post.title || post.slug
-  );
+  let draftData = {};
+  try {
+    draftData = JSON.parse(state.selectedDraftHtml);
+  } catch (e) {
+    console.error("Error parsing draft JSON on publish:", e);
+  }
+
+  const finalPostData = {
+    title: post.title,
+    topic: post.topic,
+    excerpt: post.excerpt,
+    date: post.date,
+    html: draftData.html || "",
+    imageUrl: imagePathForIndex,
+    sourceTitles: draftData.sourceTitles || []
+  };
+
+  const finalPostJson = JSON.stringify(finalPostData, null, 2);
 
   await putBinaryFile(repoImagePath, state.imageBase64, `Add image for ${post.slug}`);
-  await putTextFile(finalPostPath, finalHtml, `Publish post ${post.slug}`);
+  await putTextFile(finalPostDataPath, finalPostJson, `Publish post JSON ${post.slug}`);
 
   const indexRaw = await getTextFile(CONFIG.indexPath, "[]");
   let index = [];
   try { index = JSON.parse(indexRaw || "[]"); } catch { index = []; }
   if (!Array.isArray(index)) index = [];
+
+  const finalPostUrl = `post.html?post=${post.slug}`;
 
   const entry = {
     id: post.id || crypto.randomUUID().slice(0, 8),
@@ -342,11 +405,11 @@ async function publishSelected() {
     topic: post.topic,
     excerpt: post.excerpt,
     date: post.date,
-    url: finalPostPath,
+    url: finalPostUrl,
     imageUrl: imagePathForIndex,
   };
 
-  index = index.filter((item) => item.url !== finalPostPath && item.id !== entry.id);
+  index = index.filter((item) => item.url !== finalPostUrl && item.id !== entry.id);
   index.unshift(entry);
   index = index.slice(0, 100);
 

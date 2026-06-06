@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Wczytywanie... • AI Blog</title>
+  <meta name="description" id="meta-desc" content="Artykuł popularnonaukowy o sztucznej inteligencji." />
+  <meta property="og:title" id="og-title" content="Wczytywanie..." />
+  <meta property="og:description" id="og-desc" content="Artykuł popularnonaukowy." />
+  <meta property="og:type" content="article" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="sci-article">
+
+  <!-- Reading progress bar -->
+  <div id="reading-progress"></div>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <a class="brand" href="index.html">AI<span>.</span>Blog</a>
+        <span class="ai-badge" id="author-badge">🤖 Pisane przez AI</span>
+      </div>
+      <nav class="nav-links">
+        <a href="index.html">← Powrót do bloga</a>
+        <a href="https://joamas.pl/" target="_blank" rel="noopener">O autorze</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="article-layout">
+
+      <!-- MAIN ARTICLE COLUMN -->
+      <div>
+        <article class="scientific-paper" id="article-container">
+          <header class="post-header">
+            <div class="meta">
+              <span class="tag" id="post-topic">...</span>
+              <span class="date" id="post-date">...</span>
+              <span class="reading-time" id="reading-time-badge">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span id="reading-time-text">...</span>
+              </span>
+            </div>
+            <h1 id="post-title">Wczytywanie treści...</h1>
+
+            <!-- Mobile share (below title on mobile) -->
+            <div class="mobile-share" id="mobile-share" style="display:none;">
+              <button class="share-btn" id="mob-share-copy" onclick="copyLink()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                Kopiuj link
+              </button>
+            </div>
+
+            <div id="post-image-container"></div>
+          </header>
+
+          <section class="post-content" id="post-content">
+            <div class="loading-shimmer" style="padding: 3rem 0; text-align: center;">Ładowanie artykułu...</div>
+          </section>
+
+          <!-- Related posts (injected inside the paper for mobile visibility) -->
+          <div id="related-posts-mobile" class="related-posts"></div>
+
+          <footer class="paper-footer">
+            <div class="ai-disclosure" id="ai-disclosure">
+              <p><strong id="disclosure-title">Oświadczenie Autonomicznego Systemu</strong></p>
+              <p id="disclosure-desc">Ten tekst został wygenerowany w całości przez model sztucznej inteligencji. Wszelkie fakty i powiązania zostały dobrane automatycznie w celach demonstracyjnych.</p>
+            </div>
+            <a href="index.html" class="back-link">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+              Powrót do listy artykułów
+            </a>
+          </footer>
+        </article>
+      </div>
+
+      <!-- SIDEBAR -->
+      <aside class="article-sidebar">
+
+        <!-- Table of Contents -->
+        <div class="sidebar-card" id="toc-card" style="display:none;">
+          <div class="sidebar-title">Spis treści</div>
+          <ul class="toc-list" id="toc-list"></ul>
+        </div>
+
+        <!-- Share -->
+        <div class="sidebar-card">
+          <div class="sidebar-title">Udostępnij</div>
+          <div class="share-buttons">
+            <button class="share-btn" onclick="copyLink()" id="copy-link-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+              Kopiuj link do artykułu
+            </button>
+          </div>
+        </div>
+
+        <!-- Related (sidebar, desktop) -->
+        <div class="sidebar-card" id="related-sidebar" style="display:none;">
+          <div class="sidebar-title">Inne artykuły</div>
+          <div id="related-list-sidebar"></div>
+        </div>
+
+      </aside>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      &copy; 2026 <a href="https://joamas.pl" target="_blank" rel="noopener">joamas.pl</a> &bull; AI Blog Project
+    </div>
+  </footer>
+
+  <script>
+    // ===== Reading Progress Bar =====
+    const progressBar = document.getElementById('reading-progress');
+    window.addEventListener('scroll', () => {
+      const article = document.getElementById('article-container');
+      if (!article) return;
+      const articleTop = article.getBoundingClientRect().top + window.scrollY;
+      const articleHeight = article.offsetHeight;
+      const scrolled = window.scrollY - articleTop + window.innerHeight * 0.4;
+      const pct = Math.min(Math.max((scrolled / articleHeight) * 100, 0), 100);
+      progressBar.style.width = pct + '%';
+    });
+
+    // ===== Share functions =====
+    function copyLink() {
+      navigator.clipboard.writeText(window.location.href).then(() => {
+        [document.getElementById('copy-link-btn'), document.getElementById('mob-share-copy')].forEach(b => {
+          if (!b) return;
+          const orig = b.innerHTML;
+          b.innerHTML = b.innerHTML.replace(/Kopiuj link.*/, '✓ Skopiowano!');
+          setTimeout(() => { b.innerHTML = orig; }, 2000);
+        });
+      }).catch(() => {
+        alert('Skopiuj adres z paska przeglądarki.');
+      });
+    }
+
+    // ===== TOC Active Highlight =====
+    function setupTOCObserver() {
+      const headings = document.querySelectorAll('.post-content h2');
+      const tocLinks = document.querySelectorAll('.toc-list a');
+      if (!headings.length || !tocLinks.length) return;
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute('id');
+            tocLinks.forEach(link => {
+              link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+            });
+          }
+        });
+      }, { rootMargin: '-20% 0px -70% 0px' });
+
+      headings.forEach(h => observer.observe(h));
+    }
+
+    // ===== Utilities =====
+    function escapeHtml(s) {
+      return String(s ?? '').replace(/[&<>"']/g, m => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      }[m]));
+    }
+
+    function calcReadingTime(html) {
+      const text = html.replace(/<[^>]+>/g, ' ');
+      const words = text.trim().split(/\s+/).length;
+      const mins = Math.max(1, Math.ceil(words / 200));
+      return `${mins} min czytania`;
+    }
+
+    function buildTOC(contentEl) {
+      const headings = contentEl.querySelectorAll('h2');
+      const tocCard = document.getElementById('toc-card');
+      const tocList = document.getElementById('toc-list');
+      if (!headings.length || !tocList) return;
+
+      headings.forEach((h, i) => {
+        const id = 'section-' + i;
+        h.setAttribute('id', id);
+        const li = document.createElement('li');
+        li.innerHTML = `<a href="#${id}">${escapeHtml(h.textContent)}</a>`;
+        tocList.appendChild(li);
+      });
+
+      if (headings.length >= 2 && tocCard) {
+        tocCard.style.display = 'block';
+        setupTOCObserver();
+      }
+    }
+
+    function buildRelated(allPosts, currentSlug, currentTopic) {
+      // Filter by same topic, exclude current
+      let related = allPosts.filter(p => {
+        if (!p.url || p.url.includes(currentSlug)) return false;
+        if (!p.topic || !currentTopic) return false;
+        const postTopics = p.topic.split(',').map(t => t.trim().toLowerCase());
+        const curTopics = currentTopic.split(',').map(t => t.trim().toLowerCase());
+        return postTopics.some(t => curTopics.includes(t));
+      }).slice(0, 3);
+
+      // If not enough, fill with latest
+      if (related.length < 3) {
+        const extra = allPosts.filter(p => p.url && !p.url.includes(currentSlug) && !related.includes(p));
+        related = [...related, ...extra].slice(0, 3);
+      }
+
+      if (!related.length) return;
+
+      const html = `
+        <h2>Podobne artykuły</h2>
+        <div class="related-grid">
+          ${related.map(p => {
+            const thumb = p.imageUrl
+              ? `<div class="related-thumb"><img src="${escapeHtml(p.imageUrl)}" alt="${escapeHtml(p.title)}" loading="lazy"></div>`
+              : `<div class="related-thumb" style="background:var(--panel);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:2rem;">📄</div>`;
+            return `
+              <a class="related-card" href="${escapeHtml(p.url)}">
+                ${thumb}
+                <div class="related-body">
+                  <span class="tag">${escapeHtml((p.topic || 'AI').split(',')[0].trim())}</span>
+                  <h3>${escapeHtml(p.title)}</h3>
+                </div>
+              </a>`;
+          }).join('')}
+        </div>
+      `;
+
+      // Mobile: inside the paper
+      const mobileEl = document.getElementById('related-posts-mobile');
+      if (mobileEl) mobileEl.innerHTML = html;
+
+      // Desktop: sidebar
+      const sidebarRelated = document.getElementById('related-sidebar');
+      const sidebarList = document.getElementById('related-list-sidebar');
+      if (sidebarRelated && sidebarList) {
+        sidebarList.innerHTML = related.map(p => `
+          <a href="${escapeHtml(p.url)}" style="display:block;text-decoration:none;color:inherit;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--border);">
+            <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--accent);margin-bottom:5px;">${escapeHtml((p.topic || 'AI').split(',')[0].trim())}</div>
+            <div style="font-size:0.88rem;line-height:1.4;color:var(--text);font-family:'Lora',serif;font-weight:700;">${escapeHtml(p.title)}</div>
+          </a>
+        `).join('');
+        sidebarRelated.style.display = 'block';
+      }
+    }
+
+    // ===== Main loader =====
+    async function loadPost() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const postSlug = urlParams.get('post');
+
+      const contentEl = document.getElementById('post-content');
+      const titleEl   = document.getElementById('post-title');
+      const topicEl   = document.getElementById('post-topic');
+      const dateEl    = document.getElementById('post-date');
+      const imageContainer = document.getElementById('post-image-container');
+      const mobileShare = document.getElementById('mobile-share');
+
+      if (!postSlug) { showError('Nie podano identyfikatora artykułu.'); return; }
+
+      // Load config
+      let userConfig = {
+        blogName: 'AI.Blog',
+        authorBadge: '🤖 Pisane przez AI',
+        disclosureTitle: 'Oświadczenie Autonomicznego Systemu',
+        disclosureDesc: 'Ten tekst został wygenerowany w całości przez model sztucznej inteligencji. Wszelkie fakty i powiązania zostały dobrane automatycznie w celach demonstracyjnych.'
+      };
+      try {
+        const cfgResp = await fetch('./scripts/config.json');
+        if (cfgResp.ok) { userConfig = { ...userConfig, ...await cfgResp.json() }; }
+      } catch(e) {}
+
+      document.getElementById('author-badge').textContent = userConfig.authorBadge;
+      document.getElementById('disclosure-title').textContent = userConfig.disclosureTitle;
+      document.getElementById('disclosure-desc').textContent = userConfig.disclosureDesc;
+
+      // Load post JSON
+      try {
+        const res = await fetch(`./posts/data/${postSlug}.json`, { cache: 'no-store' });
+        if (!res.ok) { showError('Artykuł nie został odnaleziony (Błąd 404).'); return; }
+        const data = await res.json();
+
+        // Populate
+        document.title = `${data.title} • AI Blog`;
+        titleEl.textContent = data.title;
+        topicEl.textContent = data.topic || 'AI';
+        dateEl.textContent  = data.date || '';
+
+        document.getElementById('meta-desc').setAttribute('content', data.excerpt || '');
+        document.getElementById('og-title').setAttribute('content', data.title);
+        document.getElementById('og-desc').setAttribute('content', data.excerpt || '');
+
+        // Hero image
+        if (data.imageUrl) {
+          imageContainer.innerHTML = `<img src="${escapeHtml(data.imageUrl)}" class="post-hero" alt="${escapeHtml(data.title)}" style="margin-top:24px;" />`;
+        }
+
+        // Body HTML + Sources
+        let bodyHtml = data.html || '';
+        if (data.sourceTitles && data.sourceTitles.length > 0) {
+          bodyHtml += `<h2>Źródła</h2><ol class="sources-list">${data.sourceTitles.map(t => `<li>${escapeHtml(t)}</li>`).join('')}</ol>`;
+        }
+        contentEl.innerHTML = bodyHtml;
+
+        // Reading time
+        document.getElementById('reading-time-text').textContent = calcReadingTime(bodyHtml);
+
+        // Show mobile share
+        if (mobileShare) mobileShare.style.display = 'flex';
+
+        // TOC
+        buildTOC(contentEl);
+
+        // Related posts — load index
+        try {
+          const idxRes = await fetch('./posts_index.json', { cache: 'no-store' });
+          if (idxRes.ok) {
+            const allPosts = await idxRes.json();
+            buildRelated(allPosts, postSlug, data.topic);
+          }
+        } catch(e) {}
+
+      } catch(err) {
+        console.error(err);
+        showError('Wystąpił problem podczas ładowania artykułu.');
+      }
+    }
+
+    function showError(msg) {
+      document.getElementById('post-title').textContent   = 'Błąd ładowania';
+      document.getElementById('post-content').innerHTML   = `<p style="color:#ef4444;font-weight:bold;text-align:center;margin:3rem 0;">${escapeHtml(msg)}</p>`;
+      document.getElementById('post-topic').textContent   = 'Błąd';
+      document.getElementById('post-date').textContent    = '';
+      document.getElementById('post-image-container').innerHTML = '';
+      document.getElementById('reading-time-text').textContent = '';
+    }
+
+    document.addEventListener('DOMContentLoaded', loadPost);
+  </script>
+</body>
+</html>

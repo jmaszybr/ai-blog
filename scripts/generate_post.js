@@ -32,7 +32,7 @@ const CONFIG = {
     prompts: path.join(process.cwd(), "prompts"),
     data: path.join(process.cwd(), "data"),
     pending: path.join(process.cwd(), "data", "pending_posts.json"),
-    topics: path.join(process.cwd(), "data", "topics.json"),
+    topics: path.join(process.cwd(), "topics.json"),
   },
 
   gemini: {
@@ -54,20 +54,30 @@ const CONFIG = {
   slugMaxLength: 80,
 };
 
-const DEFAULT_TOPICS = [
-  "AI w archeologii - jak algorytmy odkrywają zaginione miasta pod dżunglą",
-  "Przyszłość mody: ubrania projektowane przez AI i wirtualne przymierzalnie",
-  "AI w sądownictwie - czy algorytm może być bardziej sprawiedliwy niż sędzia?",
-  "Internet of Bodies - gdy AI monitoruje nasze funkcje życiowe od środka",
-  "Koniec z korkami? Autonomiczne systemy zarządzania ruchem w miastach",
-  "AI i psychologia - czy chatbot może zastąpić terapeutę w kryzysie?",
-  "Sztuczna inteligencja w sporcie - jak dane wygrywają mecze i biją rekordy",
-  "AI w przemyśle filmowym - od odmładzania aktorów po generowanie scenariuszy",
-  "Ewolucja wyszukiwarek - dlaczego Google zmienia się w Answer Engine",
-  "AI w zarządzaniu kryzysowym - przewidywanie powodzi i pożarów z wyprzedzeniem",
-  "AI w procesie rekrutacji - jak przejść przez sito algorytmów HR",
-  "AI w turystyce - planowanie podróży marzeń w 10 sekund przez AI Concierge",
-];
+// Wczytywanie konfiguracji i szablonu HTML
+const configPath = path.join(process.cwd(), "scripts", "config.json");
+const templatePath = path.join(process.cwd(), "scripts", "template.html");
+
+if (!fs.existsSync(configPath)) {
+  throw new Error(`Brak pliku konfiguracji: ${configPath}`);
+}
+if (!fs.existsSync(templatePath)) {
+  throw new Error(`Brak szablonu HTML: ${templatePath}`);
+}
+
+const userConfig = JSON.parse(fs.readFileSync(configPath, "utf8"));
+const articleTemplate = fs.readFileSync(templatePath, "utf8");
+
+// Walidacja modelu z konfiguracji
+let geminiModel = "gemini-2.5-flash";
+if (typeof userConfig.modelId === "string" && userConfig.modelId.trim() !== "") {
+  if (userConfig.modelId.toLowerCase().includes("gemini")) {
+    geminiModel = userConfig.modelId.trim();
+  } else {
+    console.warn(`[Ostrzeżenie] Model '${userConfig.modelId}' z config.json nie jest kompatybilny z Gemini API. Używam bezpiecznego fallbacku: '${geminiModel}'.`);
+  }
+}
+CONFIG.gemini.model = geminiModel;
 
 const log = {
   _ts: () => new Date().toISOString().slice(11, 19),
@@ -172,15 +182,15 @@ function writePending(list) {
 }
 
 function readTopics() {
-  const defaults = { unused: [...DEFAULT_TOPICS], used: [] };
   if (!fs.existsSync(CONFIG.paths.topics)) {
-    log.info("Tworzę data/topics.json z domyślną pulą tematów.");
-    writeJsonAtomic(CONFIG.paths.topics, defaults);
-    return defaults;
+    throw new Error(`Brak pliku tematów pod ścieżką: ${CONFIG.paths.topics}. Dodaj plik i uzupełnij sekcję 'unused'.`);
   }
-  const parsed = readJsonSafe(CONFIG.paths.topics, defaults);
+  const parsed = readJsonSafe(CONFIG.paths.topics, null);
+  if (!parsed) {
+    throw new Error("Nie udało się odczytać tematów z data/topics.json lub plik jest pusty.");
+  }
   return {
-    unused: Array.isArray(parsed.unused) ? parsed.unused : defaults.unused,
+    unused: Array.isArray(parsed.unused) ? parsed.unused : [],
     used:   Array.isArray(parsed.used)   ? parsed.used   : [],
   };
 }
@@ -254,6 +264,9 @@ async function generatePostWithGemini(topic, existingTitles = []) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           contents: [{ parts: [{ text: prompt }] }],
+          systemInstruction: userConfig.prompts?.system ? {
+            parts: [{ text: userConfig.prompts.system }]
+          } : undefined,
           tools: [{ googleSearch: {} }],
           generationConfig: {
             temperature: CONFIG.gemini.temperature,
@@ -332,46 +345,19 @@ function renderArticlePage({ title, topic, html, date, excerpt, sourceTitles }) 
         </div>
         <!--BLOG_IMAGE_PLACEHOLDER_END-->`;
 
-  return `<!doctype html>
-<html lang="pl">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>${escapeHtml(title)} • AI Blog</title>
-  <meta name="description" content="${escapeHtml(excerpt)}" />
-  <meta property="og:title" content="${escapeHtml(title)}" />
-  <meta property="og:description" content="${escapeHtml(excerpt)}" />
-  <meta property="og:type" content="article" />
-  <link rel="stylesheet" href="../style.css" />
-</head>
-<body class="sci-article">
-  <header class="site-header">
-    <div class="container header-inner">
-      <a class="brand" href="../index.html">AI<span>Blog</span></a>
-    </div>
-  </header>
-  <main class="container">
-    <article class="scientific-paper">
-      <header class="post-header">
-        <div class="meta">
-          <span>${escapeHtml(topic)}</span> | <span>${escapeHtml(date)}</span>
-        </div>
-        <h1>${escapeHtml(title)}</h1>
-        ${placeholder}
-      </header>
-      <section class="post-content">
-        ${html}
-        ${sourcesHtml}
-      </section>
-      <footer class="paper-footer">
-        <p><strong>🤖 Szkic wygenerowany automatycznie przez AI z wykorzystaniem Google Search.</strong></p>
-        <p><em>⚠️ Wpis powinien zostać sprawdzony i zatwierdzony przed publikacją.</em></p>
-        <a href="../index.html">← Powrót na stronę główną</a>
-      </footer>
-    </article>
-  </main>
-</body>
-</html>`;
+  const contentHtml = html + "\n" + sourcesHtml;
+
+  return articleTemplate
+    .replaceAll("{{title}}", escapeHtml(title))
+    .replaceAll("{{blogName}}", escapeHtml(userConfig.blogName ?? "AI Blog"))
+    .replaceAll("{{authorBadge}}", escapeHtml(userConfig.authorBadge ?? "🤖 Pisane przez AI"))
+    .replaceAll("{{topic}}", escapeHtml(topic))
+    .replaceAll("{{date}}", escapeHtml(date))
+    .replaceAll("{{excerpt}}", escapeHtml(excerpt))
+    .replaceAll("{{imageHtml}}", placeholder)
+    .replaceAll("{{contentHtml}}", contentHtml)
+    .replaceAll("{{disclosureTitle}}", escapeHtml(userConfig.disclosureTitle ?? ""))
+    .replaceAll("{{disclosureDesc}}", escapeHtml(userConfig.disclosureDesc ?? ""));
 }
 
 async function createDraft() {
@@ -414,22 +400,22 @@ async function createDraft() {
     excerpt: post.excerpt,
   });
 
-  const draftPath = path.join(CONFIG.paths.drafts, `${slug}.html`);
+  const draftPath = path.join(CONFIG.paths.drafts, `${slug}.json`);
   const promptPath = path.join(CONFIG.paths.prompts, `${slug}.txt`);
 
   log.step("Zapisuję szkic i prompt do grafiki...");
   fs.writeFileSync(promptPath, imagePrompt, "utf8");
 
-  const pageHtml = renderArticlePage({
+  const draftData = {
     title: post.title,
     topic: post.topic,
     excerpt: post.excerpt,
     html: safeHtml,
     date,
-    sourceTitles: post.sourceTitles,
-  });
+    sourceTitles: post.sourceTitles || []
+  };
 
-  fs.writeFileSync(draftPath, pageHtml, "utf8");
+  fs.writeFileSync(draftPath, JSON.stringify(draftData, null, 2), "utf8");
 
   pending.unshift({
     id,
@@ -439,14 +425,14 @@ async function createDraft() {
     excerpt: post.excerpt,
     date,
     status: "pending_image",
-    draftPath: `posts/drafts/${slug}.html`,
+    draftPath: `posts/drafts/${slug}.json`,
     promptPath: `prompts/${slug}.txt`,
     imagePath: "",
     createdAt: now.toISOString(),
   });
 
   writePending(pending);
-  log.success(`Szkic gotowy: posts/drafts/${slug}.html`);
+  log.success(`Szkic gotowy: posts/drafts/${slug}.json`);
   log.success(`Prompt gotowy: prompts/${slug}.txt`);
   log.info("Publikacja odbędzie się dopiero z panelu /admin/ po dodaniu obrazu.");
 }

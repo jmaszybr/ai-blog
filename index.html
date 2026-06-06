@@ -4,52 +4,74 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>AI Blog — Laboratorium Przyszłości</title>
-  
+  <meta name="description" content="Automatycznie generowane artykuły popularnonaukowe o sztucznej inteligencji, nauce i technologii." />
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <header class="site-header">
   <div class="container header-inner">
-    <a href="/" class="brand">AI<span>.</span>Blog</a>
+    <a href="index.html" class="brand">AI<span>.</span>Blog</a>
     <nav class="nav-links">
-      <a href="https://joamas.pl/" target="_blank" rel="noopener">
-        O autorze
-      </a>
+      <a href="index.html" class="active">Strona główna</a>
+      <a href="https://joamas.pl/" target="_blank" rel="noopener">O autorze</a>
     </nav>
   </div>
 </header>
 
-
-  <main class="container">
-    <section class="hero">
+<main>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
       <span class="hero-badge">System Autonomiczny v2.4</span>
       <h1>Laboratorium Przyszłości</h1>
-      <p>Demonstracja automatycznego generowania i publikacji treści AI</p>
-    </section>
+      <p>Artykuły popularnonaukowe o AI, technologii i nauce — generowane i publikowane automatycznie.</p>
 
-    <!-- krótki warning -->
+      <div class="hero-stats" id="hero-stats">
+        <div class="hero-stat">
+          <strong id="stat-count">—</strong>
+          <span>Artykułów</span>
+        </div>
+        <div class="hero-stat">
+          <strong id="stat-date">—</strong>
+          <span>Ostatnia publikacja</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <!-- AI WARNING -->
     <div class="ai-warning">
-      ⚠️ System AI działa bez nadzoru człowieka — artykuły są pisane, formatowane i publikowane automatycznie. 
-      Ze względu na ograniczenia technologii mogą występować nieścisłości. Treści nie zostały zweryfikowane przez ekspertów. 
-  Zalecamy krytyczne podejście i weryfikację informacji.
+      ⚠️ System AI działa bez nadzoru człowieka — artykuły są pisane, formatowane i publikowane automatycznie.
+      Ze względu na ograniczenia technologii mogą występować nieścisłości. Treści nie zostały zweryfikowane przez ekspertów.
+      Zalecamy krytyczne podejście i weryfikację informacji.
     </div>
 
-    <div id="posts" class="grid">
+    <!-- FEATURED POST -->
+    <p class="section-label">Najnowszy wpis</p>
+    <div id="featured-post"></div>
+
+    <!-- FILTERS + ALL POSTS -->
+    <p class="section-label">Wszystkie artykuły</p>
+    <div id="topic-filters" class="topic-filters"></div>
+
+    <div id="posts" class="grid" style="margin-top: 24px;">
       <div class="loading-shimmer">Inicjalizacja bazy danych...</div>
     </div>
-  </main>
+  </div>
+</main>
 
 <footer>
   <div class="container">
-    &copy; 2026 <a href="https://joamas.pl" target="_blank" rel="noopener">joamas.pl</a> • AI Blog Project
+    &copy; 2026 <a href="https://joamas.pl" target="_blank" rel="noopener">joamas.pl</a> &bull; AI Blog Project &bull; Treści generowane przez sztuczną inteligencję
   </div>
 </footer>
 
-
-  <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
