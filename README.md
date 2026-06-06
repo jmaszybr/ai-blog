@@ -1,97 +1,103 @@
-# 🤖 AUTONOMICZNY BLOG AI
+# 🤖 Autonomiczny Blog AI
 
-**AI Insights** to eksperymentalny projekt autonomicznego bloga, w którym sztuczna inteligencja samodzielnie generuje, ilustruje i publikuje artykuły na temat rozwoju AI.
+Eksperymentalny projekt bloga, w którym sztuczna inteligencja samodzielnie generuje i publikuje artykuły popularnonaukowe na temat AI i nowych technologii.
 
-Cały proces — od wyboru tematu, przez napisanie tekstu, wygenerowanie grafiki, aż po publikację — odbywa się **BEZ ingerencji człowieka**.
+Cały proces — od wyboru tematu, przez napisanie tekstu, wygenerowanie grafiki, aż po publikację — odbywa się **bez ingerencji człowieka**.
 
-> ⚠️ **UWAGA**: Projekt ma charakter badawczo-eksperymentalny. Treści nie są weryfikowane przez ekspertów i mogą zawierać nieścisłości.
+> ⚠️ **Uwaga**: Projekt ma charakter eksperymentalny. Treści generowane są automatycznie i nie są weryfikowane przez ekspertów.
 
 ---
 
 ## ✨ Funkcjonalności
 
 - Losowanie tematów z przygotowanej puli
-- Generowanie artykułów (800–1200 słów) przez model językowy
-- Automatyczne generowanie ilustracji (Text-to-Image)
-- Tworzenie statycznych stron HTML
-- Aktualizacja indeksu wpisów (`posts_index.json`)
-- Automatyczne uruchamianie raz dziennie (scheduler)
-- Publikacja jako statyczny blog
+- Generowanie artykułów przez model Gemini (Google AI)
+- Generowanie ilustracji artykułów
+- Panel administracyjny do przeglądania i publikowania szkiców
+- Statyczna architektura — brak backendu i bazy danych
+- Automatyczne uruchamianie przez harmonogram (GitHub Actions)
 
 ---
 
-## 🏗️ Architektura Systemu
+## 🏗️ Architektura
+
 ```
 GitHub Actions (cron / manual)
             ↓
-    Node.js (generate_post.js)
+    Node.js — generator treści (Gemini API)
             ↓
-    AI (tekst) + AI (grafika)
+    Szkic trafia do panelu admina
             ↓
-  Statyczne pliki HTML / JSON
+    Po zatwierdzeniu → publikacja jako JSON
             ↓
-   Publikacja (GitHub Pages)
+    Statyczny frontend renderuje artykuły
+            ↓
+    GitHub Pages (hosting)
 ```
 
 ### System **nie używa**:
 - Bazy danych
-- Backendu
 - Serwera aplikacyjnego
+- Frameworka frontendowego
 
 ---
 
-## 📁 Struktura Projektu
+## 📁 Struktura projektu
+
 ```
 /
-├── index.html              # Strona główna
+├── index.html              # Strona główna (lista artykułów)
+├── post.html               # Szablon podstrony artykułu
 ├── style.css               # Style globalne
-├── script.js               # Renderowanie kafelków wpisów
-├── posts_index.json        # Indeks postów
-├── topics.json             # Pula tematów
+├── script.js               # Logika renderowania strony głównej
+├── posts_index.json        # Indeks wszystkich opublikowanych wpisów
+├── topics.json             # Pula tematów do generowania
+│
+├── admin/                  # Panel administracyjny
 │
 ├── scripts/
-│   └── generate_post.js    # Główny silnik AI
+│   ├── generate_post.js    # Główny silnik generowania treści (AI)
+│   └── config.json         # Konfiguracja bloga
 │
 └── posts/
-    ├── images/             # Obrazy generowane przez AI
-    └── *.html              # Wygenerowane wpisy
+    ├── data/               # Opublikowane artykuły (JSON)
+    ├── drafts/             # Szkice oczekujące na zatwierdzenie
+    └── images/             # Ilustracje artykułów
 ```
+
+---
+
+## ⚙️ Wymagania
+
+- Node.js 18+
+- Klucz API: `GEMINI_API_KEY`
+
+---
+
+## 🚀 Uruchomienie generatora
+
+```bash
+npm install
+node scripts/generate_post.js --draft
+```
+
+Szkic artykułu pojawi się w panelu admina (`/admin/`), skąd można go przejrzeć i opublikować.
 
 ---
 
 ## 🔒 Bezpieczeństwo
 
-- Klucze API **NIE** są przechowywane w repozytorium
-- Używane są zmienne środowiskowe / secrets
-- Frontend jest w pełni statyczny
-- Brak backendu = niska powierzchnia ataku
-
-> Projekt jest traktowany jako sandbox / eksperyment, a nie system produkcyjny.
+- Klucze API przechowywane wyłącznie jako zmienne środowiskowe / GitHub Secrets
+- Frontend w pełni statyczny
+- Brak backendu = minimalna powierzchnia ataku
 
 ---
 
-## ⚙️ Automatyzacja
+## 🧪 Status projektu
 
-- Codzienne uruchamianie przez scheduler
-- Możliwość ręcznego uruchomienia
-- Automatyczny commit wygenerowanych plików
-- Pełna historia zmian
+**Eksperyment / Proof of Concept**
 
----
-
-## 🧪 Status Projektu
-
-**STATUS: EKSPERYMENT / PROOF OF CONCEPT**
-
-### Celem projektu jest:
-- Testowanie autonomicznych pipeline'ów AI
-- Analiza jakości generowanego contentu
-- Eksploracja idei samopublikujących się systemów AI
-
-### Projekt **nie jest**:
-- Produktem komercyjnym
-- Systemem krytycznym
-- Narzędziem doradczym
+Celem projektu jest testowanie autonomicznych pipeline'ów generatywnych AI oraz analiza jakości automatycznie tworzonego contentu.
 
 ---
 
@@ -103,4 +109,4 @@ MIT
 
 ## 👤 Autor
 
-Projekt eksperymentalny rozwijany jako badanie nad autonomicznymi systemami generatywnymi i publikacyjnymi opartymi o sztuczną inteligencję.
+[joamas.pl](https://joamas.pl)
