@@ -1,137 +1,146 @@
 [
-    {
-        "id":  "38e59ac4",
-        "title":  "Kiedy Google szepcze odpowiedzi: Era wyszukiwarek jako inteligentnych silników wiedzy",
-        "topic":  "Ewolucja wyszukiwarek",
-        "excerpt":  "Od prostych katalogów po zaawansowane systemy oparte na sztucznej inteligencji – wyszukiwarki przeszły długą drogę. Dziś Google nie jest już tylko \"mapą linków\", lecz staje się wszechwiedzącym przewodnikiem, który dostarcza gotowe odpowiedzi, zmieniając nasze doświadczenie z siecią.",
-        "date":  "6 czerwca 2026",
-        "url":  "post.html?post=kiedy-google-szepcze-odpowiedzi-era-wyszukiwarek-jako-inteligentnych-silnikow-wi",
-        "imageUrl":  "posts/images/kiedy-google-szepcze-odpowiedzi-era-wyszukiwarek-jako-inteligentnych-silnikow-wi.jpg"
-    },
-    {
-        "id":  "2fc7de35",
-        "title":  "Algorytmy na bieżni: Rewolucja danych w świecie sportu",
-        "topic":  "Sport, AI, Dane",
-        "excerpt":  "Sztuczna inteligencja przestaje być jedynie futurystyczną wizją, stając się cichym architektem sportowych sukcesów. Odkryj, jak analiza danych przekształca treningi, strategie i zdolność do bicia rekordów.",
-        "date":  "5 czerwca 2026",
-        "url":  "post.html?post=algorytmy-na-biezni-rewolucja-danych-w-swiecie-sportu",
-        "imageUrl":  "posts/images/algorytmy-na-biezni-rewolucja-danych-w-swiecie-sportu.jpg"
-    },
-    {
-        "id":  "75bd4a4f",
-        "title":  "Kiedy algorytmy widzą przyszłość: Sztuczna inteligencja w służbie przewidywania żywiołów",
-        "topic":  "AI, zarządzanie kryzysowe",
-        "excerpt":  "W obliczu narastających zagrożeń naturalnych, sztuczna inteligencja staje się kluczowym narzędziem w przewidywaniu i minimalizowaniu skutków powodzi oraz pożarów, zmieniając podejście do zarządzania kryzysowego z reaktywnego na proaktywne.",
-        "date":  "4 czerwca 2026",
-        "url":  "post.html?post=kiedy-algorytmy-widza-przyszlosc-sztuczna-inteligencja-w-sluzbie-przewidywania-z",
-        "imageUrl":  "posts/images/kiedy-algorytmy-widza-przyszlosc-sztuczna-inteligencja-w-sluzbie-przewidywania-z.jpg"
-    },
-    {
-        "id":  "a599dbf0",
-        "title":  "Wewnątrz Sieci Ciała: Gdy AI Słucha Szeptów Naszego Organizmu",
-        "topic":  "Internet Ciał, AI, Zdrowie",
-        "excerpt":  "Wyobraź sobie świat, w którym Twoje ciało jest stale monitorowane przez niewidzialnego strażnika, a sztuczna inteligencja, niczym wewnętrzny lekarz, czuwa nad każdą funkcją życiową. To wizja Internetu Ciał – przyszłość, która już puka do naszych drzwi.",
-        "date":  "3 czerwca 2026",
-        "url":  "post.html?post=wewnatrz-sieci-ciala-gdy-ai-slucha-szeptow-naszego-organizmu",
-        "imageUrl":  "posts/images/wewnatrz-sieci-ciala-gdy-ai-slucha-szeptow-naszego-organizmu.jpg"
-    },
-    {
-        "id":  "5bd45484",
-        "title":  "Od Biblioteki Linków do Szeptu Wiedzy: Ewolucja Wyszukiwarek w Erze AI",
-        "topic":  "Ewolucja wyszukiwarek",
-        "excerpt":  "Internet, niegdyś chaotyczna sieć dokumentów, staje się inteligentnym asystentem, który nie tylko wskazuje drogę, ale potrafi wyczerpująco odpowiedzieć na nasze pytania. Jak Google, z prostego indeksu linków, przeobraża się w dynamiczny silnik wiedzy, gotów do dialogu?",
-        "date":  "2 czerwca 2026",
-        "url":  "post.html?post=od-biblioteki-linkow-do-szeptu-wiedzy-ewolucja-wyszukiwarek-w-erze-ai",
-        "imageUrl":  "posts/images/od-biblioteki-linkow-do-szeptu-wiedzy-ewolucja-wyszukiwarek-w-erze-ai.jpg"
-    },
-    {
-        "id":  "1bf4ef2b",
-        "title":  "Temida w algorytmicznym zwierciadle: Czy sztuczna inteligencja zrewolucjonizuje sprawiedliwość?",
-        "topic":  "AI w sądownictwie",
-        "excerpt":  "W dobie rosnącej potęgi sztucznej inteligencji, pojawia się fascynujące pytanie: czy algorytmy mogą być bardziej sprawiedliwe niż ludzki sędzia? Zanurzmy się w świat, gdzie technologia spotyka się z Temidą, by odkryć jej potencjał i ograniczenia.",
-        "date":  "1 czerwca 2026",
-        "url":  "post.html?post=temida-w-algorytmicznym-zwierciadle-czy-sztuczna-inteligencja-zrewolucjonizuje-s",
-        "imageUrl":  "posts/images/temida-w-algorytmicznym-zwierciadle-czy-sztuczna-inteligencja-zrewolucjonizuje-s.png"
-    },
-    {
-        "id":  "6d02a084",
-        "title":  "Przebudzenie Algorytmów: Jak AI Redefiniuje Rekrutację i Twoją Ścieżkę do Kariery",
-        "topic":  "AI w rekrutacji",
-        "excerpt":  "Sztuczna inteligencja zmienia oblicze rekrutacji, stając się niewidzialnym strażnikiem bram do wymarzonej pracy. Dowiedz się, jak przejść przez sito algorytmów i wykorzystać technologię na swoją korzyść.",
-        "date":  "31 maja 2026",
-        "url":  "post.html?post=przebudzenie-algorytmow-jak-ai-redefiniuje-rekrutacje-i-twoja-sciezke-do-kariery",
-        "imageUrl":  "posts/images/przebudzenie-algorytmow-jak-ai-redefiniuje-rekrutacje-i-twoja-sciezke-do-kariery.png"
-    },
-    {
-        "id":  "412bd6f5",
-        "title":  "Garderoba Przyszłości: Jak AI Szyje Nowe Trendy i Zmienia Doświadczenia Zakupowe",
-        "topic":  "Moda i AI",
-        "excerpt":  "Sztuczna inteligencja rewolucjonizuje świat mody, od projektowania po doświadczenia zakupowe. Odkryj, jak ubrania tworzone przez AI i wirtualne przymierzalnie kształtują przyszłość branży, czyniąc ją bardziej spersonalizowaną i zrównoważoną.",
-        "date":  "30 maja 2026",
-        "url":  "post.html?post=garderoba-przyszlosci-jak-ai-szyje-nowe-trendy-i-zmienia-doswiadczenia-zakupowe",
-        "imageUrl":  "posts/images/garderoba-przyszlosci-jak-ai-szyje-nowe-trendy-i-zmienia-doswiadczenia-zakupowe.png"
-    },
-    {
-        "id":  "8aa76924",
-        "title":  "Od Gąszczu Linków do Oświeconej Odpowiedzi: Google jako Silnik Wiedzy",
-        "topic":  "Ewolucja wyszukiwarek, AI",
-        "excerpt":  "W świecie cyfrowym, gdzie informacja to waluta, wyszukiwarki przeszły długą drogę. Od prostych list linków do inteligentnych systemów dostarczających precyzyjne odpowiedzi – Google redefiniuje sposób, w jaki pozyskujemy wiedzę, stając się prawdziwym silnikiem odpowiedzi.",
-        "date":  "29 maja 2026",
-        "url":  "post.html?post=od-gaszczu-linkow-do-oswieconej-odpowiedzi-google-jako-silnik-wiedzy",
-        "imageUrl":  "posts/images/od-gaszczu-linkow-do-oswieconej-odpowiedzi-google-jako-silnik-wiedzy.png"
-    },
-    {
-        "id":  "18f2b994",
-        "title":  "Sztuczna Inteligencja w Świecie Kina: Od Cyfrowego Odmładzania po Scenariusze Przyszłości",
-        "topic":  "AI w filmie",
-        "excerpt":  "Sztuczna inteligencja rewolucjonizuje przemysł filmowy na każdym etapie – od tworzenia scenariuszy, przez efekty specjalne i odmładzanie aktorów, aż po dystrybucję. Czy AI zastąpi ludzką kreatywność, czy stanie się jej niezastąpionym partnerem w tworzeniu filmowych arcydzieł?",
-        "date":  "28 maja 2026",
-        "url":  "post.html?post=sztuczna-inteligencja-w-swiecie-kina-od-cyfrowego-odmladzania-po-scenariusze-prz",
-        "imageUrl":  "posts/images/sztuczna-inteligencja-w-swiecie-kina-od-cyfrowego-odmladzania-po-scenariusze-prz.png"
-    },
-    {
-        "id":  "346d6532",
-        "title":  "Kiedy maszyna widzi zagrożenie, zanim nadejdzie – AI w awangardzie walki z żywiołami",
-        "topic":  "AI, Zarządzanie Kryzysowe",
-        "excerpt":  "Sztuczna inteligencja rewolucjonizuje sposób, w jaki przygotowujemy się na klęski żywiołowe, oferując bezprecedensową zdolność przewidywania powodzi i pożarów z wyprzedzeniem. To nowa era bezpieczeństwa, w której algorytmy stają się naszymi niewidzialnymi strażnikami.",
-        "date":  "26 maja 2026",
-        "url":  "post.html?post=kiedy-maszyna-widzi-zagrozenie-zanim-nadejdzie-ai-w-awangardzie-walki-z-zywiolam",
-        "imageUrl":  "posts/images/kiedy-maszyna-widzi-zagrozenie-zanim-nadejdzie-ai-w-awangardzie-walki-z-zywiolam.png"
-    },
-    {
-        "id":  "212f6624",
-        "title":  "Koniec z korkami? Autonomiczna rewolucja w zarządzaniu ruchem miejskim",
-        "topic":  "Smart City, Transport",
-        "excerpt":  "Czy zatłoczone ulice i niekończące się korki to już przeszłość? Poznaj, jak sztuczna inteligencja i autonomiczne systemy zarządzania ruchem transformują miejską mobilność, tworząc miasta przyszłości.",
-        "date":  "24 maja 2026",
-        "url":  "post.html?post=koniec-z-korkami-autonomiczna-rewolucja-w-zarzadzaniu-ruchem-miejskim",
-        "imageUrl":  "posts/images/koniec-z-korkami-autonomiczna-rewolucja-w-zarzadzaniu-ruchem-miejskim.png"
-    },
-    {
-        "id":  "89b8c8ea",
-        "title":  "AI Concierge: Podróż marzeń w 10 sekund – przyszłość, która nadchodzi",
-        "topic":  "AI, Turystyka, Podróże",
-        "excerpt":  "Wyobraź sobie, że planowanie idealnych wakacji zajmuje tyle, co wypicie filiżanki kawy. Dzięki sztucznej inteligencji, wizja osobistego konsjerża tworzącego spersonalizowane plany podróży w mgnieniu oka staje się rzeczywistością, rewolucjonizując sposób, w jaki odkrywamy świat.",
-        "date":  "23 maja 2026",
-        "url":  "post.html?post=ai-concierge-podroz-marzen-w-10-sekund-przyszlosc-ktora-nadchodzi",
-        "imageUrl":  "posts/images/ai-concierge-podroz-marzen-w-10-sekund-przyszlosc-ktora-nadchodzi.png"
-    },
-    {
-        "id":  "44aeeb1d",
-        "title":  "Internet Ciał: Gdy AI Monitoruje Nasze Funkcje Życiowe od Środka",
-        "topic":  "Medycyna, AI, Przyszłość",
-        "excerpt":  "Wyobraź sobie świat, w którym Twoje ciało jest nieustannie monitorowane przez niewidzialnego strażnika – sztuczną inteligencję, która czuwa nad Twoim zdrowiem od środka. To już nie science fiction, to wizja Internetu Ciał (IoB), która staje się naszą rzeczywistością.",
-        "date":  "23 maja 2026",
-        "url":  "post.html?post=internet-cial-gdy-ai-monitoruje-nasze-funkcje-zyciowe-od-srodka",
-        "imageUrl":  "posts/images/internet-cial-gdy-ai-monitoruje-nasze-funkcje-zyciowe-od-srodka.jpg"
-    },
-    {
-        "id":  "d822f946",
-        "title":  "Kino Przyszłości: Jak Sztuczna Inteligencja Przekształca Przemysł Filmowy",
-        "topic":  "AI w filmie",
-        "excerpt":  "Sztuczna inteligencja rewolucjonizuje przemysł filmowy, od odmładzania gwiazd ekranu po kreowanie złożonych scenariuszy i efektów specjalnych. Czy jesteśmy świadkami narodzin nowej ery kinematografii, w której granice wyobraźni zostaną całkowicie zatarte?",
-        "date":  "22 maja 2026",
-        "url":  "post.html?post=kino-przyszlosci-jak-sztuczna-inteligencja-przeksztalca-przemysl-filmowy",
-        "imageUrl":  "posts/images/kino-przyszlosci-jak-sztuczna-inteligencja-przeksztalca-przemysl-filmowy.png"
-    }
+  {
+    "id": "ea4082db",
+    "title": "Twój Inteligentny Portfel: Jak AI Zmienia Codzienne Zarządzanie Wydatkami",
+    "topic": "Finanse Osobiste, AI",
+    "excerpt": "Wyobraź sobie portfel, który nie tylko przechowuje pieniądze, ale aktywnie pomaga nimi zarządzać. Sztuczna inteligencja rewolucjonizuje bankowość osobistą, oferując narzędzia do planowania, analizy i optymalizacji codziennych wydatków, przekształcając nasze podejście do finansów.",
+    "date": "6 czerwca 2026",
+    "url": "post.html?post=twoj-inteligentny-portfel-jak-ai-zmienia-codzienne-zarzadzanie-wydatkami",
+    "imageUrl": "posts/images/twoj-inteligentny-portfel-jak-ai-zmienia-codzienne-zarzadzanie-wydatkami.jpg"
+  },
+  {
+    "id": "38e59ac4",
+    "title": "Kiedy Google szepcze odpowiedzi: Era wyszukiwarek jako inteligentnych silników wiedzy",
+    "topic": "Ewolucja wyszukiwarek",
+    "excerpt": "Od prostych katalogów po zaawansowane systemy oparte na sztucznej inteligencji – wyszukiwarki przeszły długą drogę. Dziś Google nie jest już tylko \"mapą linków\", lecz staje się wszechwiedzącym przewodnikiem, który dostarcza gotowe odpowiedzi, zmieniając nasze doświadczenie z siecią.",
+    "date": "6 czerwca 2026",
+    "url": "post.html?post=kiedy-google-szepcze-odpowiedzi-era-wyszukiwarek-jako-inteligentnych-silnikow-wi",
+    "imageUrl": "posts/images/kiedy-google-szepcze-odpowiedzi-era-wyszukiwarek-jako-inteligentnych-silnikow-wi.jpg"
+  },
+  {
+    "id": "2fc7de35",
+    "title": "Algorytmy na bieżni: Rewolucja danych w świecie sportu",
+    "topic": "Sport, AI, Dane",
+    "excerpt": "Sztuczna inteligencja przestaje być jedynie futurystyczną wizją, stając się cichym architektem sportowych sukcesów. Odkryj, jak analiza danych przekształca treningi, strategie i zdolność do bicia rekordów.",
+    "date": "5 czerwca 2026",
+    "url": "post.html?post=algorytmy-na-biezni-rewolucja-danych-w-swiecie-sportu",
+    "imageUrl": "posts/images/algorytmy-na-biezni-rewolucja-danych-w-swiecie-sportu.jpg"
+  },
+  {
+    "id": "75bd4a4f",
+    "title": "Kiedy algorytmy widzą przyszłość: Sztuczna inteligencja w służbie przewidywania żywiołów",
+    "topic": "AI, zarządzanie kryzysowe",
+    "excerpt": "W obliczu narastających zagrożeń naturalnych, sztuczna inteligencja staje się kluczowym narzędziem w przewidywaniu i minimalizowaniu skutków powodzi oraz pożarów, zmieniając podejście do zarządzania kryzysowego z reaktywnego na proaktywne.",
+    "date": "4 czerwca 2026",
+    "url": "post.html?post=kiedy-algorytmy-widza-przyszlosc-sztuczna-inteligencja-w-sluzbie-przewidywania-z",
+    "imageUrl": "posts/images/kiedy-algorytmy-widza-przyszlosc-sztuczna-inteligencja-w-sluzbie-przewidywania-z.jpg"
+  },
+  {
+    "id": "a599dbf0",
+    "title": "Wewnątrz Sieci Ciała: Gdy AI Słucha Szeptów Naszego Organizmu",
+    "topic": "Internet Ciał, AI, Zdrowie",
+    "excerpt": "Wyobraź sobie świat, w którym Twoje ciało jest stale monitorowane przez niewidzialnego strażnika, a sztuczna inteligencja, niczym wewnętrzny lekarz, czuwa nad każdą funkcją życiową. To wizja Internetu Ciał – przyszłość, która już puka do naszych drzwi.",
+    "date": "3 czerwca 2026",
+    "url": "post.html?post=wewnatrz-sieci-ciala-gdy-ai-slucha-szeptow-naszego-organizmu",
+    "imageUrl": "posts/images/wewnatrz-sieci-ciala-gdy-ai-slucha-szeptow-naszego-organizmu.jpg"
+  },
+  {
+    "id": "5bd45484",
+    "title": "Od Biblioteki Linków do Szeptu Wiedzy: Ewolucja Wyszukiwarek w Erze AI",
+    "topic": "Ewolucja wyszukiwarek",
+    "excerpt": "Internet, niegdyś chaotyczna sieć dokumentów, staje się inteligentnym asystentem, który nie tylko wskazuje drogę, ale potrafi wyczerpująco odpowiedzieć na nasze pytania. Jak Google, z prostego indeksu linków, przeobraża się w dynamiczny silnik wiedzy, gotów do dialogu?",
+    "date": "2 czerwca 2026",
+    "url": "post.html?post=od-biblioteki-linkow-do-szeptu-wiedzy-ewolucja-wyszukiwarek-w-erze-ai",
+    "imageUrl": "posts/images/od-biblioteki-linkow-do-szeptu-wiedzy-ewolucja-wyszukiwarek-w-erze-ai.jpg"
+  },
+  {
+    "id": "1bf4ef2b",
+    "title": "Temida w algorytmicznym zwierciadle: Czy sztuczna inteligencja zrewolucjonizuje sprawiedliwość?",
+    "topic": "AI w sądownictwie",
+    "excerpt": "W dobie rosnącej potęgi sztucznej inteligencji, pojawia się fascynujące pytanie: czy algorytmy mogą być bardziej sprawiedliwe niż ludzki sędzia? Zanurzmy się w świat, gdzie technologia spotyka się z Temidą, by odkryć jej potencjał i ograniczenia.",
+    "date": "1 czerwca 2026",
+    "url": "post.html?post=temida-w-algorytmicznym-zwierciadle-czy-sztuczna-inteligencja-zrewolucjonizuje-s",
+    "imageUrl": "posts/images/temida-w-algorytmicznym-zwierciadle-czy-sztuczna-inteligencja-zrewolucjonizuje-s.png"
+  },
+  {
+    "id": "6d02a084",
+    "title": "Przebudzenie Algorytmów: Jak AI Redefiniuje Rekrutację i Twoją Ścieżkę do Kariery",
+    "topic": "AI w rekrutacji",
+    "excerpt": "Sztuczna inteligencja zmienia oblicze rekrutacji, stając się niewidzialnym strażnikiem bram do wymarzonej pracy. Dowiedz się, jak przejść przez sito algorytmów i wykorzystać technologię na swoją korzyść.",
+    "date": "31 maja 2026",
+    "url": "post.html?post=przebudzenie-algorytmow-jak-ai-redefiniuje-rekrutacje-i-twoja-sciezke-do-kariery",
+    "imageUrl": "posts/images/przebudzenie-algorytmow-jak-ai-redefiniuje-rekrutacje-i-twoja-sciezke-do-kariery.png"
+  },
+  {
+    "id": "412bd6f5",
+    "title": "Garderoba Przyszłości: Jak AI Szyje Nowe Trendy i Zmienia Doświadczenia Zakupowe",
+    "topic": "Moda i AI",
+    "excerpt": "Sztuczna inteligencja rewolucjonizuje świat mody, od projektowania po doświadczenia zakupowe. Odkryj, jak ubrania tworzone przez AI i wirtualne przymierzalnie kształtują przyszłość branży, czyniąc ją bardziej spersonalizowaną i zrównoważoną.",
+    "date": "30 maja 2026",
+    "url": "post.html?post=garderoba-przyszlosci-jak-ai-szyje-nowe-trendy-i-zmienia-doswiadczenia-zakupowe",
+    "imageUrl": "posts/images/garderoba-przyszlosci-jak-ai-szyje-nowe-trendy-i-zmienia-doswiadczenia-zakupowe.png"
+  },
+  {
+    "id": "8aa76924",
+    "title": "Od Gąszczu Linków do Oświeconej Odpowiedzi: Google jako Silnik Wiedzy",
+    "topic": "Ewolucja wyszukiwarek, AI",
+    "excerpt": "W świecie cyfrowym, gdzie informacja to waluta, wyszukiwarki przeszły długą drogę. Od prostych list linków do inteligentnych systemów dostarczających precyzyjne odpowiedzi – Google redefiniuje sposób, w jaki pozyskujemy wiedzę, stając się prawdziwym silnikiem odpowiedzi.",
+    "date": "29 maja 2026",
+    "url": "post.html?post=od-gaszczu-linkow-do-oswieconej-odpowiedzi-google-jako-silnik-wiedzy",
+    "imageUrl": "posts/images/od-gaszczu-linkow-do-oswieconej-odpowiedzi-google-jako-silnik-wiedzy.png"
+  },
+  {
+    "id": "18f2b994",
+    "title": "Sztuczna Inteligencja w Świecie Kina: Od Cyfrowego Odmładzania po Scenariusze Przyszłości",
+    "topic": "AI w filmie",
+    "excerpt": "Sztuczna inteligencja rewolucjonizuje przemysł filmowy na każdym etapie – od tworzenia scenariuszy, przez efekty specjalne i odmładzanie aktorów, aż po dystrybucję. Czy AI zastąpi ludzką kreatywność, czy stanie się jej niezastąpionym partnerem w tworzeniu filmowych arcydzieł?",
+    "date": "28 maja 2026",
+    "url": "post.html?post=sztuczna-inteligencja-w-swiecie-kina-od-cyfrowego-odmladzania-po-scenariusze-prz",
+    "imageUrl": "posts/images/sztuczna-inteligencja-w-swiecie-kina-od-cyfrowego-odmladzania-po-scenariusze-prz.png"
+  },
+  {
+    "id": "346d6532",
+    "title": "Kiedy maszyna widzi zagrożenie, zanim nadejdzie – AI w awangardzie walki z żywiołami",
+    "topic": "AI, Zarządzanie Kryzysowe",
+    "excerpt": "Sztuczna inteligencja rewolucjonizuje sposób, w jaki przygotowujemy się na klęski żywiołowe, oferując bezprecedensową zdolność przewidywania powodzi i pożarów z wyprzedzeniem. To nowa era bezpieczeństwa, w której algorytmy stają się naszymi niewidzialnymi strażnikami.",
+    "date": "26 maja 2026",
+    "url": "post.html?post=kiedy-maszyna-widzi-zagrozenie-zanim-nadejdzie-ai-w-awangardzie-walki-z-zywiolam",
+    "imageUrl": "posts/images/kiedy-maszyna-widzi-zagrozenie-zanim-nadejdzie-ai-w-awangardzie-walki-z-zywiolam.png"
+  },
+  {
+    "id": "212f6624",
+    "title": "Koniec z korkami? Autonomiczna rewolucja w zarządzaniu ruchem miejskim",
+    "topic": "Smart City, Transport",
+    "excerpt": "Czy zatłoczone ulice i niekończące się korki to już przeszłość? Poznaj, jak sztuczna inteligencja i autonomiczne systemy zarządzania ruchem transformują miejską mobilność, tworząc miasta przyszłości.",
+    "date": "24 maja 2026",
+    "url": "post.html?post=koniec-z-korkami-autonomiczna-rewolucja-w-zarzadzaniu-ruchem-miejskim",
+    "imageUrl": "posts/images/koniec-z-korkami-autonomiczna-rewolucja-w-zarzadzaniu-ruchem-miejskim.png"
+  },
+  {
+    "id": "89b8c8ea",
+    "title": "AI Concierge: Podróż marzeń w 10 sekund – przyszłość, która nadchodzi",
+    "topic": "AI, Turystyka, Podróże",
+    "excerpt": "Wyobraź sobie, że planowanie idealnych wakacji zajmuje tyle, co wypicie filiżanki kawy. Dzięki sztucznej inteligencji, wizja osobistego konsjerża tworzącego spersonalizowane plany podróży w mgnieniu oka staje się rzeczywistością, rewolucjonizując sposób, w jaki odkrywamy świat.",
+    "date": "23 maja 2026",
+    "url": "post.html?post=ai-concierge-podroz-marzen-w-10-sekund-przyszlosc-ktora-nadchodzi",
+    "imageUrl": "posts/images/ai-concierge-podroz-marzen-w-10-sekund-przyszlosc-ktora-nadchodzi.png"
+  },
+  {
+    "id": "44aeeb1d",
+    "title": "Internet Ciał: Gdy AI Monitoruje Nasze Funkcje Życiowe od Środka",
+    "topic": "Medycyna, AI, Przyszłość",
+    "excerpt": "Wyobraź sobie świat, w którym Twoje ciało jest nieustannie monitorowane przez niewidzialnego strażnika – sztuczną inteligencję, która czuwa nad Twoim zdrowiem od środka. To już nie science fiction, to wizja Internetu Ciał (IoB), która staje się naszą rzeczywistością.",
+    "date": "23 maja 2026",
+    "url": "post.html?post=internet-cial-gdy-ai-monitoruje-nasze-funkcje-zyciowe-od-srodka",
+    "imageUrl": "posts/images/internet-cial-gdy-ai-monitoruje-nasze-funkcje-zyciowe-od-srodka.jpg"
+  },
+  {
+    "id": "d822f946",
+    "title": "Kino Przyszłości: Jak Sztuczna Inteligencja Przekształca Przemysł Filmowy",
+    "topic": "AI w filmie",
+    "excerpt": "Sztuczna inteligencja rewolucjonizuje przemysł filmowy, od odmładzania gwiazd ekranu po kreowanie złożonych scenariuszy i efektów specjalnych. Czy jesteśmy świadkami narodzin nowej ery kinematografii, w której granice wyobraźni zostaną całkowicie zatarte?",
+    "date": "22 maja 2026",
+    "url": "post.html?post=kino-przyszlosci-jak-sztuczna-inteligencja-przeksztalca-przemysl-filmowy",
+    "imageUrl": "posts/images/kino-przyszlosci-jak-sztuczna-inteligencja-przeksztalca-przemysl-filmowy.png"
+  }
 ]
