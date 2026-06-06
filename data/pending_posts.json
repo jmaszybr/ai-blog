@@ -1,1 +1,15 @@
-[]
+[
+  {
+    "id": "ea4082db",
+    "slug": "twoj-inteligentny-portfel-jak-ai-zmienia-codzienne-zarzadzanie-wydatkami",
+    "title": "Twój Inteligentny Portfel: Jak AI Zmienia Codzienne Zarządzanie Wydatkami",
+    "topic": "Finanse Osobiste, AI",
+    "excerpt": "Wyobraź sobie portfel, który nie tylko przechowuje pieniądze, ale aktywnie pomaga nimi zarządzać. Sztuczna inteligencja rewolucjonizuje bankowość osobistą, oferując narzędzia do planowania, analizy i optymalizacji codziennych wydatków, przekształcając nasze podejście do finansów.",
+    "date": "6 czerwca 2026",
+    "status": "pending_image",
+    "draftPath": "posts/drafts/twoj-inteligentny-portfel-jak-ai-zmienia-codzienne-zarzadzanie-wydatkami.json",
+    "promptPath": "prompts/twoj-inteligentny-portfel-jak-ai-zmienia-codzienne-zarzadzanie-wydatkami.txt",
+    "imagePath": "",
+    "createdAt": "2026-06-06T10:48:42.606Z"
+  }
+]
