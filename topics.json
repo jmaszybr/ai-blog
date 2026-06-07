@@ -4,7 +4,6 @@
     "Cyfrowy dietetyk - jak AI układa jadłospis na podstawie stylu życia",
     "Sztuczna inteligencja w teatrze - scenografie reagujące na ruch publiczności",
     "AI w walce z hałasem miasta - inteligentne mapy ciszy i dźwiękowego stresu",
-    "Robotyczny ogrodnik - jak AI pielęgnuje rośliny w domach, szklarniach i parkach",
     "AI w oceanografii - tropienie mikroplastiku od plaż po głębiny oceanów",
     "Inteligentne windy - jak AI przewiduje ruch ludzi w biurowcach i szpitalach",
     "AI w ochronie pszczół - cyfrowe ule monitorujące zdrowie całych kolonii",
@@ -184,6 +183,10 @@
     {
       "topic": "AI w bankowości osobistej - portfel, który pomaga planować codzienne wydatki",
       "usedAt": "2026-06-06T10:48:23.020Z"
+    },
+    {
+      "topic": "Robotyczny ogrodnik - jak AI pielęgnuje rośliny w domach, szklarniach i parkach",
+      "usedAt": "2026-06-07T08:45:39.815Z"
     }
   ]
 }
