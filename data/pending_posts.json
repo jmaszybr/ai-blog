@@ -1,1 +1,15 @@
-[]
+[
+  {
+    "id": "f56ec75e",
+    "slug": "cyfrowy-dietetyk-jak-ai-rewolucjonizuje-personalizacje-jadlospisow",
+    "title": "Cyfrowy Dietetyk: Jak AI Rewolucjonizuje Personalizację Jadłospisów",
+    "topic": "AI, Dietetyka, Zdrowie",
+    "excerpt": "Zastanawiałeś się kiedyś, jak wyglądałaby dieta idealnie dopasowana do Ciebie? Sztuczna inteligencja sprawia, że ta wizja staje się rzeczywistością, tworząc spersonalizowane plany żywieniowe na miarę XXI wieku.",
+    "date": "9 czerwca 2026",
+    "status": "pending_image",
+    "draftPath": "posts/drafts/cyfrowy-dietetyk-jak-ai-rewolucjonizuje-personalizacje-jadlospisow.json",
+    "promptPath": "prompts/cyfrowy-dietetyk-jak-ai-rewolucjonizuje-personalizacje-jadlospisow.txt",
+    "imagePath": "",
+    "createdAt": "2026-06-09T09:26:13.664Z"
+  }
+]

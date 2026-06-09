@@ -1,7 +1,6 @@
 {
   "unused": [
     "AI w muzeach przyszłości - wystawy, które zmieniają się pod każdego zwiedzającego",
-    "Cyfrowy dietetyk - jak AI układa jadłospis na podstawie stylu życia",
     "Sztuczna inteligencja w teatrze - scenografie reagujące na ruch publiczności",
     "AI w walce z hałasem miasta - inteligentne mapy ciszy i dźwiękowego stresu",
     "AI w oceanografii - tropienie mikroplastiku od plaż po głębiny oceanów",
@@ -187,6 +186,10 @@
     {
       "topic": "Robotyczny ogrodnik - jak AI pielęgnuje rośliny w domach, szklarniach i parkach",
       "usedAt": "2026-06-07T08:45:39.815Z"
+    },
+    {
+      "topic": "Cyfrowy dietetyk - jak AI układa jadłospis na podstawie stylu życia",
+      "usedAt": "2026-06-09T09:25:50.105Z"
     }
   ]
 }
