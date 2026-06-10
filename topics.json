@@ -19,7 +19,6 @@
     "Cyfrowy kurator sztuki - algorytmy wybierające obrazy dopasowane do nastroju",
     "Sztuczna inteligencja i pamięć rodzinna - porządkowanie starych zdjęć, listów i nagrań",
     "AI w akwarystyce - inteligentne systemy dbające o wodę, światło i zdrowie ryb",
-    "AI w logistyce prezentów - jak algorytmy przewidują, czego ludzie będą szukać przed świętami",
     "AI w renowacji starych filmów - odzyskiwanie kolorów, dźwięku i detali sprzed dekad"
   ],
   "used": [
@@ -190,6 +189,10 @@
     {
       "topic": "Cyfrowy dietetyk - jak AI układa jadłospis na podstawie stylu życia",
       "usedAt": "2026-06-09T09:25:50.105Z"
+    },
+    {
+      "topic": "AI w logistyce prezentów - jak algorytmy przewidują, czego ludzie będą szukać przed świętami",
+      "usedAt": "2026-06-10T09:41:34.111Z"
     }
   ]
 }

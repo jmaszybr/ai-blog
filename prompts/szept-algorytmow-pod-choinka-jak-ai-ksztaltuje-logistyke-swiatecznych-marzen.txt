@@ -1,0 +1,10 @@
+Editorial illustration for a Polish popular-science blog article.
+
+Title: Szept Algorytmów pod Choinką: Jak AI kształtuje logistykę świątecznych marzeń
+Category: AI, Logistyka, Święta
+Excerpt: Zastanawiałeś się kiedyś, jak to możliwe, że idealny prezent czeka na Ciebie na półce, zanim jeszcze pomyślisz o jego zakupie? To nie magia, to sztuczna inteligencja, która rewolucjonizuje logistykę prezentów, przewidując nasze świąteczne pragnienia z niezwykłą precyzją.
+
+Create a horizontal hero image, 1200 × 630 px.
+Style: futuristic, intelligent, atmospheric, premium editorial illustration, high detail, modern composition.
+Important: no text, no letters, no logos, no watermark, no UI screenshots.
+The image should work as a clean article header and Open Graph preview.
