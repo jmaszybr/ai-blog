@@ -9,7 +9,6 @@
     "Wirtualny architekt wnętrz - mieszkanie projektowane przez algorytm i Twoje nawyki",
     "Cyfrowy negocjator - czy AI może pomóc porównywać oferty i abonamenty?",
     "AI w kolejnictwie - pociągi, które przewidują awarie torów z wyprzedzeniem",
-    "Sztuczna inteligencja w opiece nad seniorami - dom, który zauważa nietypowe sytuacje",
     "AI w świecie zwierząt - algorytmy analizujące komunikację delfinów i słoni",
     "Cyfrowy sommelier - jak AI dobiera kawę, herbatę i smaki do Twojego gustu",
     "Inteligentne miasta nocą - jak AI zarządza światłem i energią po zmroku",
@@ -193,6 +192,10 @@
     {
       "topic": "AI w logistyce prezentów - jak algorytmy przewidują, czego ludzie będą szukać przed świętami",
       "usedAt": "2026-06-10T09:41:34.111Z"
+    },
+    {
+      "topic": "Sztuczna inteligencja w opiece nad seniorami - dom, który zauważa nietypowe sytuacje",
+      "usedAt": "2026-06-11T10:08:19.339Z"
     }
   ]
 }

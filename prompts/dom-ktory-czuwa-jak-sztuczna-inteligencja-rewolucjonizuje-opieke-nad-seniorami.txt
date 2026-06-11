@@ -1,0 +1,10 @@
+Editorial illustration for a Polish popular-science blog article.
+
+Title: Dom, który czuwa: Jak sztuczna inteligencja rewolucjonizuje opiekę nad seniorami
+Category: AI, Opieka Senioralna
+Excerpt: Wyobraź sobie dom, który nie tylko rozumie Twoje potrzeby, ale także wyczuwa, kiedy coś jest nie tak. Sztuczna inteligencja zmienia oblicze opieki nad seniorami, oferując im niezależność i bezpieczeństwo w zaciszu własnego mieszkania.
+
+Create a horizontal hero image, 1200 × 630 px.
+Style: futuristic, intelligent, atmospheric, premium editorial illustration, high detail, modern composition.
+Important: no text, no letters, no logos, no watermark, no UI screenshots.
+The image should work as a clean article header and Open Graph preview.

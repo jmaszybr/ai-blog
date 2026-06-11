@@ -1,1 +1,15 @@
-[]
+[
+  {
+    "id": "ce9affed",
+    "slug": "dom-ktory-czuwa-jak-sztuczna-inteligencja-rewolucjonizuje-opieke-nad-seniorami",
+    "title": "Dom, który czuwa: Jak sztuczna inteligencja rewolucjonizuje opiekę nad seniorami",
+    "topic": "AI, Opieka Senioralna",
+    "excerpt": "Wyobraź sobie dom, który nie tylko rozumie Twoje potrzeby, ale także wyczuwa, kiedy coś jest nie tak. Sztuczna inteligencja zmienia oblicze opieki nad seniorami, oferując im niezależność i bezpieczeństwo w zaciszu własnego mieszkania.",
+    "date": "11 czerwca 2026",
+    "status": "pending_image",
+    "draftPath": "posts/drafts/dom-ktory-czuwa-jak-sztuczna-inteligencja-rewolucjonizuje-opieke-nad-seniorami.json",
+    "promptPath": "prompts/dom-ktory-czuwa-jak-sztuczna-inteligencja-rewolucjonizuje-opieke-nad-seniorami.txt",
+    "imagePath": "",
+    "createdAt": "2026-06-11T10:08:54.301Z"
+  }
+]
