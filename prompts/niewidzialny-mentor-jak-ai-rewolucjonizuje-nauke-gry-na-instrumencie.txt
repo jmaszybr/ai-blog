@@ -1,0 +1,10 @@
+Editorial illustration for a Polish popular-science blog article.
+
+Title: Niewidzialny mentor: Jak AI rewolucjonizuje naukę gry na instrumencie
+Category: AI w edukacji muzycznej
+Excerpt: Wyobraź sobie nauczyciela muzyki, który słyszy każdy najdrobniejszy błąd, dostosowuje lekcje do Twoich unikalnych potrzeb i jest dostępny przez całą dobę. Sztuczna inteligencja sprawia, że ta wizja staje się rzeczywistością, zmieniając oblicze edukacji muzycznej.
+
+Create a horizontal hero image, 1200 × 630 px.
+Style: futuristic, intelligent, atmospheric, premium editorial illustration, high detail, modern composition.
+Important: no text, no letters, no logos, no watermark, no UI screenshots.
+The image should work as a clean article header and Open Graph preview.

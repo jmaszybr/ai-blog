@@ -1,5 +1,18 @@
 [
   {
+    "id": "f193e8ef",
+    "slug": "niewidzialny-mentor-jak-ai-rewolucjonizuje-nauke-gry-na-instrumencie",
+    "title": "Niewidzialny mentor: Jak AI rewolucjonizuje naukę gry na instrumencie",
+    "topic": "AI w edukacji muzycznej",
+    "excerpt": "Wyobraź sobie nauczyciela muzyki, który słyszy każdy najdrobniejszy błąd, dostosowuje lekcje do Twoich unikalnych potrzeb i jest dostępny przez całą dobę. Sztuczna inteligencja sprawia, że ta wizja staje się rzeczywistością, zmieniając oblicze edukacji muzycznej.",
+    "date": "12 czerwca 2026",
+    "status": "pending_image",
+    "draftPath": "posts/drafts/niewidzialny-mentor-jak-ai-rewolucjonizuje-nauke-gry-na-instrumencie.json",
+    "promptPath": "prompts/niewidzialny-mentor-jak-ai-rewolucjonizuje-nauke-gry-na-instrumencie.txt",
+    "imagePath": "",
+    "createdAt": "2026-06-12T09:58:11.554Z"
+  },
+  {
     "id": "ce9affed",
     "slug": "dom-ktory-czuwa-jak-sztuczna-inteligencja-rewolucjonizuje-opieke-nad-seniorami",
     "title": "Dom, który czuwa: Jak sztuczna inteligencja rewolucjonizuje opiekę nad seniorami",
