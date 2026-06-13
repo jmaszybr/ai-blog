@@ -1,0 +1,10 @@
+Editorial illustration for a Polish popular-science blog article.
+
+Title: Winda, która myśli: Jak AI kształtuje pionowy ruch przyszłości
+Category: Inteligentne Windy
+Excerpt: Zapomnij o długim czekaniu na windę. Dzięki sztucznej inteligencji, pionowy transport w budynkach staje się płynniejszy, szybszy i bardziej intuicyjny niż kiedykolwiek.
+
+Create a horizontal hero image, 1200 × 630 px.
+Style: futuristic, intelligent, atmospheric, premium editorial illustration, high detail, modern composition.
+Important: no text, no letters, no logos, no watermark, no UI screenshots.
+The image should work as a clean article header and Open Graph preview.

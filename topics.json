@@ -4,7 +4,6 @@
     "Sztuczna inteligencja w teatrze - scenografie reagujące na ruch publiczności",
     "AI w walce z hałasem miasta - inteligentne mapy ciszy i dźwiękowego stresu",
     "AI w oceanografii - tropienie mikroplastiku od plaż po głębiny oceanów",
-    "Inteligentne windy - jak AI przewiduje ruch ludzi w biurowcach i szpitalach",
     "AI w ochronie pszczół - cyfrowe ule monitorujące zdrowie całych kolonii",
     "Wirtualny architekt wnętrz - mieszkanie projektowane przez algorytm i Twoje nawyki",
     "Cyfrowy negocjator - czy AI może pomóc porównywać oferty i abonamenty?",
@@ -199,6 +198,10 @@
     {
       "topic": "AI w edukacji muzycznej - nauczyciel gry na instrumencie, który słyszy każdy błąd",
       "usedAt": "2026-06-12T09:57:47.349Z"
+    },
+    {
+      "topic": "Inteligentne windy - jak AI przewiduje ruch ludzi w biurowcach i szpitalach",
+      "usedAt": "2026-06-13T08:47:35.246Z"
     }
   ]
 }

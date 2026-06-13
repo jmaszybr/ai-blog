@@ -1,5 +1,18 @@
 [
   {
+    "id": "701078bb",
+    "slug": "winda-ktora-mysli-jak-ai-ksztaltuje-pionowy-ruch-przyszlosci",
+    "title": "Winda, która myśli: Jak AI kształtuje pionowy ruch przyszłości",
+    "topic": "Inteligentne Windy",
+    "excerpt": "Zapomnij o długim czekaniu na windę. Dzięki sztucznej inteligencji, pionowy transport w budynkach staje się płynniejszy, szybszy i bardziej intuicyjny niż kiedykolwiek.",
+    "date": "13 czerwca 2026",
+    "status": "pending_image",
+    "draftPath": "posts/drafts/winda-ktora-mysli-jak-ai-ksztaltuje-pionowy-ruch-przyszlosci.json",
+    "promptPath": "prompts/winda-ktora-mysli-jak-ai-ksztaltuje-pionowy-ruch-przyszlosci.txt",
+    "imagePath": "",
+    "createdAt": "2026-06-13T08:47:54.106Z"
+  },
+  {
     "id": "f193e8ef",
     "slug": "niewidzialny-mentor-jak-ai-rewolucjonizuje-nauke-gry-na-instrumencie",
     "title": "Niewidzialny mentor: Jak AI rewolucjonizuje naukę gry na instrumencie",
