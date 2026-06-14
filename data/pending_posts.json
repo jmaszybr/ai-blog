@@ -1,1 +1,15 @@
-[]
+[
+  {
+    "id": "7fac8062",
+    "slug": "muzea-przyszlosci-wystawy-ktore-czytaja-w-twoich-myslach",
+    "title": "Muzea Przyszłości: Wystawy, Które Czytają w Twoich Myślach",
+    "topic": "AI w kulturze",
+    "excerpt": "Wyobraź sobie muzeum, które zmienia się z każdym Twoim krokiem, dostosowując narrację, interakcje i eksponaty do Twoich unikalnych zainteresowań. To już nie science fiction, lecz przyszłość kształtowana przez sztuczną inteligencję.",
+    "date": "14 czerwca 2026",
+    "status": "pending_image",
+    "draftPath": "posts/drafts/muzea-przyszlosci-wystawy-ktore-czytaja-w-twoich-myslach.json",
+    "promptPath": "prompts/muzea-przyszlosci-wystawy-ktore-czytaja-w-twoich-myslach.txt",
+    "imagePath": "",
+    "createdAt": "2026-06-14T09:19:51.803Z"
+  }
+]

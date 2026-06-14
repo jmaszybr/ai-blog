@@ -1,0 +1,10 @@
+Editorial illustration for a Polish popular-science blog article.
+
+Title: Muzea Przyszłości: Wystawy, Które Czytają w Twoich Myślach
+Category: AI w kulturze
+Excerpt: Wyobraź sobie muzeum, które zmienia się z każdym Twoim krokiem, dostosowując narrację, interakcje i eksponaty do Twoich unikalnych zainteresowań. To już nie science fiction, lecz przyszłość kształtowana przez sztuczną inteligencję.
+
+Create a horizontal hero image, 1200 × 630 px.
+Style: futuristic, intelligent, atmospheric, premium editorial illustration, high detail, modern composition.
+Important: no text, no letters, no logos, no watermark, no UI screenshots.
+The image should work as a clean article header and Open Graph preview.

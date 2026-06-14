@@ -1,6 +1,5 @@
 {
   "unused": [
-    "AI w muzeach przyszłości - wystawy, które zmieniają się pod każdego zwiedzającego",
     "Sztuczna inteligencja w teatrze - scenografie reagujące na ruch publiczności",
     "AI w walce z hałasem miasta - inteligentne mapy ciszy i dźwiękowego stresu",
     "AI w oceanografii - tropienie mikroplastiku od plaż po głębiny oceanów",
@@ -202,6 +201,10 @@
     {
       "topic": "Inteligentne windy - jak AI przewiduje ruch ludzi w biurowcach i szpitalach",
       "usedAt": "2026-06-13T08:47:35.246Z"
+    },
+    {
+      "topic": "AI w muzeach przyszłości - wystawy, które zmieniają się pod każdego zwiedzającego",
+      "usedAt": "2026-06-14T09:19:32.452Z"
     }
   ]
 }
