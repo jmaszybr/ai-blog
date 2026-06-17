@@ -1,0 +1,10 @@
+Editorial illustration for a Polish popular-science blog article.
+
+Title: Gdy miasto budzi się do życia po zmroku: Jak AI tka sieć światła i energii
+Category: Inteligentne miasta, AI, energia
+Excerpt: Nocą, kiedy większość z nas odpoczywa, inteligentne miasta nie śpią. To właśnie po zmroku sztuczna inteligencja przejmuje stery, z chirurgiczną precyzją zarządzając oświetleniem i energią, by zapewnić bezpieczeństwo, oszczędności i zrównoważony rozwój.
+
+Create a horizontal hero image, 1200 × 630 px.
+Style: futuristic, intelligent, atmospheric, premium editorial illustration, high detail, modern composition.
+Important: no text, no letters, no logos, no watermark, no UI screenshots.
+The image should work as a clean article header and Open Graph preview.

@@ -9,7 +9,6 @@
     "AI w kolejnictwie - pociągi, które przewidują awarie torów z wyprzedzeniem",
     "AI w świecie zwierząt - algorytmy analizujące komunikację delfinów i słoni",
     "Cyfrowy sommelier - jak AI dobiera kawę, herbatę i smaki do Twojego gustu",
-    "Inteligentne miasta nocą - jak AI zarządza światłem i energią po zmroku",
     "Sztuczna inteligencja w kosmicznym górnictwie - poszukiwanie surowców na asteroidach",
     "Robot kucharz w restauracji - jak AI zmienia zaplecze gastronomii, nie tylko menu",
     "Cyfrowy kurator sztuki - algorytmy wybierające obrazy dopasowane do nastroju",
@@ -205,6 +204,10 @@
     {
       "topic": "AI w muzeach przyszłości - wystawy, które zmieniają się pod każdego zwiedzającego",
       "usedAt": "2026-06-14T09:19:32.452Z"
+    },
+    {
+      "topic": "Inteligentne miasta nocą - jak AI zarządza światłem i energią po zmroku",
+      "usedAt": "2026-06-17T10:27:20.074Z"
     }
   ]
 }
