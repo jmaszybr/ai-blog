@@ -1,7 +1,6 @@
 {
   "unused": [
     "Sztuczna inteligencja w teatrze - scenografie reagujące na ruch publiczności",
-    "AI w walce z hałasem miasta - inteligentne mapy ciszy i dźwiękowego stresu",
     "AI w oceanografii - tropienie mikroplastiku od plaż po głębiny oceanów",
     "AI w ochronie pszczół - cyfrowe ule monitorujące zdrowie całych kolonii",
     "Wirtualny architekt wnętrz - mieszkanie projektowane przez algorytm i Twoje nawyki",
@@ -208,6 +207,10 @@
     {
       "topic": "Inteligentne miasta nocą - jak AI zarządza światłem i energią po zmroku",
       "usedAt": "2026-06-17T10:27:20.074Z"
+    },
+    {
+      "topic": "AI w walce z hałasem miasta - inteligentne mapy ciszy i dźwiękowego stresu",
+      "usedAt": "2026-06-18T10:07:20.486Z"
     }
   ]
 }

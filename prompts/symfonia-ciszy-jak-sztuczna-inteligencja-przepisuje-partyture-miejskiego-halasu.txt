@@ -1,0 +1,10 @@
+Editorial illustration for a Polish popular-science blog article.
+
+Title: Symfonia ciszy: Jak sztuczna inteligencja przepisuje partyturę miejskiego hałasu
+Category: AI, środowisko, miasto
+Excerpt: Miasta tętnią życiem, ale i nieustannym hałasem. Czy sztuczna inteligencja może pomóc nam odzyskać spokój, tworząc inteligentne mapy ciszy i mierząc dźwiękowy stres, który nas otacza?
+
+Create a horizontal hero image, 1200 × 630 px.
+Style: futuristic, intelligent, atmospheric, premium editorial illustration, high detail, modern composition.
+Important: no text, no letters, no logos, no watermark, no UI screenshots.
+The image should work as a clean article header and Open Graph preview.
