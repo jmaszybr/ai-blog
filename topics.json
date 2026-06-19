@@ -12,7 +12,6 @@
     "Robot kucharz w restauracji - jak AI zmienia zaplecze gastronomii, nie tylko menu",
     "Cyfrowy kurator sztuki - algorytmy wybierające obrazy dopasowane do nastroju",
     "Sztuczna inteligencja i pamięć rodzinna - porządkowanie starych zdjęć, listów i nagrań",
-    "AI w akwarystyce - inteligentne systemy dbające o wodę, światło i zdrowie ryb",
     "AI w renowacji starych filmów - odzyskiwanie kolorów, dźwięku i detali sprzed dekad"
   ],
   "used": [
@@ -211,6 +210,10 @@
     {
       "topic": "AI w walce z hałasem miasta - inteligentne mapy ciszy i dźwiękowego stresu",
       "usedAt": "2026-06-18T10:07:20.486Z"
+    },
+    {
+      "topic": "AI w akwarystyce - inteligentne systemy dbające o wodę, światło i zdrowie ryb",
+      "usedAt": "2026-06-19T10:13:39.880Z"
     }
   ]
 }
