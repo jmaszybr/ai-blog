@@ -7,7 +7,6 @@
     "Cyfrowy negocjator - czy AI może pomóc porównywać oferty i abonamenty?",
     "AI w kolejnictwie - pociągi, które przewidują awarie torów z wyprzedzeniem",
     "AI w świecie zwierząt - algorytmy analizujące komunikację delfinów i słoni",
-    "Cyfrowy sommelier - jak AI dobiera kawę, herbatę i smaki do Twojego gustu",
     "Sztuczna inteligencja w kosmicznym górnictwie - poszukiwanie surowców na asteroidach",
     "Robot kucharz w restauracji - jak AI zmienia zaplecze gastronomii, nie tylko menu",
     "Cyfrowy kurator sztuki - algorytmy wybierające obrazy dopasowane do nastroju",
@@ -214,6 +213,10 @@
     {
       "topic": "AI w akwarystyce - inteligentne systemy dbające o wodę, światło i zdrowie ryb",
       "usedAt": "2026-06-19T10:13:39.880Z"
+    },
+    {
+      "topic": "Cyfrowy sommelier - jak AI dobiera kawę, herbatę i smaki do Twojego gustu",
+      "usedAt": "2026-06-20T08:42:11.187Z"
     }
   ]
 }

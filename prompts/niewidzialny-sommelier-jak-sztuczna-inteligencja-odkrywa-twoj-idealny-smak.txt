@@ -1,0 +1,10 @@
+Editorial illustration for a Polish popular-science blog article.
+
+Title: Niewidzialny Sommelier: Jak Sztuczna Inteligencja Odkrywa Twój Idealny Smak
+Category: Personalizacja smaku
+Excerpt: Wyobraź sobie, że każda filiżanka kawy czy herbaty jest idealnie dopasowana do Twojego nastroju, preferencji, a nawet biologicznych potrzeb. To nie science fiction, to przyszłość kreowana przez sztuczną inteligencję.
+
+Create a horizontal hero image, 1200 × 630 px.
+Style: futuristic, intelligent, atmospheric, premium editorial illustration, high detail, modern composition.
+Important: no text, no letters, no logos, no watermark, no UI screenshots.
+The image should work as a clean article header and Open Graph preview.

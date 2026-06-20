@@ -1,5 +1,18 @@
 [
   {
+    "id": "9e83f501",
+    "slug": "niewidzialny-sommelier-jak-sztuczna-inteligencja-odkrywa-twoj-idealny-smak",
+    "title": "Niewidzialny Sommelier: Jak Sztuczna Inteligencja Odkrywa Twój Idealny Smak",
+    "topic": "Personalizacja smaku",
+    "excerpt": "Wyobraź sobie, że każda filiżanka kawy czy herbaty jest idealnie dopasowana do Twojego nastroju, preferencji, a nawet biologicznych potrzeb. To nie science fiction, to przyszłość kreowana przez sztuczną inteligencję.",
+    "date": "20 czerwca 2026",
+    "status": "pending_image",
+    "draftPath": "posts/drafts/niewidzialny-sommelier-jak-sztuczna-inteligencja-odkrywa-twoj-idealny-smak.json",
+    "promptPath": "prompts/niewidzialny-sommelier-jak-sztuczna-inteligencja-odkrywa-twoj-idealny-smak.txt",
+    "imagePath": "",
+    "createdAt": "2026-06-20T08:42:35.016Z"
+  },
+  {
     "id": "425aac8a",
     "slug": "glebia-inteligencji-jak-ai-przepisuje-zasady-akwarystyki",
     "title": "Głębia Inteligencji: Jak AI Przepisuje Zasady Akwarystyki",
