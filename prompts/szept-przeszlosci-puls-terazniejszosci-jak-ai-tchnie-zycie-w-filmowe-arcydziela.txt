@@ -1,0 +1,10 @@
+Editorial illustration for a Polish popular-science blog article.
+
+Title: Szept przeszłości, puls teraźniejszości: Jak AI tchnie życie w filmowe arcydzieła
+Category: Renowacja filmów AI
+Excerpt: Sztuczna inteligencja rewolucjonizuje sposób, w jaki odkrywamy i doświadczamy starych filmów, przywracając im utracone kolory, klarowny dźwięk i zapomniane detale, przenosząc widzów w czasie z niespotykaną dotąd precyzją.
+
+Create a horizontal hero image, 1200 × 630 px.
+Style: futuristic, intelligent, atmospheric, premium editorial illustration, high detail, modern composition.
+Important: no text, no letters, no logos, no watermark, no UI screenshots.
+The image should work as a clean article header and Open Graph preview.

@@ -10,8 +10,7 @@
     "Sztuczna inteligencja w kosmicznym górnictwie - poszukiwanie surowców na asteroidach",
     "Robot kucharz w restauracji - jak AI zmienia zaplecze gastronomii, nie tylko menu",
     "Cyfrowy kurator sztuki - algorytmy wybierające obrazy dopasowane do nastroju",
-    "Sztuczna inteligencja i pamięć rodzinna - porządkowanie starych zdjęć, listów i nagrań",
-    "AI w renowacji starych filmów - odzyskiwanie kolorów, dźwięku i detali sprzed dekad"
+    "Sztuczna inteligencja i pamięć rodzinna - porządkowanie starych zdjęć, listów i nagrań"
   ],
   "used": [
     {
@@ -217,6 +216,10 @@
     {
       "topic": "Cyfrowy sommelier - jak AI dobiera kawę, herbatę i smaki do Twojego gustu",
       "usedAt": "2026-06-20T08:42:11.187Z"
+    },
+    {
+      "topic": "AI w renowacji starych filmów - odzyskiwanie kolorów, dźwięku i detali sprzed dekad",
+      "usedAt": "2026-06-21T09:37:33.731Z"
     }
   ]
 }
