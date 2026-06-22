@@ -1,5 +1,18 @@
 [
   {
+    "id": "7558bbdd",
+    "slug": "echa-nastrojow-jak-algorytmy-ksztaltuja-nasze-artystyczne-doswiadczenia",
+    "title": "Echa Nastrojów: Jak Algorytmy Kształtują Nasze Artystyczne Doświadczenia",
+    "topic": "AI, sztuka, personalizacja",
+    "excerpt": "Czy wyobrażasz sobie galerię sztuki, która intuicyjnie rozumie Twój nastrój i prezentuje dzieła idealnie rezonujące z Twoimi emocjami? Wkraczamy w erę cyfrowych kuratorów sztuki, gdzie algorytmy stają się naszymi przewodnikami po świecie obrazów.",
+    "date": "22 czerwca 2026",
+    "status": "pending_image",
+    "draftPath": "posts/drafts/echa-nastrojow-jak-algorytmy-ksztaltuja-nasze-artystyczne-doswiadczenia.json",
+    "promptPath": "prompts/echa-nastrojow-jak-algorytmy-ksztaltuja-nasze-artystyczne-doswiadczenia.txt",
+    "imagePath": "",
+    "createdAt": "2026-06-22T11:36:55.229Z"
+  },
+  {
     "id": "859622ab",
     "slug": "szept-przeszlosci-puls-terazniejszosci-jak-ai-tchnie-zycie-w-filmowe-arcydziela",
     "title": "Szept przeszłości, puls teraźniejszości: Jak AI tchnie życie w filmowe arcydzieła",
