@@ -1,5 +1,18 @@
 [
   {
+    "id": "3edc1fa4",
+    "slug": "pociagi-przyszlosci-jak-ai-uczy-sie-sluchac-torow-i-przewidywac-niewidzialne-zag",
+    "title": "Pociągi przyszłości: Jak AI uczy się słuchać torów i przewidywać niewidzialne zagrożenia",
+    "topic": "AI w kolejnictwie",
+    "excerpt": "Wyobraź sobie świat, w którym pociągi nie tylko bezpiecznie dowożą nas do celu, ale także aktywnie dbają o swoją trasę. To nie science fiction, to przyszłość kolei napędzana sztuczną inteligencją, która uczy się przewidywać awarie torów z wyprzedzeniem.",
+    "date": "25 czerwca 2026",
+    "status": "pending_image",
+    "draftPath": "posts/drafts/pociagi-przyszlosci-jak-ai-uczy-sie-sluchac-torow-i-przewidywac-niewidzialne-zag.json",
+    "promptPath": "prompts/pociagi-przyszlosci-jak-ai-uczy-sie-sluchac-torow-i-przewidywac-niewidzialne-zag.txt",
+    "imagePath": "",
+    "createdAt": "2026-06-25T08:49:10.889Z"
+  },
+  {
     "id": "859622ab",
     "slug": "szept-przeszlosci-puls-terazniejszosci-jak-ai-tchnie-zycie-w-filmowe-arcydziela",
     "title": "Szept przeszłości, puls teraźniejszości: Jak AI tchnie życie w filmowe arcydzieła",

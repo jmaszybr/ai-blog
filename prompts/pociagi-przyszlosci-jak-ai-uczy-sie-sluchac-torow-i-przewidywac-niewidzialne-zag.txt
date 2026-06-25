@@ -1,0 +1,10 @@
+Editorial illustration for a Polish popular-science blog article.
+
+Title: Pociągi przyszłości: Jak AI uczy się słuchać torów i przewidywać niewidzialne zagrożenia
+Category: AI w kolejnictwie
+Excerpt: Wyobraź sobie świat, w którym pociągi nie tylko bezpiecznie dowożą nas do celu, ale także aktywnie dbają o swoją trasę. To nie science fiction, to przyszłość kolei napędzana sztuczną inteligencją, która uczy się przewidywać awarie torów z wyprzedzeniem.
+
+Create a horizontal hero image, 1200 × 630 px.
+Style: futuristic, intelligent, atmospheric, premium editorial illustration, high detail, modern composition.
+Important: no text, no letters, no logos, no watermark, no UI screenshots.
+The image should work as a clean article header and Open Graph preview.
