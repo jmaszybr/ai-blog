@@ -1,5 +1,18 @@
 [
   {
+    "id": "0796ee4b",
+    "slug": "kulinarna-rewolucja-jak-robot-kucharz-i-sztuczna-inteligencja-na-nowo-definiuja-",
+    "title": "Kulinarna Rewolucja: Jak robot kucharz i sztuczna inteligencja na nowo definiują serce restauracji",
+    "topic": "AI w gastronomii",
+    "excerpt": "Zanurz się w świat, gdzie roboty nie tylko smażą frytki, ale całe zaplecze restauracji tętni inteligentnymi algorytmami, zmieniając każdy aspekt od zarządzania zapasami po kreowanie menu.",
+    "date": "26 czerwca 2026",
+    "status": "pending_image",
+    "draftPath": "posts/drafts/kulinarna-rewolucja-jak-robot-kucharz-i-sztuczna-inteligencja-na-nowo-definiuja-.json",
+    "promptPath": "prompts/kulinarna-rewolucja-jak-robot-kucharz-i-sztuczna-inteligencja-na-nowo-definiuja-.txt",
+    "imagePath": "",
+    "createdAt": "2026-06-26T08:52:11.532Z"
+  },
+  {
     "id": "3edc1fa4",
     "slug": "pociagi-przyszlosci-jak-ai-uczy-sie-sluchac-torow-i-przewidywac-niewidzialne-zag",
     "title": "Pociągi przyszłości: Jak AI uczy się słuchać torów i przewidywać niewidzialne zagrożenia",

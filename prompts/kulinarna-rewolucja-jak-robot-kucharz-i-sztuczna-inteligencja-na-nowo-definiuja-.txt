@@ -1,0 +1,10 @@
+Editorial illustration for a Polish popular-science blog article.
+
+Title: Kulinarna Rewolucja: Jak robot kucharz i sztuczna inteligencja na nowo definiują serce restauracji
+Category: AI w gastronomii
+Excerpt: Zanurz się w świat, gdzie roboty nie tylko smażą frytki, ale całe zaplecze restauracji tętni inteligentnymi algorytmami, zmieniając każdy aspekt od zarządzania zapasami po kreowanie menu.
+
+Create a horizontal hero image, 1200 × 630 px.
+Style: futuristic, intelligent, atmospheric, premium editorial illustration, high detail, modern composition.
+Important: no text, no letters, no logos, no watermark, no UI screenshots.
+The image should work as a clean article header and Open Graph preview.
