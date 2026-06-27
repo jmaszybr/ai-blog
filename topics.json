@@ -3,7 +3,6 @@
     "Sztuczna inteligencja w teatrze - scenografie reagujące na ruch publiczności",
     "AI w oceanografii - tropienie mikroplastiku od plaż po głębiny oceanów",
     "AI w ochronie pszczół - cyfrowe ule monitorujące zdrowie całych kolonii",
-    "Wirtualny architekt wnętrz - mieszkanie projektowane przez algorytm i Twoje nawyki",
     "Cyfrowy negocjator - czy AI może pomóc porównywać oferty i abonamenty?",
     "AI w świecie zwierząt - algorytmy analizujące komunikację delfinów i słoni",
     "Sztuczna inteligencja w kosmicznym górnictwie - poszukiwanie surowców na asteroidach",
@@ -229,6 +228,10 @@
     {
       "topic": "Robot kucharz w restauracji - jak AI zmienia zaplecze gastronomii, nie tylko menu",
       "usedAt": "2026-06-26T08:51:31.780Z"
+    },
+    {
+      "topic": "Wirtualny architekt wnętrz - mieszkanie projektowane przez algorytm i Twoje nawyki",
+      "usedAt": "2026-06-27T08:26:50.430Z"
     }
   ]
 }

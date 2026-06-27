@@ -1,5 +1,18 @@
 [
   {
+    "id": "4c5223d9",
+    "slug": "sztuka-algorytmu-gdy-twoje-mieszkanie-projektuje-sie-samo-na-podstawie-nawyku",
+    "title": "Sztuka Algorytmu: Gdy Twoje Mieszkanie Projektuje się Samo na Podstawie Nawyku",
+    "topic": "AI, Projektowanie Wnętrz",
+    "excerpt": "Wyobraź sobie przestrzeń, która rozumie Cię lepiej niż Ty sam siebie. Poznaj, jak sztuczna inteligencja, analizując Twoje codzienne nawyki, tworzy wnętrza idealnie dopasowane do Twojego życia.",
+    "date": "27 czerwca 2026",
+    "status": "pending_image",
+    "draftPath": "posts/drafts/sztuka-algorytmu-gdy-twoje-mieszkanie-projektuje-sie-samo-na-podstawie-nawyku.json",
+    "promptPath": "prompts/sztuka-algorytmu-gdy-twoje-mieszkanie-projektuje-sie-samo-na-podstawie-nawyku.txt",
+    "imagePath": "",
+    "createdAt": "2026-06-27T08:27:12.181Z"
+  },
+  {
     "id": "0796ee4b",
     "slug": "kulinarna-rewolucja-jak-robot-kucharz-i-sztuczna-inteligencja-na-nowo-definiuja-",
     "title": "Kulinarna Rewolucja: Jak robot kucharz i sztuczna inteligencja na nowo definiują serce restauracji",
