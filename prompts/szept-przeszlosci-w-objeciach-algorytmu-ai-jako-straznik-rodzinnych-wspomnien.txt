@@ -1,0 +1,10 @@
+Editorial illustration for a Polish popular-science blog article.
+
+Title: Szept przeszłości w objęciach algorytmu: AI jako strażnik rodzinnych wspomnień
+Category: Pamięć rodzinna, AI
+Excerpt: Czy wyobrażasz sobie świat, w którym sztuczna inteligencja pomaga Ci odnaleźć uśmiech pradziadka na pożółkłej fotografii lub usłyszeć głos babci z dawno zapomnianego nagrania? Przenieśmy się do przyszłości, gdzie AI staje się kustoszem naszych najcenniejszych wspomnień.
+
+Create a horizontal hero image, 1200 × 630 px.
+Style: futuristic, intelligent, atmospheric, premium editorial illustration, high detail, modern composition.
+Important: no text, no letters, no logos, no watermark, no UI screenshots.
+The image should work as a clean article header and Open Graph preview.

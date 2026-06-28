@@ -1,5 +1,18 @@
 [
   {
+    "id": "3bb3bac3",
+    "slug": "szept-przeszlosci-w-objeciach-algorytmu-ai-jako-straznik-rodzinnych-wspomnien",
+    "title": "Szept przeszłości w objęciach algorytmu: AI jako strażnik rodzinnych wspomnień",
+    "topic": "Pamięć rodzinna, AI",
+    "excerpt": "Czy wyobrażasz sobie świat, w którym sztuczna inteligencja pomaga Ci odnaleźć uśmiech pradziadka na pożółkłej fotografii lub usłyszeć głos babci z dawno zapomnianego nagrania? Przenieśmy się do przyszłości, gdzie AI staje się kustoszem naszych najcenniejszych wspomnień.",
+    "date": "28 czerwca 2026",
+    "status": "pending_image",
+    "draftPath": "posts/drafts/szept-przeszlosci-w-objeciach-algorytmu-ai-jako-straznik-rodzinnych-wspomnien.json",
+    "promptPath": "prompts/szept-przeszlosci-w-objeciach-algorytmu-ai-jako-straznik-rodzinnych-wspomnien.txt",
+    "imagePath": "",
+    "createdAt": "2026-06-28T08:41:23.851Z"
+  },
+  {
     "id": "4c5223d9",
     "slug": "sztuka-algorytmu-gdy-twoje-mieszkanie-projektuje-sie-samo-na-podstawie-nawyku",
     "title": "Sztuka Algorytmu: Gdy Twoje Mieszkanie Projektuje się Samo na Podstawie Nawyku",
