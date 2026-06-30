@@ -1,0 +1,10 @@
+Editorial illustration for a Polish popular-science blog article.
+
+Title: Niewidzialny Wróg, Inteligentny Trop: Jak AI Śledzi Mikroplastik w Głębinach Oceanów
+Category: AI w oceanografii
+Excerpt: Mikroplastik to globalne wyzwanie dla naszych oceanów. Odkryj, jak sztuczna inteligencja rewolucjonizuje jego wykrywanie i śledzenie, od piaszczystych plaż po niezbadane głębiny.
+
+Create a horizontal hero image, 1200 × 630 px.
+Style: futuristic, intelligent, atmospheric, premium editorial illustration, high detail, modern composition.
+Important: no text, no letters, no logos, no watermark, no UI screenshots.
+The image should work as a clean article header and Open Graph preview.
