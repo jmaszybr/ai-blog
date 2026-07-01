@@ -1,5 +1,18 @@
 [
   {
+    "id": "acee8bac",
+    "slug": "teatr-ktory-oddycha-kiedy-scenografia-staje-sie-zywym-partnerem-publicznosci",
+    "title": "Teatr, który oddycha: Kiedy scenografia staje się żywym partnerem publiczności",
+    "topic": "AI w teatrze",
+    "excerpt": "Wyobraź sobie spektakl, gdzie każde drgnienie, każdy szept publiczności kształtuje świat na scenie. Sztuczna inteligencja otwiera drzwi do teatru, który reaguje, żyje i współtworzy z widzami, redefiniując granice artystycznego doświadczenia.",
+    "date": "1 lipca 2026",
+    "status": "pending_image",
+    "draftPath": "posts/drafts/teatr-ktory-oddycha-kiedy-scenografia-staje-sie-zywym-partnerem-publicznosci.json",
+    "promptPath": "prompts/teatr-ktory-oddycha-kiedy-scenografia-staje-sie-zywym-partnerem-publicznosci.txt",
+    "imagePath": "",
+    "createdAt": "2026-07-01T09:31:15.144Z"
+  },
+  {
     "id": "cd988857",
     "slug": "niewidzialny-wrog-inteligentny-trop-jak-ai-sledzi-mikroplastik-w-glebinach-ocean",
     "title": "Niewidzialny Wróg, Inteligentny Trop: Jak AI Śledzi Mikroplastik w Głębinach Oceanów",
